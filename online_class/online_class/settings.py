@@ -11,14 +11,18 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), '/var/www/static/',)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@b6mr405fr^4s3^#z9&3-(4bkx*co8l%7&6-p1qy-iu3u^o6)2'
+SECRET_KEY = '_hsg(^b!4@t=@6g=3&07h11%+qq-m5!t3n!^9(+3=z9@$fmlkq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'class_management',
     'home',
-    'class',
     'study',
 )
 
