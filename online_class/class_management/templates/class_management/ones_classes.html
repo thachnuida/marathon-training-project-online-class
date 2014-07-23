@@ -1,0 +1,10 @@
+{% load url from future %}
+{% load staticfiles %}
+
+
+<a href = {% url 'classes:createclass' %}>Tao lop Hoc </a>
+<h1>Danh Sach Lop Hoc</h1>
+{% for class in ones_classes %}
+<a href="/{{ object.id }}"><img src="{{ class.image_class.url }}"/>{{ class.class_name }}</a>
+
+{% endfor %}

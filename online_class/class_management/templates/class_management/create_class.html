@@ -1,0 +1,12 @@
+<head>
+	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+</head>
+
+<form action="" method="POST">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<textarea rows="4" cols="50"></textarea>
+    <input type="submit" value="Create" />
+</form>
+

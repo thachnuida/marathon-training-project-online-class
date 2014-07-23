@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from home.models import *
 
 # Create your models here.
@@ -9,7 +10,7 @@ class Class(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
     quanlity = models.IntegerField()
-    image_class = models.ImageField(upload_to='images/class', null=True, blank=True)
+    image_class = models.ImageField(upload_to="class_management", null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
