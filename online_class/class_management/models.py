@@ -1,15 +1,16 @@
 from django.db import models
 from django.conf import settings
 from home.models import *
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Class(models.Model):
-    class_name = models.CharField(max_length=100, unique=True)
-    teacher = models.ForeignKey(Teacher)
-    students_in_class = models.ManyToManyField(Student, related_name="students_in_class", null=True, blank=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    class_name = models.CharField(max_length=100)
+    teacher = models.ForeignKey(User)
+    students_in_class = models.ManyToManyField(User, related_name="students_in_class", null=True, blank=True)
+    slug = models.SlugField(max_length=100)
     description = models.TextField(null=True, blank=True)
-    quanlity = models.IntegerField()
+    quantity = models.IntegerField()
     image_class = models.ImageField(upload_to="class_management", null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
@@ -20,9 +21,9 @@ class Class(models.Model):
 
 
 class Lesson(models.Model):
-    lesson_name = models.CharField(max_length=100, unique=True)
+    lesson_name = models.CharField(max_length=100)
     Class = models.ForeignKey(Class)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100)
     description = models.TextField(null=True, blank=True)
     video_link = models.URLField(max_length=45)
     create_date = models.DateTimeField(auto_now_add=True)
@@ -37,7 +38,7 @@ class Lesson(models.Model):
 class Test(models.Model):
     lesson = models.ForeignKey(Lesson)
     test_name = models.CharField(max_length=45)
-    slug = models.SlugField(max_length=45, unique=True)
+    slug = models.SlugField(max_length=45)
     
     def __unicode__(self):
         return self.test_name

@@ -2,18 +2,13 @@
 	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
 </head>
+<html>
+
+<img src="{{ Chose_class.image_class.url }}" height=150 width=150/>
 <form enctype="multipart/form-data" method="post" action="">
 	{% csrf_token %}
-	<!-- {{ form.as_p }} -->
-	{% for field in form %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
-    </div>
-    
-	{% endfor %}
+	{{ form.as_p }}
     <input type="submit" value="Create" />
 </form>
 
-
-
+</html>
