@@ -11,11 +11,9 @@ from django.views import generic
 from django.shortcuts import render, get_object_or_404
 # Create your views here.
 def classlist(request):
-    teacher = request.user;
-    print teacher
+    print UserProfile.objects.get(user=request.user).role
+    teacher = request.user
     ones_classes = Class.objects.filter(teacher = teacher)
-    print "lop hoc"
-    print ones_classes
     return render(request, "class_management/ones_classes.html", {'ones_classes':ones_classes})
 # def create_class(request):
 #     return render(request, "class_management/create_class.html")
@@ -25,9 +23,12 @@ def create_class(request):
     if request.method == 'POST':
         form = CreateClass(request.POST, request.FILES)
         if form.is_valid():
-            createdclass = Class(class_name = form.cleaned_data['class_name'], teacher = request.user,slug=slugify(form.cleaned_data['class_name']), quantity = form.cleaned_data['quantity'], image_class=form.cleaned_data['image_class'], description=request.POST['description'])
-            createdclass.save()
-            return HttpResponseRedirect(reverse('classes:classlist'))
+            if (UserProfile.objects.get(user=request.user).role == 'T'):
+                createdclass = Class(class_name = form.cleaned_data['class_name'], teacher = request.user,slug=slugify(form.cleaned_data['class_name']), quantity = form.cleaned_data['quantity'], image_class=form.cleaned_data['image_class'], description=request.POST['description'])
+                createdclass.save()
+                return HttpResponseRedirect(reverse('classes:classlist'))
+            else :
+                form
         else :
             form
     return render(request, "class_management/create_class.html", {'form':form})

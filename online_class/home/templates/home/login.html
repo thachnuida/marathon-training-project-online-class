@@ -1,28 +1,26 @@
-{% load url from future %}
-{% load staticfiles %}
-	<h3>Welcome, Please Login!</h3>
-	<div class="action-form">
-		<form method="post" action="{% url 'login' %}">
-			{% csrf_token %}
-			<input type="hidden" name="next" value="{{ next_url }}"/>
-			<ul>
-				{% if error %}
-				<li class="error-message">
-					{{ error|safe }}
-				</li>
-				{% endif %}
-				<li>
-					<input id="id_username" name="username" type="text" value="{{ username }}" placeholder="Username..."/>
-				</li>
-				<li>
-					<input id="id_password" name="password" type="password" placeholder="Password..."/>
-				</li>
-				<li>
-					<input type="submit" value="Login">
-				</li>
-				<li class="link">
-					<a href="">Forgot your password?</a>
-				</li>
-			</ul>
-		</form>
+<!-- {% load url from future %}
+{% load staticfiles %} -->
+{% block body_block %}
+<div>
+    <h1>Welcome, Please Login!</h1>
+    <h3>Login Online Class</h3>
+    <div class="container">
+        <form class="form-horizontal" role="form" id="login_form" method="post" action="/home/login/">
+            
+            <h2 class="form-sign-heading">Please sign in</h2>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url }}"/>
+            <ul>
+                {% if error %}
+                <li class="error-message">
+                    {{ error|safe }}
+                </li>
+                {% endif %}
+            </ul>    
+            <input id="id_username" name="username" type="text" class="form-control" value="{{ username }}" placeholder="Username..."/>
+            <input id="id_password" name="password" type="password" class="form-control" placeholder="Password..."/>
+            <button class="btn btn-primary" type="submit">Sign in</button>
+        </form>
+    </div>    
 </div>
+{% endblock%}

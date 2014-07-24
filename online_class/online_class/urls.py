@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^class/', include('class_management.urls', namespace='classes')),
     url(r'^tinymce/', include('tinymce.urls')),
-    url(r'^', include('home.urls')),
+    url(r'^home/', include('home.urls'), name='home'),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
