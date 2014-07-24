@@ -1,7 +1,5 @@
 from django.contrib import admin
-from django.contrib import admin
-from class_management.models import *
+from home.models import UserProfile
 
-admin.site.register(Teacher)
-admin.site.register(Student)
+admin.site.register(UserProfile)
 

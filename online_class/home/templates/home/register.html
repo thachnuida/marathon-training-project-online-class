@@ -1,0 +1,23 @@
+{% load staticfiles%}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Register</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'home/styles.css'%}"/>
+    </head>
+    <body>
+        <h1>Register with Online Class</h1>
+        {% if registered %}
+        <h2><strong>Thank for regiter!</strong></h2>
+        <a href="/home"> Return to homepage</a></br>
+        {% else %}
+        <form id="user_form" method ="POST" action="/home/register/" enctype"multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+        <input type="submit" name="submit" value="Dang ki"/>
+        </form>
+        {% endif %}
+    </body>
+</html>
