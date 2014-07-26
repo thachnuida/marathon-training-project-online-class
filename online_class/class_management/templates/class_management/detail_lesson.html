@@ -1,0 +1,35 @@
+{% load url from future %}
+{% load staticfiles %}
+
+
+<head>
+	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+</head>
+<html>
+	<iframe width="420" height="345"
+	src="{{ chose_lesson.video_link }}">
+	</iframe>
+	<form method="post" action="">
+		{% csrf_token %}
+		{% for field in form %}
+	    <div class="fieldWrapper">
+	        {{ field.errors }}
+	        {{ field.label_tag }} {{ field }}
+	    </div>  
+		{% endfor %}
+	    <input type="submit" value="Sua Bai Hoc" />
+	</form>
+ 	<a href = "{% url 'classes:createtest' chose_lesson.Class.id chose_lesson.id %}">Tao Bai Trac Nghiem</a>
+	<div id="test_list">
+		{% for test in test_list %}
+    		<a class="test_wrapper" href="">
+    			<ul style = "display:inline-block">
+    				<li>{{ lesson.test_name }}</li>
+    				<li>{{ lesson.create_date }}</li>
+    				<li>{{ lesson.latest_update_date }}</li>s
+    			</ul>
+    		</a>
+		{% endfor %}
+	</div>
+</html>

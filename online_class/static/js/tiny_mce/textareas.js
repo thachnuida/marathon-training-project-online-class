@@ -30,7 +30,4 @@ style_formats : [
     {title : 'Table styles'},
     {title : 'Table row 1', selector : 'tr', classes : 'tablerow'}
 ],
-
-width: '700',
-height: '400'
 });

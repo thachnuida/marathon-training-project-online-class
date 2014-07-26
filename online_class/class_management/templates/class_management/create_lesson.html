@@ -3,22 +3,18 @@
 <head>
 	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
-	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-	<script src="{% static 'class_management/js/js.js' %}"></script>
 </head>
-<input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
-<form enctype="multipart/form-data" method="post" action="">
+<html>
+<form method="post" action="">
 	{% csrf_token %}
 	<!-- {{ form.as_p }} -->
 	{% for field in form %}
     <div class="fieldWrapper">
         {{ field.errors }}
         {{ field.label_tag }} {{ field }}
-    </div>
+    </div>  
 	{% endfor %}
-    <input type="submit" value="Create" />
+    <input type="submit" value="Tao Bai Hoc" />
 </form>
-
-
-
+</html>
 

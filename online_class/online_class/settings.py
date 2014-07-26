@@ -30,8 +30,6 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = 'home.Teacher'
-# AUTH_USER_MODEL = 'home.Student'
 
 # Application definition
 

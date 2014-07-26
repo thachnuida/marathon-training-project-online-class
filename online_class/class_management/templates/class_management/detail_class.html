@@ -1,0 +1,41 @@
+{% load url from future %}
+{% load staticfiles %}
+
+<head>
+	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+	<script src="{% static 'class_management/js/js.js' %}"></script>
+</head>
+<html>
+	{% if Chose_class.image_class and Chose_class.image_class != "False" %}
+		<img src="{{ Chose_class.image_class.url }}" height=150 width=150/>
+	{% else %}
+		<img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
+	{% endif %}
+	<form enctype="multipart/form-data" method="post" action="">
+		{% csrf_token %}
+		{% for field in form %}
+    		<div class="fieldWrapper">
+        	{{ field.errors }}
+        	{{ field.label_tag }} {{ field }}
+    		</div>
+		{% endfor %}
+    	<input type="submit" value="Cập Nhật" />
+	</form>
+	<a href = "{% url 'classes:createlesson' Chose_class.id %}">Tao Bai Hoc</a>
+	<div id="lesson-list" >
+		{% for lesson in lesson_list %}
+    		<a class="lesson_wrapper" href="{% url 'classes:detaillesson' Chose_class.id lesson.id %}">
+    			<ul style = "display:inline-block">
+    				<li>{{ lesson.lesson_name }}</li>
+    				<li class="shortcut" style="">{{ lesson.description|safe|lower|slice:":50" }}</li>
+    				<li>{{ lesson.create_date }}</li>
+    				<li>{{ lesson.latest_update_date }}</li>
+    			</ul>
+    		</a>
+		{% endfor %}
+	</div>
+
+
+</html>

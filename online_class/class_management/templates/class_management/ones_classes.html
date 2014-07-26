@@ -7,12 +7,13 @@
 {% for class in ones_classes %}
 
 <a href="{% url 'classes:classlist' %}">
-{% if class.image_class %}
+
+{% if class.image_class and class.image_class != "False" %}
     <img src="{{ class.image_class.url }}" height=150 width=150/>
 {% else %}
 	<img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
 {% endif %}
 	{{ class.class_name }}</a>
-	<a href="{% url 'classes:detailclass' class.id %}">Xem Thong Tin Lop Hoc</a>
-	<a href="{% url 'classes:studentclass' class.id %}">Xem Thong Tin Hoc Sinh</a>
+	<a href="{% url 'classes:detailclass' class.id %}">TT Lop Hoc</a>
+	<a href="{% url 'classes:studentclass' class.id %}">TT Hoc Sinh</a>
 {% endfor %}
