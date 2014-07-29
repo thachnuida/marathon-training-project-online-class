@@ -18,9 +18,19 @@
 	        {{ field.label_tag }} {{ field }}
 	    </div>  
 		{% endfor %}
-	    <input type="submit" value="Sua Bai Hoc" />
+	    <input type="submit" value="Sua Bai Hoc" name="lesson" />
 	</form>
- 	<a href = "{% url 'classes:createtest' chose_lesson.Class.id chose_lesson.id %}">Tao Bai Trac Nghiem</a>
+	<form method="post" action="">
+    	{% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {% for field in formtest %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>  
+    {% endfor %}
+    <input type="submit" value="Tao Bai Trac Nghiem" name="test"/>
+	</form>
 	<div id="test_list">
 		{% for test in test_list %}
     		<a class="test_wrapper" href="">
@@ -32,4 +42,5 @@
     		</a>
 		{% endfor %}
 	</div>
+	
 </html>

@@ -6,6 +6,7 @@
 	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
 	<script src="{% static 'class_management/js/js.js' %}"></script>
 </head>
+<html>
 <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
 <form enctype="multipart/form-data" method="post" action="">
 	{% csrf_token %}
@@ -18,7 +19,6 @@
 	{% endfor %}
     <input type="submit" value="Create" />
 </form>
-
-
+</html>
 
 

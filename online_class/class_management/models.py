@@ -30,7 +30,7 @@ class Lesson(models.Model):
 
 class Test(models.Model):
     lesson = models.ForeignKey(Lesson)
-    test_name = models.CharField(max_length=45)
+    test_name = models.CharField(max_length=100)
     create_date = models.DateTimeField(auto_now_add=True)
     latest_update_date = models.DateTimeField(auto_now=True)
     def __unicode__(self):
@@ -42,6 +42,8 @@ class Question(models.Model):
     answerA = models.CharField(max_length=255)
     answerB = models.CharField(max_length=255)
     answerC = models.CharField(max_length=255)
+    answerD = models.CharField(max_length=255)
+    image_ques = models.ImageField(upload_to="test", null=True, blank=True) 
     right_answer = models.CharField(max_length=1)
     test = models.ForeignKey(Test)
     order_test = models.IntegerField()

@@ -1,1 +1,20 @@
-dfasdfasdf
+{% load url from future %}
+{% load staticfiles %}
+<head>
+    <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+</head>
+<html>
+<form method="post" action="">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>  
+    {% endfor %}
+    <input type="submit" value="Tao Bai Trac Nghiem" />
+</form>
+</html>
+

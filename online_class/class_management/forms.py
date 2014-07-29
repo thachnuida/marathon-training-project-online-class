@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
 
 class CreateClass(forms.Form):
@@ -30,3 +31,16 @@ class CreateLesson(forms.Form):
             self.fields['lesson_name'].initial = chose_lesson['lesson_name']
             self.fields['description'].initial = chose_lesson['description']
             self.fields['video_link'].initial = chose_lesson['video_link']
+
+class CreateTest(forms.Form):
+    test_name = forms.CharField(max_length=100)
+
+class CreateQuestion(forms.Form):
+    CHOICES=[('A','A'), ('B','B'), ('C','C'), ('D','D')]
+    question = forms.CharField(max_length=255, label=mark_safe('Nhap cau hoi<br/>'),widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    answerA = forms.CharField(max_length=255, label=mark_safe('<br/> Nhap cac lua chon <br/><br/>A. '), widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    answerD = forms.CharField(max_length=255, label="D. ",  widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    image_ques =  forms.ImageField(required=False)
+    right_answer = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())

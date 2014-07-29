@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'home',
     'study',
     'tinymce',
+    'dajaxice',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
 
 ROOT_URLCONF = 'online_class.urls'
 

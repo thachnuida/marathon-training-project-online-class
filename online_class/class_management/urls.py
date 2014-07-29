@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from class_management import views
 from class_management.views import *
+from class_management.ajax import *
 
 urlpatterns = patterns('',
     url(r'^$', classlist, name='classlist'),
@@ -11,5 +12,5 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/student-class/$', studentclass, name='studentclass'),
     url(r'^(?P<class_id>\d+)/create-lesson/$', create_lesson, name='createlesson'),
     url(r'^(?P<class_id>\d+)/lesson/(?P<pk>\d+)/$', detail_lesson, name='detaillesson'),
-    url(r'^(?P<class_id>\d+)/lesson/(?P<lesson_id>\d+)/create-test/$', create_test, name='createtest'),
+    url(r'^(?P<class_id>\d+)/lesson/(?P<lesson_id>\d+)/create-test/(?P<test_id>\d+)/$', create_test, name='createtest'),
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
