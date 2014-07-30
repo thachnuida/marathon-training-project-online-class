@@ -64,9 +64,9 @@ def create_lesson(request, class_id):
     return render(request, "class_management/create_lesson.html", {'form':form })
 
 def detail_lesson(request, class_id, pk):
-    chose_lesson = get_object_or_404(Lesson, pk=pk)
-    test_list = chose_lesson.test_set.all()
-    form = CreateLesson(chose_lesson=chose_lesson.__dict__)
+    chosen_lesson = get_object_or_404(Lesson, pk=pk)
+    test_list = chosen_lesson.test_set.all()
+    form = CreateLesson(chosen_lesson=chosen_lesson.__dict__)
     formtest = CreateTest()
     if request.method == 'POST':
         if 'lesson' in request.POST:
@@ -80,7 +80,7 @@ def detail_lesson(request, class_id, pk):
                 test = Test(lesson = Lesson.objects.get(pk=pk), test_name = formtest.cleaned_data['test_name'])
                 test.save()
                 return HttpResponseRedirect(reverse('classes:createtest', args=[class_id, pk, test.id]))
-    return render(request, "class_management/detail_lesson.html", {"form": form, 'chose_lesson':chose_lesson, 'test_list':test_list, 'formtest':formtest})
+    return render(request, "class_management/detail_lesson.html", {"form": form, 'chosen_lesson':chosen_lesson, 'test_list':test_list, 'formtest':formtest, 'class_id':class_id})
      
 def studentclass(request, pk):
     chose_class = get_object_or_404(Class, pk=pk)
@@ -113,6 +113,7 @@ def create_test(request, class_id, lesson_id, test_id):
             if form.is_valid():
                 order = Question.objects.filter(test=Test.objects.get(pk=test_id)).aggregate(Max('order_test'))
                 order_test = order['order_test__max']
+                print form.cleaned_data['image_ques']
                 if order_test == None: 
                     order_test = 1
                 else :
@@ -134,3 +135,70 @@ def create_test(request, class_id, lesson_id, test_id):
                 return HttpResponseBadRequest(simplejson.dumps(errors_dict))
     return render(request, "class_management/questionintest.html", {"form": form,"chosen_class": chosen_class,"chosen_lesson":chosen_lesson, "chosen_test":chosen_test, "question_list":question_list})
 
+def detail_test(request, class_id, lesson_id, test_id):
+    form = CreateQuestion()
+    chosen_class = get_object_or_404(Class, pk=class_id)
+    chosen_lesson = get_object_or_404(Lesson, pk=lesson_id)
+    chosen_test = get_object_or_404(Test, pk=test_id)
+    question_list = Question.objects.filter(test=Test.objects.get(pk=test_id))
+    if request.method == 'POST':
+        if request.is_ajax():
+            form = CreateQuestion(request.POST, request.FILES)
+            if form.is_valid():
+                order = Question.objects.filter(test=Test.objects.get(pk=test_id)).aggregate(Max('order_test'))
+                order_test = order['order_test__max']
+                if order_test == None: 
+                    order_test = 1
+                else :
+                    order_test = order_test + 1
+                question = Question(test=Test.objects.get(pk=test_id), question = form.cleaned_data['question'], answerA = form.cleaned_data['answerA'], answerB = form.cleaned_data['answerB'], answerC = form.cleaned_data['answerC'], answerD = form.cleaned_data['answerD'], right_answer = form.cleaned_data['right_answer'], image_ques = form.cleaned_data['image_ques'], order_test = order_test)
+                question.save()
+                question =Question.objects.get(pk=question.pk)
+                question_dict = question.__dict__
+                del question_dict['_state']
+                if question_dict['image_ques'] != "":
+                    question_dict['image_ques'] = question.image_ques.url
+                return HttpResponse(simplejson.dumps(question_dict))
+            else :
+                errors_dict = {}
+                if form.errors:
+                    for error in form.errors:
+                        e = form.errors[error]
+                        errors_dict[error] = unicode(e)
+                return HttpResponseBadRequest(simplejson.dumps(errors_dict))
+    return render(request, "class_management/detail_test.html", {"form": form,"chosen_class": chosen_class,"chosen_lesson":chosen_lesson, "chosen_test":chosen_test, "question_list":question_list})
+from django.views.decorators.csrf import csrf_protect
+
+def update_question(request, test_id):
+    chosen_test = get_object_or_404(Test, pk=test_id)
+    if request.method == 'POST':
+        if request.is_ajax():
+            form = CreateQuestion(request.POST, request.FILES)
+            if form.is_valid():
+                print "value"
+                print request.POST
+                id_question = request.POST['id']
+                print form.cleaned_data['image_ques']
+                Question.objects.filter(pk=id_question).update(question = form.cleaned_data['question'], answerA = form.cleaned_data['answerA'], answerB = form.cleaned_data['answerB'], answerC = form.cleaned_data['answerC'], answerD = form.cleaned_data['answerD'], right_answer = form.cleaned_data['right_answer'])
+                updatedquestion = get_object_or_404(Question, pk = id_question)
+                if form.cleaned_data['image_ques'] != None:
+                    updatedquestion.image_ques = form.cleaned_data['image_ques']
+                updatedquestion.save()
+                question =Question.objects.get(pk=id_question)
+                question_dict = question.__dict__
+                print question_dict
+                del question_dict['_state']
+                print "question_dict"
+                print question_dict
+                if question_dict['image_ques'] != "":
+                    question_dict['image_ques'] = question.image_ques.url
+                print question_dict
+                return HttpResponse(simplejson.dumps(question_dict))
+            else :
+                errors_dict = {}
+                if form.errors:
+                    for error in form.errors:
+                        e = form.errors[error]
+                        errors_dict[error] = unicode(e)
+                return HttpResponseBadRequest(simplejson.dumps(errors_dict))
+    return HttpResponse("never come");

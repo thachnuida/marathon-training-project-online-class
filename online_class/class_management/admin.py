@@ -1,5 +1,6 @@
 from django.contrib import admin
 from class_management.models import *
+from home.models import *
 
 class ClassAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug':('class_name',)}

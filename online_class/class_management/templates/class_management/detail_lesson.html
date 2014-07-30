@@ -1,46 +1,34 @@
-{% load url from future %}
-{% load staticfiles %}
-
-
+{% load url from future %} {% load staticfiles %}
 <head>
-	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
 </head>
 <html>
-	<iframe width="420" height="345"
-	src="{{ chose_lesson.video_link }}">
-	</iframe>
-	<form method="post" action="">
-		{% csrf_token %}
-		{% for field in form %}
-	    <div class="fieldWrapper">
-	        {{ field.errors }}
-	        {{ field.label_tag }} {{ field }}
-	    </div>  
-		{% endfor %}
-	    <input type="submit" value="Sua Bai Hoc" name="lesson" />
-	</form>
-	<form method="post" action="">
-    	{% csrf_token %}
-    <!-- {{ form.as_p }} -->
-    {% for field in formtest %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
-    </div>  
-    {% endfor %}
-    <input type="submit" value="Tao Bai Trac Nghiem" name="test"/>
-	</form>
-	<div id="test_list">
-		{% for test in test_list %}
-    		<a class="test_wrapper" href="">
-    			<ul style = "display:inline-block">
-    				<li>{{ lesson.test_name }}</li>
-    				<li>{{ lesson.create_date }}</li>
-    				<li>{{ lesson.latest_update_date }}</li>s
-    			</ul>
-    		</a>
-		{% endfor %}
+<iframe width="420" height="345" src="{{ chose_lesson.video_link }}">
+</iframe>
+<form method="post" action="">
+	 {% csrf_token %} {% for field in form %}
+	<div class="fieldWrapper">
+		 {{ field.errors }} {{ field.label_tag }} {{ field }}
 	</div>
-	
+	 {% endfor %} <input type="submit" value="Sua Bai Hoc" name="lesson"/>
+</form>
+<form method="post" action="">
+	 {% csrf_token %} 
+	 {% for field in formtest %}
+	<div class="fieldWrapper">
+		 {{ field.errors }} {{ field.label_tag }} {{ field }}
+	</div>
+	 {% endfor %} <input type="submit" value="Tao Bai Trac Nghiem" name="test"/>
+</form>
+<div id="test_list">
+	 {% for test in test_list %} <a class="test_wrapper" href="{% url 'classes:detailtest' class_id chosen_lesson.id test.id %}">
+	<ul style "display:inline-block">
+		<li>{{ test.test_name }}</li>
+		<li>{{ test.create_date }}</li>
+		<li>{{ test.latest_update_date }}</li>
+	</ul>
+	</a>
+	{% endfor %}
+</div>
 </html>

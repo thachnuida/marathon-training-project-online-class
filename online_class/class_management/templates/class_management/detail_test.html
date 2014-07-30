@@ -1,0 +1,63 @@
+{% load url from future %} {% load staticfiles %}
+<head>
+<style>
+		ul li {
+			display: inline;
+		}
+</style>
+<script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+
+</head>
+<html>
+<div id="menu">
+	<img src="{% static 'class_management/images/Add-Text-icon.png' %}" title="Them cau hoi" width="58" height="58" onclick="$('#add_ques').show();">
+	<img src="{% static 'class_management/images/Edit-Text-icon.png' %}" title="Sua cau hoi" width="58" height="58" id="edit_text">
+	<img src="{% static 'class_management/images/Delete-Text-icon.png' %}" title="Xoa cau hoi" width="58" height="58" id="del_text">
+	<img src="{% static 'class_management/images/Done-Text-icon.png' %}" title="Ket thuc" width="58" height="58" id="done_text">
+</div>
+<div style="float: left">
+
+<form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;">
+	 {% csrf_token %} 
+     <input type="hidden" id="id" value=""/>
+     <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse"/>
+    <img id="image_test" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
+	{% for field in form %}
+	<div class="fieldWrapper">
+		 {{ field.errors }} 
+         {{ field.label_tag }} {{ field }}
+	</div>
+	 {% endfor %} 
+     <input type="button" value="Them Cau Hoi"  id="add_question"  onclick="addquestion()"/>
+     <input type="button" value="Sua Cau Hoi"  id="updat_equestion" onclick="updatequestion()"/>
+</form>
+</div>
+<div id="testlist" style="float:left;">
+	 {% for question in question_list %}
+	<div id="{{ question.order_test }}" class="test">
+		<div>
+			<span class="id_test">{{ question.order_test }}</span><span>. </span> <span class="id_question_test">{{ question.question }}</span>
+		</div>
+		 {% if question.image_ques and question.image_ques != "False" %} 
+         <img src="{{ question.image_ques.url }}" height=150 width=150/>
+         {% else %}
+         <img src="#" height=0 width=0/>
+		{% endif %}
+		<ol style='list-style-type: upper-alpha'>
+			<li class="id_answerA_test">{{ question.answerA }}</li>
+			<li class="id_answerB_test">{{ question.answerB }}</li>
+			<li class="id_answerC_test">{{ question.answerC }}</li>
+			<li class="id_answerD_test">{{ question.answerD }}</li>
+		</ol>
+		<div>
+			 Dap An Dung: <span class="id_right_answer_test">{{ question.right_answer }}</span>
+		</div>
+	</div>
+	 {% endfor %}
+</div>
+<script>
+    
+</script>
+<script src="{% static 'class_management/js/detail_test_js.js' %}"></script>
+</html>

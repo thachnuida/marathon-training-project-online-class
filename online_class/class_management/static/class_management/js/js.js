@@ -1,9 +1,16 @@
 $(document).ready(function(){
   $("#id_image_class").hide();
   $('label[for="id_image_class"]').hide();
+
+  $("#id_image_ques").hide();
+  $('label[for="id_image_ques"]').hide();
+  
   $('.browse').click(function(){
     $("#id_image_class").click();
+    $("#id_image_ques").click();
   });
+
+
 });
 
 function basic_pie(container, d1, d2 , d3, d4) {

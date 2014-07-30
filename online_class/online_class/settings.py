@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     'home',
     'study',
     'tinymce',
-    'dajaxice',
 )
 
 MIDDLEWARE_CLASSES = (

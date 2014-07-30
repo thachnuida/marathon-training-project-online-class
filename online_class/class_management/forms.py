@@ -25,12 +25,12 @@ class CreateLesson(forms.Form):
     description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
-        chose_lesson = kwargs.pop('chose_lesson', None)
+        chosen_lesson = kwargs.pop('chosen_lesson', None)
         super(CreateLesson, self).__init__(*args, **kwargs)
-        if chose_lesson:
-            self.fields['lesson_name'].initial = chose_lesson['lesson_name']
-            self.fields['description'].initial = chose_lesson['description']
-            self.fields['video_link'].initial = chose_lesson['video_link']
+        if chosen_lesson:
+            self.fields['lesson_name'].initial = chosen_lesson['lesson_name']
+            self.fields['description'].initial = chosen_lesson['description']
+            self.fields['video_link'].initial = chosen_lesson['video_link']
 
 class CreateTest(forms.Form):
     test_name = forms.CharField(max_length=100)

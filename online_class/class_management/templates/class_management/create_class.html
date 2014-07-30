@@ -10,7 +10,6 @@
 <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
 <form enctype="multipart/form-data" method="post" action="">
 	{% csrf_token %}
-	<!-- {{ form.as_p }} -->
 	{% for field in form %}
     <div class="fieldWrapper">
         {{ field.errors }}
