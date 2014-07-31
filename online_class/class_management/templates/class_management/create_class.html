@@ -8,6 +8,8 @@
 </head>
 <html>
 <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
+<img id="image_class" src="#" alt="Preview" width="0" height="0"/>
+
 <form enctype="multipart/form-data" method="post" action="">
 	{% csrf_token %}
 	{% for field in form %}

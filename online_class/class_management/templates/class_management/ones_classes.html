@@ -1,19 +1,30 @@
 {% load url from future %}
 {% load staticfiles %}
-
-
-<a href = {% url 'classes:createclass' %}>Tao lop Hoc </a>
-<h1>Danh Sach Lop Hoc</h1>
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+	<script src="{% static 'class_management/js/js.js' %}"></script>
+</head>
+<html>
+<div id="ones_classes">
+<a href = {% url 'classes:createclass' %}><image src="{% static 'class_management/images/Add-Class-icon.png' %} " title="TẠO LỚP HỌC"/ height=100 width=100></a>
+<h1 class="title">DANH SÁCH LỚP HỌC</h1>
 {% for class in ones_classes %}
-
-<a href="{% url 'classes:classlist' %}">
-
+<div class="class_in_list">
 {% if class.image_class and class.image_class != "False" %}
-    <img src="{{ class.image_class.url }}" height=150 width=150/>
+    <img src="{{ class.image_class.url }}" height=200 width=200/>
 {% else %}
-	<img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
+	<img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
 {% endif %}
-	{{ class.class_name }}</a>
-	<a href="{% url 'classes:detailclass' class.id %}">TT Lop Hoc</a>
-	<a href="{% url 'classes:studentclass' class.id %}">TT Hoc Sinh</a>
+	</a>
+	<div class="hover_detail">
+	<div class="class_name">{{ class.class_name }}</div>
+	
+	<a href="{% url 'classes:detailclass' class.id %}" class="chose_class"><image src="{% static 'class_management/images/Class-Detail-icon.png' %}" title="Chi Tiết Lớp Học" ></a>
+	<a href="{% url 'classes:studentclass' class.id %}" class="chose_student"><image src="{% static 'class_management/images/Student-In-Class-icon.png' %}" title="Chi Tiết Học Sinh" ></a>
+	<div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
+	</div>
+	</div>
 {% endfor %}
+ </div>
+</html>

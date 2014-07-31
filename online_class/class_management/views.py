@@ -53,6 +53,10 @@ def detail_class(request, pk):
             return HttpResponseRedirect(reverse('classes:detailclass', args=[pk]))
     return render(request, "class_management/detail_class.html", {"form": form, 'Chose_class':Chose_class, 'lesson_list':lesson_list })
 
+def delete_class(request, pk):
+    Class.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(reverse('classes:classlist'))
+
 def create_lesson(request, class_id):
     form = CreateLesson()
     if request.method == 'POST':
@@ -62,6 +66,10 @@ def create_lesson(request, class_id):
             createdlesson.save()
             return HttpResponseRedirect(reverse('classes:detailclass', args=[class_id]))
     return render(request, "class_management/create_lesson.html", {'form':form })
+
+def delete_lesson(request, class_id, pk):
+    Lesson.objects.get(Class=class_id, pk=pk).delete()
+    return HttpResponseRedirect(reverse('classes:detailclass', args=[class_id]))
 
 def detail_lesson(request, class_id, pk):
     chosen_lesson = get_object_or_404(Lesson, pk=pk)
@@ -113,7 +121,6 @@ def create_test(request, class_id, lesson_id, test_id):
             if form.is_valid():
                 order = Question.objects.filter(test=Test.objects.get(pk=test_id)).aggregate(Max('order_test'))
                 order_test = order['order_test__max']
-                print form.cleaned_data['image_ques']
                 if order_test == None: 
                     order_test = 1
                 else :
@@ -133,7 +140,11 @@ def create_test(request, class_id, lesson_id, test_id):
                         e = form.errors[error]
                         errors_dict[error] = unicode(e)
                 return HttpResponseBadRequest(simplejson.dumps(errors_dict))
-    return render(request, "class_management/questionintest.html", {"form": form,"chosen_class": chosen_class,"chosen_lesson":chosen_lesson, "chosen_test":chosen_test, "question_list":question_list})
+    return render(request, "class_management/create_test.html", {"form": form,"chosen_class": chosen_class,"chosen_lesson":chosen_lesson, "chosen_test":chosen_test, "question_list":question_list})
+
+def delete_test(request, class_id, lesson_id, pk):
+    Test.objects.filter(lesson=lesson_id, pk=pk).delete();
+    return HttpResponseRedirect(reverse('classes:detaillesson', args=[class_id, lesson_id]))
 
 def detail_test(request, class_id, lesson_id, test_id):
     form = CreateQuestion()
@@ -201,4 +212,21 @@ def update_question(request, test_id):
                         e = form.errors[error]
                         errors_dict[error] = unicode(e)
                 return HttpResponseBadRequest(simplejson.dumps(errors_dict))
+    return HttpResponse("never come");
+# from django.views.decorators.csrf import csrf_exempt
+
+# @csrf_exempt
+def delete_question(request, test_id):
+    if request.method == 'POST':
+        if request.is_ajax():
+            id_question = request.POST['id']
+            order = Question.objects.filter(test=Test.objects.get(pk=test_id)).aggregate(Max('order_test'))
+            order_test = order['order_test__max']
+            Question.objects.filter(test=test_id, order_test=id_question).delete()
+            i = int(id_question) + 1
+            while (i <= int(order_test)):
+                new_order = i - 1
+                Question.objects.filter(test=test_id, order_test=i).update(order_test=new_order)
+                i = i + 1
+            return HttpResponse(simplejson.dumps({}))    
     return HttpResponse("never come");

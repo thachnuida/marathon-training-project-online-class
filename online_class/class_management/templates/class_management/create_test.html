@@ -1,19 +1,98 @@
 {% load url from future %}
 {% load staticfiles %}
 <head>
-    <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
-    <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+	<style>
+		ul li {
+			display: inline;
+		}
+	</style>
+	<script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+	<script src="{% static 'class_management/js/js.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 </head>
 <html>
-<form method="post" action="">
-    {% csrf_token %}
-    {% for field in form %}
+<div id="create_test">
+    <div id="create_test_form">
+<input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse"/>
+ <img id="image_ques" src="#" alt="Preview" width="0" height="0"/>
+<form enctype="multipart/form-data"  method="post" action="" id="add_ques" onsubmit="return false;">
+	{% csrf_token %}
+    <input type="hidden" value={{ test.pk  }}/>
+	{% for field in form %}
     <div class="fieldWrapper">
         {{ field.errors }}
         {{ field.label_tag }} {{ field }}
     </div>  
-    {% endfor %}
-    <input type="submit" value="Tao Bai Trac Nghiem" />
+	{% endfor %}
+    <input type="button" value="Them Cau Hoi" onclick="tam()"/>
 </form>
+</div>
+<div id="testlist">
+    <h2 class="title">{{ chosen_test.test_name }} </h2>
+    {% for question in question_list %}
+    <div class="question">
+    <div>
+        <span>{{ question.order_test }}. </span> {{ question.question }}
+    </div>
+    {% if question.image_ques and question.image_ques != "False" %}
+        <img src="{{ question.image_ques.url }}" height=150 width=150/>
+    {% endif %}
+        <ol style='list-style-type: upper-alpha'>
+                     <li>{{ question.answerA }}</li>
+                       <li>{{ question.answerB }}</li>
+                         <li>{{ question.answerC }}</li>
+                         <li>{{ question.answerD }}</li>
+                        </ol>
+                    <div> Đáp Án Đúng : {{ question.right_answer }}</div> 
+                </div>
+    {% endfor %}
+</div>
+</div>
+<script>
+    var tam = function(){
+        var data = new FormData($('form').get(0));
+    	$.ajax({
+    		type:"POST",
+    		url : "{% url 'classes:createtest' chosen_class.pk chosen_lesson.pk chosen_test.pk %}",
+    		dataType: "json",
+    		data : data,
+            processData: false,
+            contentType: false,
+    		success : function(question_dict){
+                var html =  "<div class='question'><div>"
+                        +       "<span>"+question_dict['order_test']+". </span>"+question_dict['question']
+                        +   "</div>";
+            if (question_dict['image_ques']){
+                    html+=  "<img src = '"+ question_dict['image_ques']+"' height=150 width=150 />";
+                }
+                    html+=   "<ol style='list-style-type: upper-alpha'>"
+                        +       "<li>"+question_dict['answerA']+"</li>"
+                        +       "<li>"+question_dict['answerB']+"</li>"
+                        +       "<li>"+question_dict['answerC']+"</li>"
+                        +       "<li>"+question_dict['answerD']+"</li>"
+                        +   "</ol>"
+                        +   "<div> Đáp Án Đúng : "+question_dict['right_answer']+"</div></div>";
+    			$("#testlist").append(html);
+                $("#image_test").attr('src', '/media/test/img-icon.png');
+        $("#id_question").val("");
+        $("#id_answerA").val("");
+        $("#id_answerB").val("");
+        $("#id_answerC").val("");
+        $("#id_answerD").val("");
+        $("input[name=right_answer]").prop('checked', false);
+   			},
+   			error: function(errors_dict){
+                var errors = JSON.parse(errors_dict.responseText);
+                  $('.errorlist').remove();
+                    for (error in errors) {
+                        var id = '#id_' + error;
+                        console.log(id);
+                        $(id).parent().append(errors[error]);
+                    }
+			}
+    		});
+        return false;
+	};
+</script>
 </html>
-

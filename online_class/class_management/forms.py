@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*- 
 from django import forms
 from django.utils.safestring import mark_safe
 
 
 class CreateClass(forms.Form):
-    class_name = forms.CharField(max_length=100)
-    quantity = forms.ChoiceField(choices=[(x, x) for x in range(30, 101)])
+    class_name = forms.CharField(max_length=100, label="Tên Lớp")
+    quantity = forms.ChoiceField(choices=[(x, x) for x in range(30, 101)], label="Số Lượng")
     image_class = forms.ImageField(required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    description = forms.CharField(label="Mô tả", widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         class_details = kwargs.pop('class_details', None)
@@ -20,9 +21,9 @@ class CreateClass(forms.Form):
             self.fields['image_class'].initial = class_details['image_class']
 
 class CreateLesson(forms.Form):
-    lesson_name = forms.CharField(max_length=100)
-    video_link = forms.URLField(label='Your Lesson Link')
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    lesson_name = forms.CharField(max_length=100, label="Bài Học")
+    video_link = forms.URLField(label='Video Link')
+    description = forms.CharField(label="Mô tả",widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         chosen_lesson = kwargs.pop('chosen_lesson', None)
@@ -33,14 +34,14 @@ class CreateLesson(forms.Form):
             self.fields['video_link'].initial = chosen_lesson['video_link']
 
 class CreateTest(forms.Form):
-    test_name = forms.CharField(max_length=100)
+    test_name = forms.CharField(label="Tên Bài Tập", max_length=100)
 
 class CreateQuestion(forms.Form):
     CHOICES=[('A','A'), ('B','B'), ('C','C'), ('D','D')]
-    question = forms.CharField(max_length=255, label=mark_safe('Nhap cau hoi<br/>'),widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
-    answerA = forms.CharField(max_length=255, label=mark_safe('<br/> Nhap cac lua chon <br/><br/>A. '), widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    question = forms.CharField(max_length=255, label=mark_safe('Câu Hỏi<br/>'),widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    answerA = forms.CharField(max_length=255, label=mark_safe('<br/>Các Đáp Án Lựa Chọn<br/><br/>A. '), widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerD = forms.CharField(max_length=255, label="D. ",  widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     image_ques =  forms.ImageField(required=False)
-    right_answer = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    right_answer = forms.ChoiceField(label="Đáp Án Đúng", choices=CHOICES, widget=forms.RadioSelect())

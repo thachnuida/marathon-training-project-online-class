@@ -2,33 +2,48 @@
 <head>
 <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 </head>
 <html>
-<iframe width="420" height="345" src="{{ chose_lesson.video_link }}">
-</iframe>
+<div id="detail_lesson">
+	<div id="detail_lesson_form">
+	<iframe width="420" height="345" src="{{ chose_lesson.video_link }}">
+	</iframe>
 <form method="post" action="">
 	 {% csrf_token %} {% for field in form %}
 	<div class="fieldWrapper">
 		 {{ field.errors }} {{ field.label_tag }} {{ field }}
 	</div>
-	 {% endfor %} <input type="submit" value="Sua Bai Hoc" name="lesson"/>
+	 {% endfor %} <input type="submit" value="Sửa Bài Học" name="lesson"/>
 </form>
+
+<a href = "{% url 'classes:deletelesson' class_id chosen_lesson.id %} " id="del_lesson"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" width="58" height="58" >Xóa Bài Học</a>
+</div>
 <form method="post" action="">
 	 {% csrf_token %} 
 	 {% for field in formtest %}
 	<div class="fieldWrapper">
 		 {{ field.errors }} {{ field.label_tag }} {{ field }}
 	</div>
-	 {% endfor %} <input type="submit" value="Tao Bai Trac Nghiem" name="test"/>
+	 {% endfor %} <input type="submit" value="Thêm Bài Tập" name="test"/>
 </form>
 <div id="test_list">
-	 {% for test in test_list %} <a class="test_wrapper" href="{% url 'classes:detailtest' class_id chosen_lesson.id test.id %}">
-	<ul style "display:inline-block">
-		<li>{{ test.test_name }}</li>
-		<li>{{ test.create_date }}</li>
-		<li>{{ test.latest_update_date }}</li>
-	</ul>
+	 {% for test in test_list %} 
+	 <a class="test_wrapper" href="{% url 'classes:detailtest' class_id chosen_lesson.id test.id %}">
+		<p class="test_name">{{ test.test_name }}</p>
+		<p class="date">Ngày Tạo {{ test.create_date|date:"H:i d/m/Y" }}</p>
+		<p class="date">Cập Nhập {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
 	</a>
 	{% endfor %}
 </div>
+</div>
+<script>
+		$("#del_lesson").click(function(){
+			if (confirm("Tất cả các Bài tập liên quan đến Bài học này sẽ bị xóa\nBạn chắc chắn xóa Bài học này? ")){
+				return true;
+			}
+			return false;
+		});
+	</script>
 </html>

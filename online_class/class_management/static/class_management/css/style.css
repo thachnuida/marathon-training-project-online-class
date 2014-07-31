@@ -1,0 +1,110 @@
+#ones_classes a,#detail_class a, #detail_lesson a {
+    text-decoration: none;
+}
+
+#ones_classes .title, #create_test #testlist .title{
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed',sans-serif;
+    font-size: 35px;
+    font-weight: 700;
+    color: #B31B3B;
+}
+
+#ones_classes .class_in_list {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    margin: 20px;
+    float: left;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#ones_classes .hover_detail {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 140px;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+#ones_classes .chose_student {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#ones_classes .chose_class {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+#ones_classes .create_date_class {
+    font-size: 12px;
+    text-align: right;
+    color: blue;
+}
+
+#ones_classes .class_name {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+    color: red;
+}
+
+#detail_class #add_class_form, #detail_lesson #detail_lesson_form, #create_test #create_test_form{
+	border: 5px groove rgb(137, 136, 170);
+	padding: 20px;
+	display: inline-block;
+	float: left;
+}
+#detail_class .lesson{
+    padding: 20px;
+    border: 5px groove rgb(137, 136, 170);
+    border-left: 0px;
+    overflow: hidden;
+}
+
+#detail_class .lesson_wrapper{
+	display: inline-block;
+	border: 5px groove rgb(116, 56, 56);
+	padding: 10px;
+	width: 150px;
+	height: 150px;
+    margin: 20px;
+    background: rgb(214, 210, 212);
+}
+
+#detail_class .date, #detail_lesson .date{
+	font-size: 12px;
+	
+}
+#detail_class .shortcut{
+    word-wrap:break-word;
+}
+#detail_lesson .test_wrapper{
+    background-image: url('/static/class_management/images/Text-Pen-icon.png');
+    background-size: 38px 38px;
+    background-position: 128px 11px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    padding: 10px;
+    margin: 20px;
+    border: 2px solid black;
+    height: 120px;
+    width: 150px;
+    background-color: rgb(125, 243, 163)
+}
+#detail_lesson .test_name{
+    color: red;
+    font-size: 15px;
+    text-align: center;
+}
+#create_test #testlist .question{
+    padding-left: 85px;
+    overflow: hidden;
+    padding-bottom: 12px;
+}

@@ -6,12 +6,16 @@
 	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
 	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
 	<script src="{% static 'class_management/js/js.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 </head>
 <html>
+<div id="detail_class">
+	<div id="add_class_form">
+	<input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
 	{% if Chose_class.image_class and Chose_class.image_class != "False" %}
-		<img src="{{ Chose_class.image_class.url }}" height=150 width=150/>
+		<img src="{{ Chose_class.image_class.url }}" height=130 width=130 id="image_class"/>
 	{% else %}
-		<img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
+		<img src="{% static 'class_management/images/classroom.jpg' %}" height=130 width=130 id="image_class"/>
 	{% endif %}
 	<form enctype="multipart/form-data" method="post" action="">
 		{% csrf_token %}
@@ -23,19 +27,29 @@
 		{% endfor %}
     	<input type="submit" value="Cập Nhật" />
 	</form>
-	<a href = "{% url 'classes:createlesson' Chose_class.id %}">Tao Bai Hoc</a>
+	<a href = "{% url 'classes:deleteclass' Chose_class.id %} " id="del_class"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Xóa Lớp Học" width="58" height="58" ></a>
+</div>
+	<div class="lesson">
+	<a href = "{% url 'classes:createlesson' Chose_class.id %}"><image src="{% static 'class_management/images/Add-Lesson-icon.png' %}" title="TẠO BÀI HỌC" height=50 width=50/></a>
 	<div id="lesson-list" >
 		{% for lesson in lesson_list %}
     		<a class="lesson_wrapper" href="{% url 'classes:detaillesson' Chose_class.id lesson.id %}">
-    			<ul style = "display:inline-block">
-    				<li>{{ lesson.lesson_name }}</li>
-    				<li class="shortcut" style="">{{ lesson.description|safe|lower|slice:":50" }}</li>
-    				<li>{{ lesson.create_date }}</li>
-    				<li>{{ lesson.latest_update_date }}</li>
-    			</ul>
+    				<p>{{ lesson.lesson_name }}</p>
+    				<div class="shortcut">{{ lesson.description|safe|lower|slice:":50" }}</div>
+    				<p class="date">Ngày Tạo {{ lesson.create_date|date:"H:i d/m/Y" }}</p>
+    				<p class="date">Cập Nhập {{ lesson.latest_update_date|date:"H:i d/m/Y" }}</p>
     		</a>
 		{% endfor %}
 	</div>
-
+</div>
+</div>
+	<script>
+		$("#del_class").click(function(){
+			if (confirm("Tất cả các bài học liên quan đến lớp học này sẽ bị xóa\nBạn chắc chắn xóa lớp học này? ")){
+				return true;
+			}
+			return false;
+		});
+	</script>
 
 </html>
