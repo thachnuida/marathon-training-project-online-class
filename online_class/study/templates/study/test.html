@@ -2,17 +2,67 @@
 <h2>Ban hay lam bai tap</h2>
 {% for test in all_question %}
 
+<form id="myForm" action="">
 
-<form action="">
 <h4>{{ test.question }}</h4>
-
 <h4>{{ test.image_ques }}</h4>
-<input type="radio" name="anwserA"/>{{ test.answerA }}<br>
-<input type="radio" name="anwserB"/>{{ test.answerB }}<br>
-<input type="radio" name="anwserC"/>{{ test.answerC }}<br>
-<input type="radio" name="anwserD"/>{{ test.answerD }}<br>
+<h4>{{ test.id }}</h4>
+  <input id="A" type="radio" name="{{ test.id }}" value="{{ test.answerA }}" />{{ test.answerA }}<br>
+  <input id="B" type="radio" name="{{ test.id }}" value="{{ test.answerB }}" />{{ test.answerB }}<br>
+  <input id="C" type="radio" name="{{ test.id }}" value="{{ test.answerC }}" />{{ test.answerC }}<br>
+  <input id="D" type="radio" name="{{ test.id }}" value="{{ test.answerD }}" />{{ test.answerD }}<br>
 </form>
 {% endfor %}
-<form action="">
-<input type="submit" value="Xong">
+<form action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
+<button type ="POST"> Xong</button>
 </form>
+
+
+<p>If you click on me, I will disappear.</p>
+<p>Click me away!</p>
+<p></p>
+<input id ="radio_submit" type="button" value=" Test">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#radio_submit").click(function () {
+    //      var $radioA = $('input:radio[name=1]');
+    // if($radioA.is(':checked') === true) {
+      var selValue = $('input[name=1]:checked').val(); 
+      $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
+   
+       // }
+    });
+});
+
+a="{{rightanswer}}"
+b=a.length
+console.log(b)
+for (var i=7;i<b;i=i+7){
+console.log(a[i])
+}
+// $(document).ready(function(){
+//   $("#tes").click(function(){
+//     var $radioA = $('input:radio[name=anwserA]');
+//     if($radioA.is(':checked') === true) {
+//        alert("aaaa")
+//     }
+//   });
+// });
+
+// if(document.forms[0].A1.checked){
+// document.all.Wrong1.innerHTML=Right
+// var subtract1=0
+// }
+// else{
+// document.all.Wrong1.innerHTML=Wrong
+// var subtract1=10
+// }
+// $(document).ready(function(){
+//     var $radios = $('input:radio[name=anwserA]');
+//     if($radios.is(':checked') === false) {
+//        alert("aaaa")
+//     }
+// });
+
+</script>

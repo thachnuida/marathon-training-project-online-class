@@ -49,7 +49,7 @@ def studyclass(request,pk):
 def lesson(request,class_id,pke):
     chosen_class = get_object_or_404(Class, pk=class_id)
     chosen_lesson = get_object_or_404(Lesson, pk=pke)
-    chosen_test = Test.objects.all()
+    chosen_test = chosen_lesson.test_set.all()
 
     all_lesson = Lesson.objects.filter(pk=pke)
     return render(request,"study/lesson.html",{
@@ -61,13 +61,29 @@ def lesson(request,class_id,pke):
 
 
 def test(request,class_id,lesson_id,pk):
+    chosen_class  = get_object_or_404 (Class,pk=class_id)
+    chosen_lesson = get_object_or_404 (Lesson,pk=lesson_id)
+    chosen_test   = get_object_or_404 (Test,pk=pk)
+    all_question  = chosen_test.question_set.all()
+    # right_answer
+    rightanswer=[]
+    for test in all_question:
+        rightanswer.extend(test.right_answer)
+        print test.right_answer
 
-    all_question = Question.objects.all()
-    print all_question
+    # all_question = Question.objects.all()
     return render(request,"study/test.html",{
-        'all_question':all_question
+        'all_question':all_question,
+        'chosen_class':chosen_class,
+        'chosen_lesson':chosen_lesson,
+        'chosen_test':chosen_test,
+        'rightanswer':rightanswer
         })
     
+def result(request,class_id,lesson_id,test_id):
+    return render(request,"study/result.html",{
+        })
+
 
 def join(request):    
     all_class1 = Class.objects.all()
@@ -88,7 +104,6 @@ def joinclass(request,pk):
         join_class.students_in_class.add(user_using)
         joined = False
 
-        print "Da tham gia"
 
     return render(request, "study/joinclass.html", {
         'all_lesson':all_lesson,
