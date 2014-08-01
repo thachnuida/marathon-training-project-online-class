@@ -1,4 +1,21 @@
-
+{% extends 'base.html' %}
+{% load url from future %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% block title %} Lop hoc Online {% endblock %}
+    {% block link %}
+   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+  <script src="{% static 'class_management/js/js.js' %}"></script>
+    {% endblock %}
+  </head>
+  <body>
+        {% block body %}
 {% if joined %}
 
 <h3>{{ join_class }}</h3>
@@ -14,8 +31,9 @@
 </form>
 {% else %}
   <h3>Ban da dang ki thang cong</h3>
-  <a href="/study/study/">Tro ve danh sach lop hoc da dang ki</a>
+  <a href="{% url 'study:study' %}">Tro ve danh sach lop hoc da dang ki</a>
 {% endif %}
+{% endblock %}
 <script>
 //     var tam = function(){
 //         var data = new FormData($('form').get(0));

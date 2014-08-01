@@ -1,11 +1,26 @@
-
-
+{% extends 'base.html' %}
+{% load url from future %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% block title %} Lop hoc Online {% endblock %}
+    {% block link %}
+   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+  <script src="{% static 'class_management/js/js.js' %}"></script>
+    {% endblock %}
+  </head>
+{% block body %}
 <h3>{{ chosen_class}}</h3>
 
 <h3>{{ chosen_lesson}}</h3>
 
 {% for les in all_lesson %}
-<h5>{{les.description}}</h5>
+<h5>{{les.description|safe}}</h5>
 
 <iframe width="560" height="315" src="{{les.video_link}}" frameborder="0" allowfullscreen></iframe><br>
 
@@ -15,3 +30,4 @@
 <a href="{% url 'study:test' chosen_class.pk chosen_lesson.id test.id %}">{{test.test_name}}</a>
 
 {% endfor %}
+{% endblock %}

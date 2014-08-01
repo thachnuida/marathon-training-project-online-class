@@ -1,4 +1,5 @@
 {% load staticfiles%}
+{% load url from future %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,9 +11,9 @@
         <h1>Register with Online Class</h1>
         {% if registered %}
         <h2><strong>Thank for regiter!</strong></h2>
-        <a href="/"> Return to homepage</a></br>
+        <a href="{% url 'home:home' %}"> Return to homepage</a></br>
         {% else %}
-        <form id="user_form" method ="POST" action="/register/" enctype"multipart/form-data">
+        <form id="user_form" method ="POST" action="" enctype"multipart/form-data">
             {% csrf_token %}
             {{ user_form.as_p }}
             {{ profile_form.as_p }}

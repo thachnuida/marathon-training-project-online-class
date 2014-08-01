@@ -1,4 +1,9 @@
 $(document).ready(function(){
+  $(".dropdown").hover(function(){
+    $(".dropdown-menu").show();
+  }, function(){
+$(".dropdown-menu").hide();
+  });
   $("#id_image_class").parent().hide();
 
   $("#id_image_ques").parent().hide();

@@ -38,8 +38,8 @@ class CreateTest(forms.Form):
 
 class CreateQuestion(forms.Form):
     CHOICES=[('A','A'), ('B','B'), ('C','C'), ('D','D')]
-    question = forms.CharField(max_length=255, label=mark_safe('Câu Hỏi<br/>'),widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
-    answerA = forms.CharField(max_length=255, label=mark_safe('<br/>Các Đáp Án Lựa Chọn<br/><br/>A. '), widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
+    question = forms.CharField(max_length=255, label="  ",widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    answerA = forms.CharField(max_length=255, label="A. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerD = forms.CharField(max_length=255, label="D. ",  widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))

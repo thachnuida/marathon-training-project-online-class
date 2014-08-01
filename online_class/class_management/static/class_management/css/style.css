@@ -2,13 +2,14 @@
     text-decoration: none;
 }
 
-#ones_classes .title, #create_test #testlist .title{
+#ones_classes .title, #create_test #testlist .title, #detail_lesson .title{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Roboto Condensed',sans-serif;
     font-size: 35px;
     font-weight: 700;
     color: #B31B3B;
+    margin-top: -64px;
 }
 
 #ones_classes .class_in_list {
@@ -55,7 +56,7 @@
     color: red;
 }
 
-#detail_class #add_class_form, #detail_lesson #detail_lesson_form, #create_test #create_test_form{
+#detail_class #add_class_form, #detail_lesson #detail_lesson_form, #create_test #create_test_form, #detail_test #add_test_form{
 	border: 5px groove rgb(137, 136, 170);
 	padding: 20px;
 	display: inline-block;
@@ -63,23 +64,22 @@
 }
 #detail_class .lesson{
     padding: 20px;
-    border: 5px groove rgb(137, 136, 170);
-    border-left: 0px;
+    border-top: 5px groove rgb(137, 136, 170);
     overflow: hidden;
 }
 
 #detail_class .lesson_wrapper{
 	display: inline-block;
-	border: 5px groove rgb(116, 56, 56);
-	padding: 10px;
-	width: 150px;
-	height: 150px;
-    margin: 20px;
-    background: rgb(214, 210, 212);
+border: 5px groove rgb(116, 56, 56);
+padding: 10px;
+width: 177px;
+height: 155px;
+margin: 7px;
+background: rgb(214, 210, 212);
 }
 
 #detail_class .date, #detail_lesson .date{
-	font-size: 12px;
+	font-size: 11px;
 	
 }
 #detail_class .shortcut{
@@ -88,7 +88,7 @@
 #detail_lesson .test_wrapper{
     background-image: url('/static/class_management/images/Text-Pen-icon.png');
     background-size: 38px 38px;
-    background-position: 128px 11px;
+    background-position: 109px 3px;
     display: inline-block;
     background-repeat: no-repeat;
     padding: 10px;
@@ -96,7 +96,8 @@
     border: 2px solid black;
     height: 120px;
     width: 150px;
-    background-color: rgb(125, 243, 163)
+    background-color: rgb(125, 243, 163);
+    margin-top: -10px
 }
 #detail_lesson .test_name{
     color: red;
@@ -107,4 +108,27 @@
     padding-left: 85px;
     overflow: hidden;
     padding-bottom: 12px;
+}
+#detail_lesson #detail_test{
+    border-top: 5px groove rgb(137, 136, 170);
+    overflow: hidden;
+    padding-top: 15px;
+    padding-left: 20px;
+    background-image: url('/static/class_management/images/paper-clip.png');
+    background-position:  550px 51px;
+    background-repeat: no-repeat;
+}
+#detail_lesson #add_test_form{
+    border: 1px solid #000000;
+    float: right;
+    display: inline-block;
+    padding: 20px;
+    padding-top: 30px;
+    margin-right: 31px;
+    margin-top: 50px;
+}
+#detail_test #testlist{
+    border: 2px solid black;
+    padding: 50px;
+    width: 600px;
 }

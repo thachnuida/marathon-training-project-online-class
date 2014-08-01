@@ -11,24 +11,52 @@ $(document).ready(function() {
     });
 
      $('#add_text').click(function(){
-        $('#add_ques').show();
-        $('#add_question').show();
+        $("#edit_text").animate({
+          height: '0px',
+          width: '0px'
+        },"slow");
+
+        $("#del_text").animate({
+          height: '0px',
+          width: '0px'
+        },"slow");
+        $("#testlist").animate({
+            'margin-left': '499px'
+        }, "slow");
+        $('#add_ques').show('slow');
+        $('#add_question').show('slow');
         $('#update_question').hide();
 
     });
 
     
     $("#edit_text").click(function() {
-        alert("Kich vao kfasdjf");
+        alert("Kích Vào Câu Hỏi Cần Chỉnh Sửa");
+         $("#add_text").animate({
+          height: '0px',
+          width: '0px'
+        },"slow");
+
+        $("#del_text").animate({
+          height: '0px',
+          width: '0px'
+        },"slow");
+        
+        
+
         $("#testlist").children().hover(function() {
             $(this).css("background-color", "#E8E8E8 ");
         }, function() {
             $(this).css('background-color', '');
         });
         $("#testlist").children().click(function() {
-            $('#add_ques').show();
-            $('#update_question').show();
-            $("#add_question").hide();
+
+        $("#testlist").animate({
+            'margin-left': '499px'
+        }, "slow");
+        $('#add_ques').show('slow');
+        $('#add_question').hide();
+        $('#update_question').show('slow');
             $('#id_question').html($(this).find(".id_question_test").html());
             $("#id").val($(this).find(".id_test").html());
             if ($(this).children('img').attr('src') != "#") $('#image_test').attr('src', $(this).children('img').attr('src'));
@@ -45,6 +73,22 @@ $(document).ready(function() {
      $('#done_text').click(function(){
         $("#testlist").children().unbind();
         $("#add_ques").hide();
+        $("#add_text").animate({
+          height: '58px',
+          width: '58px'
+        },"slow");
+
+        $("#del_text").animate({
+          height: '58px',
+          width: '58px'
+        },"slow");
+         $("#edit_text").animate({
+          height: '58px',
+          width: '58px'
+        },"slow");
+         $("#testlist").animate({
+            'margin-left': '0px'
+        }, "slow");
      });
     });
 

@@ -1,24 +1,34 @@
-{% load url from future %} {% load staticfiles %}
+{% extends 'base.html' %}
+{% load url from future %}
+{% load staticfiles %}
 <head>
-<style>
-		ul li {
-			display: inline;
-		}
-</style>
-<script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
-<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-
+    {% block title %}Quan ly lop hoc {% endblock %}
+    {% block link %}
+     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+          <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+        <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+        <style>
+            ul li {
+                display: inline;
+            }
+        </style>
+    {% endblock %}
 </head>
-<html>
+{% block user_form %}{% endblock %}
+{% block body %}
+<div id="detail_test">
 <div id="menu">
 	<img src="{% static 'class_management/images/Add-Text-icon.png' %}" title="Thêm Câu Hỏi" width="58" height="58" id="add_text">
 	<img src="{% static 'class_management/images/Edit-Text-icon.png' %}" title="Sửa Câu Hỏi" width="58" height="58" id="edit_text">
 	<img src="{% static 'class_management/images/Delete-Text-icon.png' %}" title="Xóa Câu Hỏi" width="58" height="58" id="del_text">
 	<img src="{% static 'class_management/images/Done-Text-icon.png' %}" title="Kết Thúc" width="58" height="58" id="done_text">
 </div>
-<a href = "{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %} " id="del_test"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Xóa Bài tập" width="58" height="58" ></a>
 
-<div style="float: left">
+
+<div id="add_test_form">
 
 <form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;">
 	 {% csrf_token %} 
@@ -34,10 +44,11 @@
      <input type="button" value="Thêm Câu Hỏi"  id="add_question"  onclick="addquestion()"/>
      <input type="button" value="Sửa Câu Hỏi"  id="update_question" onclick="updatequestion()"/>
 </form>
+<a href = "{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %} " id="del_test"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Xóa Bài tập" width="58" height="58" ></a>
 </div>
 
-
-<div id="testlist" style="float:left;">
+<div id="testlist">
+    <h2 style="text-align: center;"> BÀI TẬP </h2>
 	 {% for question in question_list %}
 	<div id="{{ question.order_test }}">
 		<div>
@@ -60,10 +71,22 @@
 	</div>
 	 {% endfor %}
 </div>
+</div>
+{% endblock %}
+{% block script %}
     <script src="{% static 'class_management/js/detail_test_js.js' %}"></script>
     <script>
     $('#del_text').click(function() {
         alert("Kich vao cau hoi ban muon xoa!");
+        $("#add_text").animate({
+          height: '0px',
+          width: '0px'
+        },"slow");
+
+        $("#edit_text").animate({
+          height: '0px',
+          width: '0px'}, 'slow');
+        
         $("#testlist").children().hover(function() {
             $(this).css("background-color", "#E8E8E8 ");
         }, function() {
@@ -189,4 +212,5 @@ var addquestion = function() {
             return false;
         });
     </script>
+    {% endblock %}
 </html>

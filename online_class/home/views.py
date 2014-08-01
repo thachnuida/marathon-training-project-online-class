@@ -4,38 +4,35 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from class_management.models import *
 # Create your views here.
 
 def register(request):
-    # context=RequestContext(request)
     registered=False
-
     if request.method =='POST':
         user_form=UserForm(data=request.POST) 
         profile_form=UserProfileForm(data=request.POST)
-
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
             profile.save()
-
-            # Update our variable to tell the template registration was successful.
             registered = True
-
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
+            if user.is_active:
+                auth_login(request, user)
         else:
             print user_form.errors, profile_form.errors
     else:
         user_form=UserForm()
         profile_form=UserProfileForm()
-    
     return render(request,
             'home/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
@@ -50,15 +47,42 @@ def login(request):
         if user:
             if user.is_active:
                 auth_login(request, user)
-                return render(request, "home/home.html")
+                currentuser = UserProfile.objects.get(user=request.user.id)
+                return render(request, "home/home.html", {'currentuser':currentuser})
             else:
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
         return render(request, "home/home.html", {'error': error })
-    return render(request, "home/home.html")
+    if request.user.is_anonymous():
+        return render(request, "home/home.html")
+    else :
+        currentuser = UserProfile.objects.get(user=request.user.id)
+        return render(request, "home/home.html", {'currentuser':currentuser})
 
 def home(request):
-    return render(request, "home/home.html")
+    all_class = Class.objects.all()
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                auth_login(request, user)
+                currentuser = UserProfile.objects.get(user=request.user.id)
+                all_class=all_class.exclude(students_in_class=request.user)
+                return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class})
+            else:
+                error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
+        else:
+            error = '''Username and password didn't matched, if you forgot your password?'''
+        return render(request, "home/home.html", {'error': error })
+    if request.user.is_anonymous():
+        return render(request, "home/home.html", {'all_class': all_class})
+    else :
+        all_class=all_class.exclude(students_in_class=request.user)
+        currentuser = UserProfile.objects.get(user=request.user.id)
+        return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class})
+
 def alone(request):
     return render(request,'home/alone.html')

@@ -1,12 +1,22 @@
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
-	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% block title %} Lop hoc Online {% endblock %}
+    {% block link %}
+   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+ 	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
 	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
 	<script src="{% static 'class_management/js/js.js' %}"></script>
-</head>
-<html>
+    {% endblock %}
+  </head>
+{% block body %}
+
 <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
 <img id="image_class" src="#" alt="Preview" width="0" height="0"/>
 
@@ -20,6 +30,6 @@
 	{% endfor %}
     <input type="submit" value="Create" />
 </form>
-</html>
+{% endblock %}
 
 

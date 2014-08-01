@@ -1,0 +1,83 @@
+{% load url from future %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Lớp Học Online{% endblock %}</title>
+        {% block link %}
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+    	  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+        <script src="{% static 'class_management/js/js.js' %}"></script>
+        {% endblock %}
+    </head>
+
+    <body>
+    	<div>{%block banner %}
+				<image id="banner" src="{% static 'images/banner.jpg' %}"/>
+    		{% endblock %}
+    	</div>
+        <div class="container" style="width:1130px; margin-bottom: -13px;">
+			{% block menu %}
+        	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          	<div class="container">
+            <div class="navbar-collapse collapse">
+            	<span class="navbar-brand" href="#">Online Class</span>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'home:home' %}">TRANG CHỦ</a></li>
+                <li><a href="{% url 'study:study' %}">LỚP HỌC THAM GIA</a></li>
+                <li><a href="#contact">LIÊN HỆ</a></li>
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">TÁC VỤ<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Tiến Độ Học Tập</a></li>
+                    {% if currentuser.role == 'T' %}
+                    <li class="divider"></li>
+                    <li><a href="{% url 'classes:classlist' %}">Quản Lý Lớp Học</a></li>
+                    {% endif %}
+                  </ul>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+	{% endblock %}
+      </div>
+      <div id="mid_container">
+      	{% block user_form %}
+      	<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">          
+          {% if user.is_authenticated %}
+          <a href="{% url 'home:alone'%}">Chào bạn {{ currentuser.username }}!</a>
+          <a href="{% url 'home:logout'%}">Đăng Xuất</a>
+          {% else %}
+          <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ next_url }}"/>
+              <ul>
+                {% if error %}
+                <li class="error-message">
+                    {{ error|safe }}
+                </li>
+                {% endif %}
+              </ul>    
+              <input id="id_username" name="username" type="text" class="form-control" value="{{ username }}" placeholder="Username..."/>
+              <br/>
+              <input id="id_password" name="password" type="password" class="form-control" placeholder="Password..."/>
+              <br/>
+              <button class="btn btn-primary" type="submit" style="margin-left: 20px;">Đăng Nhập</button>
+              <a class="btn btn-primary" href="{% url 'home:register' %}" style="float: right; margin-right: 20px;">Đăng Ký</a>
+          </form>  
+          {% endif %}
+        </div>
+      	{% endblock %}
+      	{% block lastest_class %}{% endblock %}
+        <div id="content">
+        {% block body %}{% endblock %}
+      </div>
+      {% block script %}{% endblock %}
+    </div>
+    </body>
+</html>

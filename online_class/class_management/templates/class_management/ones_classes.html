@@ -1,11 +1,18 @@
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
 <head>
+	{% block title %}Quan ly lop hoc {% endblock %}
+	{% block link %}
+	 <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+    	  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
 	<script src="{% static 'class_management/js/js.js' %}"></script>
+	{% endblock %}
 </head>
-<html>
+{% block body %}
 <div id="ones_classes">
 <a href = {% url 'classes:createclass' %}><image src="{% static 'class_management/images/Add-Class-icon.png' %} " title="TẠO LỚP HỌC"/ height=100 width=100></a>
 <h1 class="title">DANH SÁCH LỚP HỌC</h1>
@@ -27,4 +34,4 @@
 	</div>
 {% endfor %}
  </div>
-</html>
+ {% endblock %}
