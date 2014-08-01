@@ -1,0 +1,18 @@
+
+<h2>Ban hay lam bai tap</h2>
+{% for test in all_question %}
+
+
+<form action="">
+<h4>{{ test.question }}</h4>
+
+<h4>{{ test.image_ques }}</h4>
+<input type="radio" name="anwserA"/>{{ test.answerA }}<br>
+<input type="radio" name="anwserB"/>{{ test.answerB }}<br>
+<input type="radio" name="anwserC"/>{{ test.answerC }}<br>
+<input type="radio" name="anwserD"/>{{ test.answerD }}<br>
+</form>
+{% endfor %}
+<form action="">
+<input type="submit" value="Xong">
+</form>

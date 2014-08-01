@@ -1,0 +1,36 @@
+
+{% if joined %}
+
+<h3>{{ join_class }}</h3>
+{% for lesson in all_lesson %}
+  <ul>
+    <li>{{ lesson.lesson_name }}</li>
+  </ul>
+{% endfor %} 
+<form enctype="multipart/form-data"  method="post" action="" id="add_ques">
+  {% csrf_token %}
+  <button type="submit"> Join </button>
+    <!-- <input type="button" value="Join" onclick="tam()"/> -->
+</form>
+{% else %}
+  <h3>Ban da dang ki thang cong</h3>
+  <a href="/study/study/">Tro ve danh sach lop hoc da dang ki</a>
+{% endif %}
+<script>
+//     var tam = function(){
+//         var data = new FormData($('form').get(0));
+//      $.ajax({
+//        type:"POST",
+//        url : "{% url 'study:study' %}",
+//        dataType: "json",
+//        data : data,
+//             processData: false,
+//             contentType: false,
+//        success : function(question_dict){
+//               alert("Có lỗi xảy ra!");
+//          },
+//          error: function(errors_dict){
+//            alert("Có lỗi xảy ra!");
+//         return false;
+//  };
+</script>

@@ -1,0 +1,18 @@
+
+{% load url from future %}
+{% load staticfiles %}
+{% if joined %}
+  <h3>{{ join_class }}</h3>
+  <ul>
+    {% for lesson in all_lesson %}
+    <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}">{{ lesson.lesson_name }}</a></li>
+    {% endfor %}  
+  </ul>
+<form enctype="multipart/form-data"  method="post" action="" id="add_ques">
+  {% csrf_token %}
+  <button type="submit"> Remove </button>
+</form>
+{% else %}
+<h3>Ban da xoa ki thang cong</h3>
+<a href="/study/study/">Tro ve danh sach lop hoc da dang ki</a>
+{% endif %}

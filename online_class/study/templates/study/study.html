@@ -1,0 +1,14 @@
+{% load url from future %}
+{% load staticfiles %}
+
+<h1>Danh Sach Lop Hoc Da Dang Ki</h1>
+{% for class in all_class %}
+
+{% if class.image_class and class.image_class != "False" %}
+   <img src="{{ class.image_class.url }}" height=150 width=150/>
+{% else %}
+  <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
+{% endif %}
+  <a href="{% url 'study:studyclass' class.id %}">{{ class.class_name }}</a><br>
+  <a href="">{{ class.teacher }}</a><br>
+{% endfor %}

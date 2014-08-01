@@ -2,6 +2,8 @@ from django.shortcuts import *
 from home.forms import *
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def register(request):
@@ -39,8 +41,6 @@ def register(request):
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
-def home(request):
-    return render(request,'home/home.html')
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -55,16 +55,10 @@ def login(request):
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
-        return render(request, "home/login.html", {'error': error })
-    return render(request, "home/login.html")
+        return render(request, "home/home.html", {'error': error })
+    return render(request, "home/home.html")
 
-# @login_required
-# def restricted(request):
-#     return render(request,'Please login!!')
-@login_required
-def logout(request):
-    auth_logout(request)
-    return render(request,'home/home.html') 
-
+def home(request):
+    return render(request, "home/home.html")
 def alone(request):
     return render(request,'home/alone.html')
