@@ -7,12 +7,19 @@
 <h4>{{ test.question }}</h4>
 <h4>{{ test.image_ques }}</h4>
 <h4>{{ test.id }}</h4>
+<<<<<<< HEAD
   
   <input id="A" type="radio" name="{{ test.id  }}" value="{{ test.answerA }}" />{{ test.answerA }}<br>
   <input id="B" type="radio" name="{{ test.id  }}" value="{{ test.answerB }}" />{{ test.answerB }}<br>
   <input id="C" type="radio" name="{{ test.id  }}" value="{{ test.answerC }}" />{{ test.answerC }}<br>
   <input id="D" type="radio" name="{{ test.id  }}" value="{{ test.answerD }}" />{{ test.answerD }}<br>
 
+=======
+  <input id="A" type="radio" name="{{ test.id }}" value="{{ test.answerA }}" />{{ test.answerA }}<br>
+  <input id="B" type="radio" name="{{ test.id }}" value="{{ test.answerB }}" />{{ test.answerB }}<br>
+  <input id="C" type="radio" name="{{ test.id }}" value="{{ test.answerC }}" />{{ test.answerC }}<br>
+  <input id="D" type="radio" name="{{ test.id }}" value="{{ test.answerD }}" />{{ test.answerD }}<br>
+>>>>>>> 6dde696e5274b2384f8137c6bd39d7ee859c4916
 </form>
 {% endfor %}
 <form action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
@@ -26,13 +33,17 @@
 <input id ="radio_submit" type="button" value=" Test">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
+<<<<<<< HEAD
 
 
 var score=0;
+=======
+>>>>>>> 6dde696e5274b2384f8137c6bd39d7ee859c4916
 $(document).ready(function() {
     $("#radio_submit").click(function () {
     //      var $radioA = $('input:radio[name=1]');
     // if($radioA.is(':checked') === true) {
+<<<<<<< HEAD
       // var selValue = $('input[name=1]:checked').val(); 
       // var selValue = $("#myForm :radio:checked").attr('id');
       var selValue = $('input:radio:checked').attr('id'); 
@@ -40,6 +51,9 @@ $(document).ready(function() {
           score+=10;
         }
         console.log(score);
+=======
+      var selValue = $('input[name=1]:checked').val(); 
+>>>>>>> 6dde696e5274b2384f8137c6bd39d7ee859c4916
       $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
    
        // }
