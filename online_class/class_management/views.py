@@ -12,6 +12,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseBadRequest
+from django.db.models import Count
+from study.models import *
 
 
 # Create your views here.
@@ -91,20 +93,27 @@ def detail_lesson(request, class_id, pk):
     return render(request, "class_management/detail_lesson.html", {"form": form, 'chosen_lesson':chosen_lesson, 'test_list':test_list, 'formtest':formtest, 'class_id':class_id})
      
 def studentclass(request, pk):
-    chose_class = get_object_or_404(Class, pk=pk)
-    student_list = chose_class.students_in_class.all()
-    print calpercent(chose_class)
-    chart = {"d1" : [[0,33]],  "d2" : [[0,44]],   "d3" : [[0,3]],    "d4" : [[0,30]]}
-    return render(request, "class_management/studentclass.html", {'student_list':student_list, "chart":chart})
+    chosen_class = get_object_or_404(Class, pk=pk)
+    student_list = chosen_class.students_in_class.all()
+    chart = []
+    for student in student_list:
+        chart.append(calpercent(chosen_class, student))
+    return render(request, "class_management/studentclass.html", {'chosen_class':chosen_class, 'student_list':student_list, 'chart': chart})
 
-def calpercent(chose_class):
-    lessons = chose_class.lesson_set.all()
-    test_sum = 0
-    for lesson in lessons:
-        print lesson
-        print test_sum
-        test_sum += lesson.test_set.count()
-    return test_sum
+def calpercent(chosen_class, user):
+    num_test = Test.objects.filter(lesson__Class=chosen_class).count()
+    non_test = num_test - Score.objects.filter(test__lesson__Class=chosen_class,user=user).values_list('test', flat=True).distinct().count()
+    test_list = Test.objects.filter(lesson__Class=chosen_class)
+    good_test = 0;
+    medium_test = 0;
+    bad_test = 0;
+    for test in test_list:
+        question_num = Question.objects.filter(test=test).count()
+        good_test += Score.objects.filter(test=test, user=user, score__gte = float(question_num*70)/100).values_list('test',flat=True).distinct().count()
+        medium_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*70)/100, score__gte = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
+        bad_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
+    chart = [[[0, good_test]], [[0, medium_test]], [[0,bad_test]], [[0,non_test]]]
+    return chart
 
 from django.utils import simplejson
 from django.db.models import Max
@@ -230,3 +239,36 @@ def delete_question(request, test_id):
                 i = i + 1
             return HttpResponse(simplejson.dumps({}))    
     return HttpResponse("never come");
+
+from django.utils.dateformat import DateFormat
+from django.utils.formats import get_format
+def test_history(request, user_id, class_id):
+    user = get_object_or_404(User, pk=user_id)
+    chosen_class = Class.objects.get(pk=class_id)
+    if request.method == 'POST':
+        if request.is_ajax():
+            response = []
+            if request.POST['option'] == 'Lesson':
+                test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test__lesson')
+            if request.POST['option'] == 'Score':
+                test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('score')
+            if request.POST['option'] == 'Time':
+                test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test_date')
+            html = ""
+            for test in test_list:
+                df = DateFormat(test.test_date)
+                html = html + "<div class='muc'>"
+                html = html + "<div class='time-period-left-blue'></div>"
+                html = html + "<h4>"
+                html = html + "Score: "+ str(test.score) +"/"+ str(test.question_num)+"<span class='time-period-right-blue'>"+ str(df.format('H:i d/m/Y'))+"</span>"
+                html = html + "</h4>"
+                html = html + "<ul class='main-info-list'>"
+                html = html + "<li>Lesson <span>"+ str(test.test.lesson)+"</span></li>"
+                html = html + "<li>Exercise<span>"+ str(test.test) +"</span>"
+                html = html + "</li>"
+                html = html + "</ul>"
+                html = html + "</div>"
+            return HttpResponse(html)
+    test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))
+    
+    return render(request, "class_management/test_history.html", {'user': user,'test_list':test_list, 'chosen_class':chosen_class})

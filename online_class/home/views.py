@@ -8,6 +8,7 @@ from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from class_management.models import *
+from django.db.models import Count
 # Create your views here.
 
 def register(request):
@@ -71,18 +72,24 @@ def home(request):
                 auth_login(request, user)
                 currentuser = UserProfile.objects.get(user=request.user.id)
                 all_class=all_class.exclude(students_in_class=request.user)
-                return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class})
+                recently_class = Class.objects.exclude(students_in_class=request.user).order_by("create_date")[:12]
+                top_student_class = Class.objects.exclude(students_in_class=request.user).annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
+                return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
             else:
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
         return render(request, "home/home.html", {'error': error })
     if request.user.is_anonymous():
-        return render(request, "home/home.html", {'all_class': all_class})
+        recently_class = Class.objects.order_by("create_date")[:12]
+        top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
+        return render(request, "home/home.html", {'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
     else :
+        recently_class = Class.objects.exclude(students_in_class=request.user).order_by("create_date")[:12]
         all_class=all_class.exclude(students_in_class=request.user)
         currentuser = UserProfile.objects.get(user=request.user.id)
-        return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class})
+        top_student_class = Class.objects.exclude(students_in_class=request.user).annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
+        return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
 
 def alone(request):
     return render(request,'home/alone.html')

@@ -18,5 +18,6 @@ urlpatterns = patterns('',
     url(r'^(?P<class_id>\d+)/lesson/(?P<lesson_id>\d+)/delete-test/(?P<pk>\d+)/$', delete_test, name='deletetest'),
     url(r'^test/(?P<test_id>\d+)/update-question/$', update_question, name="updatequestion"),
     url(r'^test/(?P<test_id>\d+)/delete-question/$', delete_question, name="deletequestion"),
-
+    url(r'^calpercent/(?P<chosen_class>\d+)/(?P<user_id>\d+)', calpercent, name="calpercent"),
+    url(r'^user/(?P<user_id>\d+)/class/(?P<class_id>\d+)/test-history/$', test_history, name="testhistory"),
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

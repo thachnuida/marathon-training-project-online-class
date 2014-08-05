@@ -64,11 +64,8 @@ def test(request,class_id,lesson_id,pk):
     all_question  = chosen_test.question_set.all()
     # right_answer
     rightanswer=[]
-<<<<<<< HEAD
 
     # listquestion=range(1)
-=======
->>>>>>> 6dde696e5274b2384f8137c6bd39d7ee859c4916
     for test in all_question:
         rightanswer.extend(test.right_answer)
         print test.right_answer
@@ -79,12 +76,8 @@ def test(request,class_id,lesson_id,pk):
         'chosen_class':chosen_class,
         'chosen_lesson':chosen_lesson,
         'chosen_test':chosen_test,
-<<<<<<< HEAD
         'rightanswer':rightanswer,
         # 'listquestion':listquestion
-=======
-        'rightanswer':rightanswer
->>>>>>> 6dde696e5274b2384f8137c6bd39d7ee859c4916
         })
     
 def result(request,class_id,lesson_id,test_id):

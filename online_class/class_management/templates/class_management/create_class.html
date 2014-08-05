@@ -4,16 +4,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      {% block title %} Lop hoc Online {% endblock %}
-    {% block link %}
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
- 	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
-	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-	<script src="{% static 'class_management/js/js.js' %}"></script>
-    {% endblock %}
+        {% block title %} Lop hoc Online {% endblock %}
+        {% block link %}
+        {{ block.super }}
+        <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+        <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+        <script src="{% static 'class_management/js/js.js' %}"></script>
+        {% endblock %}
   </head>
 {% block body %}
 

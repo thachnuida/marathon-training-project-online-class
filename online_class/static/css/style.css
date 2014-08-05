@@ -11,8 +11,38 @@
 	border: 2px solid black;
 	padding: 20px;
 	float: right;
+	top: -328px;
 }
 #mid_container{
 	margin: 0px auto;
 	width: 85%;
+}
+#side_content{
+	margin-top: -200px;
+	width: 175px;
+}
+ul#topmost{
+	padding-left: 5px;
+}
+#topmost li{
+	display: inline-block;
+	height: 100px;
+	width: 200px;
+padding-bottom: 10px;
+margin-bottom: 10px;
+border-bottom: solid 1px #CCC;
+}
+#topmost img{
+	margin-right: 20px;
+	height: 100px;
+	width: 100px;
+	float: left; 
+	padding: 10px;
+}
+.plus_info{
+	text-align: center;
+	background: #5A9DCA;
+	color: #FFFFFF;
+	border-bottom-left-radius: 55px;
+ 	border-bottom-right-radius: 55px;
 }

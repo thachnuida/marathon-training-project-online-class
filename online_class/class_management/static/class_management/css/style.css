@@ -16,7 +16,7 @@
     height: 200px;
     width: 200px;
     position: relative;
-    margin: 20px;
+    margin: 10px;
     float: left;
     border-radius: 5px;
     overflow: hidden;
@@ -131,4 +131,208 @@ background: rgb(214, 210, 212);
     border: 2px solid black;
     padding: 50px;
     width: 600px;
+}
+
+.mycarousel{
+    margin: 20px auto;
+position: relative;
+border: 10px solid #fff;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+-webkit-box-shadow: 0 0 2px #999;
+-moz-box-shadow: 0 0 2px #999;
+box-shadow: 0 0 2px #999;
+overflow: hidden;
+    position: relative;
+    width: 1020px
+}
+.mycarousel ul{
+        width: 20000em;
+    position: relative;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#mycarousel li{
+    float: left;
+}
+#studentclass #bonus{
+    border: 1px solid black;
+    padding: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 350px;
+    right: 165px;
+}
+
+#studentclass #bonus #goodscore{
+    background: #00A8F0;
+display: inline-block;
+width: 15px;
+height: 15px;
+margin-right: 10px;
+}
+#studentclass #bonus #mediumscore{
+    background: #C0D800;
+display: inline-block;
+width: 15px;
+height: 15px;
+margin-right: 10px;
+}
+#studentclass #bonus #badscore{
+    background: #CB4B4B;
+display: inline-block;
+width: 15px;
+height: 15px;
+margin-right: 10px;
+}
+
+#studentclass #bonus #nonscore{
+    background: #4DA74D;
+display: inline-block;
+width: 15px;
+height: 15px;
+margin-right: 10px;
+}
+#studentclass h1{
+    text-align: center;
+}
+
+
+#studentclass table#student_score_detail{
+    margin: 97px auto;
+}
+
+#studentclass table#student_score_detail td{
+    padding-left: 25px;
+    padding-right: 25px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid black;
+}
+#studentclass table#student_score_detail th{
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: center;
+    background: #832935;
+    color: white;
+    border: 1px solid #832935;
+}
+
+#test_history .fill-green{
+    background: #7fffd4;
+    color: red;
+}
+#test_history .substrate {
+    float: left;
+    position: relative;
+    margin-bottom: 30px;
+    padding: 15px 10px;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    float: left;
+}
+#test_history .left-blue {
+    border-left: 10px solid #2d7fb9;
+    margin: 0 0 20px -10px;
+    padding-left: 25px;
+}
+#test_history .muc {
+    width: 283px;
+    float: left;
+    border-left: 10px solid #2d7fb9;
+    padding-left: 10px;
+}
+#test_history .time-period-left-blue {
+    margin-right: 15px;
+    position: relative;
+}
+#test_history .time-period-right-blue {
+    background: #2d7fb9;
+    width: 125px;
+    padding: 3px 10px;
+    margin-left: 3px;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 13px;
+}
+#test_history .main-info-list li span {
+    float: right;
+    color: blue;
+    width: 160px;
+    margin-left: 20px;
+}
+
+#test_history .main-info-list {
+    margin: 10px auto;
+}
+
+#test_history.time-period-left-blue:before {
+    position: absolute;
+    top: -5px;
+    left: -28px;
+    width: 25px;
+    height: 25px;
+    border: 6px solid #2d7fb9;
+    border-radius: 15px;
+    background: #fff;
+    content: ' ';
+}
+
+#test_history .fill-green{
+    padding-left: 35px;
+    height: 45px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 45px;
+}
+
+#test_history .substrate h2 {
+    text-align: center;
+    margin: 10px auto;
+    color: red;
+}
+
+#test_history #student{
+    display: inline-block;
+    border: 1px solid black;
+    padding: 20px;
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+}
+
+#test_history #history{
+    overflow: hidden;
+    width: 918px;
+    margin-left: 5px;
+   margin-top: -354px;
+    float: right;
+}
+
+#test_history #sort{
+    border-top: 1px solid black;
+    margin-top: 20px;
+}
+#test_history #sort .title{
+    background: #354543;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#test_history #sort img{
+    height: 25px;
+    width: 25px;
+    margin: 8px;
+    margin-right: 20px;
+}
+#test_history #sort_option div:hover{
+    background: rgb(204, 198, 198);
+    cursor: pointer;
 }
