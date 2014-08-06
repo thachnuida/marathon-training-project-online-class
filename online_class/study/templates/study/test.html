@@ -1,79 +1,77 @@
+{% load url from future %}
+{% load staticfiles %}
+<head>
+  <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+</head>
 
 <h2>Ban hay lam bai tap</h2>
-{% for test in all_question %}
+<div>{{ answer3 }}</div>
+<div id="div1">
+<form enctype="multipart/form-data"  class="dynamic-form" method="POST" id="question" action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
+  {% csrf_token %}
+  <input class="question_id"  name="question_id" value = "{{ one_question.id  }}"/>
+  <input class="order" name="number" value ="{{ one_question.order_test}}"/>
+  <input class="answer_user" name="answer_user" value=""/>
+  <p class="numbertest">{{one_question.order_test}}</p>
+  <p class="question">{{ one_question.question}}</p>
 
-<form id="myForm" action="">
-
-<h4>{{ test.question }}</h4>
-<h4>{{ test.image_ques }}</h4>
-<h4>{{ test.id }}</h4>
-  
-  <input id="A" type="radio" name="{{ test.id  }}" value="{{ test.answerA }}" />{{ test.answerA }}<br>
-  <input id="B" type="radio" name="{{ test.id  }}" value="{{ test.answerB }}" />{{ test.answerB }}<br>
-  <input id="C" type="radio" name="{{ test.id  }}" value="{{ test.answerC }}" />{{ test.answerC }}<br>
-  <input id="D" type="radio" name="{{ test.id  }}" value="{{ test.answerD }}" />{{ test.answerD }}<br>
-
+  <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
+  <input class="2" type="radio" name="answer" value="B" /><span class="span2">
+  {{ one_question.answerB }}</span><br>
+  <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
+  <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
+  <input class="button2" type="button" value="Next" onclick="next()"/>
 </form>
-{% endfor %}
-<form action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
+
+<!-- <form action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
 <button type ="POST"> Xong</button>
-</form>
+</form> -->
 
+</div>
 
-<p>If you click on me, I will disappear.</p>
-<p>Click me away!</p>
-<p></p>
-<input id ="radio_submit" type="button" value=" Test">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-
-
-var score=0;
-$(document).ready(function() {
-    $("#radio_submit").click(function () {
-    //      var $radioA = $('input:radio[name=1]');
-    // if($radioA.is(':checked') === true) {
-      // var selValue = $('input[name=1]:checked').val(); 
-      // var selValue = $("#myForm :radio:checked").attr('id');
-      var selValue = $('input:radio:checked').attr('id'); 
-        if (selValue =="A"){
-          score+=10;
-        }
-        console.log(score);
-      $('p').html('<br/>Selected Radio Button Value is : <b>' + selValue + '</b>');
-   
-       // }
-    });
-});
-
-a="{{rightanswer}}"
-b=a.length
-console.log(b)
-for (var i=7;i<b;i=i+7){
-console.log(a[i])
-}
-// $(document).ready(function(){
-//   $("#tes").click(function(){
-//     var $radioA = $('input:radio[name=anwserA]');
-//     if($radioA.is(':checked') === true) {
-//        alert("aaaa")
-//     }
-//   });
-// });
-
-// if(document.forms[0].A1.checked){
-// document.all.Wrong1.innerHTML=Right
-// var subtract1=0
-// }
-// else{
-// document.all.Wrong1.innerHTML=Wrong
-// var subtract1=10
-// }
-// $(document).ready(function(){
-//     var $radios = $('input:radio[name=anwserA]');
-//     if($radios.is(':checked') === false) {
-//        alert("aaaa")
-//     }
-// });
-
+var next = function(){
+  var data = new FormData($('form').get(0));
+  $.ajax({
+    type: "POST",
+    url: "{% url 'study:question' chosen_test.pk %}",
+    data: data,
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    success: function(topic_list) {
+      console.log(topic_list.array_user_choose);
+      order  = topic_list.load['order_test']
+      lenght = topic_list.load['lenght'];
+      console.log(order,lenght);
+      if (order <= lenght) {
+      $(".order").val(topic_list.load['order_test']);
+      $(".question_id").val(topic_list.load['id']);
+      $(".answer_user").val(topic_list.array_user_choose);
+      $(".numbertest").html(topic_list.load['order_test']);
+      $(".question").html(topic_list.load['question']);
+      $(".1").prop("checked", false)
+      $(".2").prop("checked", false)
+      $(".3").prop("checked", false)
+      $(".4").prop("checked", false)
+      $(".span1").html(topic_list.load['answerA']);
+      $(".span2").html(topic_list.load['answerB']);
+      $(".span3").html(topic_list.load['answerC']);
+      $(".span4").html(topic_list.load['answerD']);
+      }
+      if (order == lenght) {
+        $(".button2").val("Finish");
+        // $(".button2").attr('type','submit');
+        // $(".button2").attr('onclick',null);
+        console.log("aaa");
+        // window.location.pathname="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}";
+        // $('ajaxloader').remove() // remove the ajax-loader
+        // submitbutton.show() // return the submit butto
+      }
+     
+    }
+  });
+  return false;
+};
 </script>

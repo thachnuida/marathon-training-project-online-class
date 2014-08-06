@@ -1,1 +1,74 @@
-adsdsadasd
+{% load url from future %}
+{% load staticfiles %}
+<head>
+  <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+</head>
+
+<h2>Diem so cua ban la "{{score}}"</h2>
+
+
+
+<button class="result"> Xem lai kq bai lam</button><br>
+<a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}">Lam lai bai tap</a><br>
+<a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}">Quay lai trang bai hoc</a><br>
+
+<div id="win">
+  <h3>Background yelow is Rigth Answer</h3>
+  <h3>Font large is User Answer</h3>
+  {% for test in all_question %}
+  <div id="{{ test.order_test }}">
+    <p><b>{{ test.order_test }}</b></p>
+    <p><b>{{ test.question }}</b></p>
+    <p class="A">{{ test.answerA }}</p>
+    <p class="B">{{ test.answerB }}</p>
+    <p class="C">{{ test.answerC }}</p>
+    <p class="D">{{ test.answerD }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+
+$(document).ready(function(){
+  $(".result").click(function(){
+      $("#win").slideToggle();
+  });
+  var x=0;
+  var b = [];
+  var a= "{{ list_right_answer }}";
+  console.log(a.length);
+  for (var x=7;x<a.length;x+=7){
+    console.log(a[x]);
+    if (a[x]==" "){ 
+    console.log("rong") ;  
+    }
+    else{
+      b.push(a[x]);
+    }
+  }
+  var c = "{{ answer_user }}";
+  console.log(a,b,c,(b.length));
+  console.log(c.charAt(0));
+  for (var j= 1;j<=(b.length);j++){
+  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+  }
+  for (var j= 1;j<=(b.length);j++){
+  $("#"+j+" ."+c.charAt(j-1)).css("font-size","200%");
+  $("#"+j+" ."+c.charAt(j-1)).css("font-size","200%");
+  $("#"+j+" ."+c.charAt(j-1)).css("font-size","200%");
+  $("#"+j+" ."+c.charAt(j-1)).css("font-size","200%");
+  $("#"+j+" ."+c.charAt(j-1)).css("font-size","200%");
+  }
+});
+
+</script>
+<style>
+#win {
+    display: none;
+} 
+</style>
