@@ -1,37 +1,33 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
-	{% block title %}Quan ly lop hoc {% endblock %}
-	{% block link %}
-	 <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-    	  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+{% block title %}Class Management{% endblock %}
+{% block link %}
+	{{ block.super }}
 	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-	<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-	<script src="{% static 'class_management/js/js.js' %}"></script>
-	{% endblock %}
-</head>
+{% endblock %}
 {% block body %}
-<div id="ones_classes">
-<a href = {% url 'classes:createclass' %}><image src="{% static 'class_management/images/Add-Class-icon.png' %} " title="TẠO LỚP HỌC"/ height=100 width=100></a>
-<h1 class="title">DANH SÁCH LỚP HỌC</h1>
-{% for class in ones_classes %}
-<div class="class_in_list">
-{% if class.image_class and class.image_class != "False" %}
-    <img src="{{ class.image_class.url }}" height=200 width=200/>
-{% else %}
-	<img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
-{% endif %}
-	</a>
-	<div class="hover_detail">
-	<div class="class_name">{{ class.class_name }}</div>
-	
-	<a href="{% url 'classes:detailclass' class.id %}" class="chose_class"><image src="{% static 'class_management/images/Class-Detail-icon.png' %}" title="Chi Tiết Lớp Học" ></a>
-	<a href="{% url 'classes:studentclass' class.id %}" class="chose_student"><image src="{% static 'class_management/images/Student-In-Class-icon.png' %}" title="Chi Tiết Học Sinh" ></a>
-	<div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
+	<div id="ones_classes">
+		<a href = {% url 'classes:createclass' %}><image src="{% static 'class_management/images/Add-Class-icon.png' %} " title="Create Class"/ height=100 width=100></a>
+		<h1 class="title">CLASS LIST</h1>
+		{% if ones_classes|length == 0 %}
+			<div class="nonhaving">You Aren't Having Any Class. Let's Create Class!</div>
+		{% else %}
+			{% for class in ones_classes %}
+				<div class="class_in_list">
+					{% if class.image_class and class.image_class != "False" %}
+	    				<img src="{{ class.image_class.url }}" height=200 width=200/>
+					{% else %}
+						<img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
+					{% endif %}
+					<div class="hover_detail">
+						<div class="class_name">{{ class.class_name }}</div>
+						<a href="{% url 'classes:detailclass' class.id %}" class="chose_class"><image src="{% static 'class_management/images/Class-Detail-icon.png' %}" title="Class Detail" ></a>
+						<a href="{% url 'classes:studentclass' class.id %}" class="chose_student"><image src="{% static 'class_management/images/Student-In-Class-icon.png' %}" title="Student List" ></a>
+						<div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
 	</div>
-	</div>
-{% endfor %}
- </div>
  {% endblock %}

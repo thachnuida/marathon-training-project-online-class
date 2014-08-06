@@ -1,19 +1,38 @@
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
+{% block title %}Create Lesson{% endblock %}
+{% block link %}
+	{{ block.super }}
 	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
-</head>
-<html>
-<form method="post" action="">
-	{% csrf_token %}
-	{% for field in form %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
-    </div>  
-	{% endfor %}
-    <input type="submit" value="Tao Bai Hoc" />
-</form>
-</html>
+	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+{% endblock %}
+{% block body %}
+	<div id="create_lesson">
+		<div id="add_lesson_form">
+			<h1 class="title">CREATE LESSON</h1>
+			<iframe id = "video_link" width="420" height="345">
+			</iframe>
+			<form method="post" action="">
+				{% csrf_token %}
+				{% for field in form %}
+	    		<div class="fieldWrapper">
+	        		{{ field.errors }}
+	        		{{ field.label_tag }} {{ field }}
+	    		</div>  
+				{% endfor %}
+	    		<input type="submit" value="Create Lesson" />
+	    		<a href="{% url 'classes:detailclass' chosen_class.id %}">Cancel</a>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+	$("#id_video_link").change(function(){
+			$("#video_link").attr('src', $('#id_video_link').val());
+		});
+</script>
+{% endblock %}
 

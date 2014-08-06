@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% load staticfiles %}
+{% block title %}Exercise History{% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div id="student_detail">
+        <h1 class="title">STUDENT DETAIL</h1>
+        <div id="image_student">
+            {% if user.userprofile.user_image %}
+                <img src="{{ user.userprofile.user_image.url }}"/>
+            {% else %}
+                <img src="{% static 'home/img/account.png' %}"/>
+            {% endif %}
+        </div>
+        <div id="infor">
+            <table id="infor_table">
+                <tr>
+                    <td>Username</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    {% if user.userprofile.gender == 'M' %}
+                        <td>Male</td>
+                    {% else %}
+                        <td>Female</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Full Name</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Birthday</td>
+                    <td>{{ user.userprofile.birthday|date:" d/m/Y" }}</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>{{ user.userprofile.address }}</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>{{ user.userprofile.phone }}</td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    {% if user.userprofile.role == 'T' %}
+                        <td>Teacher</td>
+                    {% endif %}
+                    {% if user.userprofile.role == 'F' %}
+                        <td>Student</td>
+                    {% endif %}
+                </tr>
+            </table>
+            <hr/>
+                <table id="class_list_table">
+                    <caption>Joined Class</caption>
+                    <tr>
+                        <th>Class Image</th>
+                        <th>Class Name</th>
+                        <th>Class Teacher</th>
+                    </tr>
+                    {% for Class in class_list %}
+                    <tr>
+                        {% if Class.image_class and Class.image_class != "False" %} 
+                          <td><img src="{{ Class.image_class.url }}" height=80 width=80/></td>
+                          {% else %} 
+                          <td><img src="{% static 'class_management/images/classroom.jpg' %}" height=80 width=80/></td>
+                      {% endif %} 
+                          <td class="student_name">{{ Class.class_name }}</td>
+                          <td>{{ Class.teacher.username }}</td>
+                  </tr>
+              {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

@@ -1,33 +1,31 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-        {% block title %} Lop hoc Online {% endblock %}
-        {% block link %}
-        {{ block.super }}
-        <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
-        <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
-        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-        <script src="{% static 'class_management/js/js.js' %}"></script>
-        {% endblock %}
-  </head>
+{% block title %}Create Class{% endblock %}
+{% block link %}
+    {{ block.super }}
+    <script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+{% endblock %}
 {% block body %}
-
-<input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse">
-<img id="image_class" src="#" alt="Preview" width="0" height="0"/>
-
-<form enctype="multipart/form-data" method="post" action="">
-	{% csrf_token %}
-	{% for field in form %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} {{ field }}
+    <div id="create_class">
+        <div id="add_class_form">
+            <h1 class="title">CREATE CLASS</h1>
+            <img id="image_class" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
+            <form enctype="multipart/form-data" method="post" action="">
+	           {% csrf_token %}
+	           {% for field in form %}
+                    <div class="fieldWrapper">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+	           {% endfor %}
+                <input type="submit" value="Create Class" />
+                <a href="{% url 'classes:classlist' %}">Cancel</a>
+            </form>
+        </div>
     </div>
-	{% endfor %}
-    <input type="submit" value="Create" />
-</form>
 {% endblock %}
 
 

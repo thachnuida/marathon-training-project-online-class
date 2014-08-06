@@ -1,62 +1,63 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
-	{% block title %}Quan ly lop hoc {% endblock %}
-	{% block link %}
-	 <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-    	  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
-<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
-<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-	{% endblock %}
-</head>
-{% block user_form %}{% endblock %}
-{% block body %}
-<div id="detail_lesson">
-	<h1 class="title">CHI TIẾT BÀI HỌC</h1>
-	<div id="detail_lesson_form">
-	<iframe id = "video_link" width="420" height="345" src="{{ chose_lesson.video_link }}">
-	</iframe>
-<form method="post" action="">
-	 {% csrf_token %} {% for field in form %}
-	<div class="fieldWrapper">
-		 {{ field.errors }} {{ field.label_tag }} {{ field }}
-	</div>
-	 {% endfor %} <input type="submit" value="Sửa Bài Học" name="lesson"/>
-</form>
-
-<a href = "{% url 'classes:deletelesson' class_id chosen_lesson.id %} " id="del_lesson"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" width="58" height="58" >Xóa Bài Học</a>
-</div>
-<div id="detail_test">
-	<div id="add_test_form">
-<form method="post" action="">
-	 {% csrf_token %} 
-	 {% for field in formtest %}
-	<div class="fieldWrapper">
-		 {{ field.errors }} {{ field.label_tag }} {{ field }}
-	</div>
-	 {% endfor %} <input type="submit" value="Thêm Bài Tập" name="test"/>
-</form>
-</div>
-<div id="test_list">
-	<h3>DANH SÁCH BÀI TẬP</h3>
-	 {% for test in test_list %} 
-	 <a class="test_wrapper" href="{% url 'classes:detailtest' class_id chosen_lesson.id test.id %}">
-		<p class="test_name">{{ test.test_name }}</p>
-		<p class="date">Ngày Tạo {{ test.create_date|date:"H:i d/m/Y" }}</p>
-		<p class="date">Cập Nhập {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
-	</a>
-	{% endfor %}
-</div>
-</div>
-</div>
+{% block title %}Lesson Detail{% endblock %}
+{% block link %}
+	{{ block.super }}
+	<script type="text/javascript" src="/static/js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="/static/js/tiny_mce/textareas.js"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
-<script>
+{% block body %}
+	<div id="detail_lesson">
+		<div id="detail_lesson_form">
+			<h1 class="title">LESSON DETAIL</h1>
+			<iframe id = "video_link" width="420" height="345" src="{{ chosen_lesson.video_link }}">
+			</iframe>
+			<form method="post" action="">
+	 			{% csrf_token %} 
+	 			{% for field in form %}
+					<div class="fieldWrapper">
+		 				{{ field.errors }} {{ field.label_tag }} {{ field }}
+					</div>
+	 			{% endfor %} 
+	 			<input type="submit" value="Update Lesson" name="lesson"/>
+			</form>
+			<a href = "{% url 'classes:deletelesson' chosen_class.pk chosen_lesson.id %} " id="del_lesson"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" width="58" height="58" >Delete Lesson</a>
+		</div>
+		<div id="detail_test">
+			<div id="add_test_form">
+				<form method="post" action="">
+			 		{% csrf_token %} 
+			 		{% for field in formtest %}
+						<div class="fieldWrapper">
+				 			{{ field.errors }} {{ field.label_tag }} {{ field }}
+						</div>
+			 		{% endfor %} 
+			 		<input type="submit" value="Add Exercise" name="test"/>
+				</form>
+			</div>
+			<div id="test_list">
+				<h3>EXERCISE LIST</h3>
+				{% if test_list|length == 0 %}
+					<div class="nonhaving">You Aren't Having Any Exercise. Let's Create Excercise!</div>
+				{% else %}
+				 	{% for test in test_list %} 
+				 		<a class="test_wrapper" href="{% url 'classes:detailtest' chosen_class.pk chosen_lesson.id test.id %}">
+							<p class="test_name">{{ test.test_name }}</p>
+							<p class="date">Create Date {{ test.create_date|date:"H:i d/m/Y" }}</p>
+							<p class="date">Update Date {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
+						</a>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+	<script>
 		$("#del_lesson").click(function(){
-			if (confirm("Tất cả các Bài tập liên quan đến Bài học này sẽ bị xóa\nBạn chắc chắn xóa Bài học này? ")){
+			if (confirm("Everything relating to This Lesson will be deteled too\nAre you sure you want to delete This Lesson?")){
 				return true;
 			}
 			return false;
@@ -66,3 +67,4 @@
 		});
 
 	</script>
+{% endblock %}

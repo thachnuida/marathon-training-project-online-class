@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load url from future %} {% load staticfiles %}
+{% block title %}Student List in Class{% endblock %}
+{% block link %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'class_management/js/flotr2.min.js' %}"></script>
+    <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div id="studentclass">
+        <h1>Student List In {{ chosen_class.class_name }} Class</h1>
+        {% if student_list|length == 0 %}
+          <div class="nonhaving">Any Student Haven't Joined This Class</div>
+        {% else %}
+          <div id="bonus">
+              <div><div id="goodscore"></div><span>Good Mark (Mark >= 70%)</span></div>
+              <div><div id="mediumscore"></div><span>Medium Mark ( 50% &lt= Mark &lt 70%)</span></div>
+              <div><div id="badscore"></div><span>Bad Mark (Mark &lt 50%)</span></div>
+              <div><div id="nonscore"></div><span>Haven't Done</span></div>
+          </div>
+          <table id="student_score_detail">
+              <tr>
+                  <th>Student Image</th>
+                  <th>Student Username</th>
+                  <th>Mark Graph</th>
+                  <th>Student Information</th>
+                  <th>Student Score Detail</th>
+              </tr>
+              {% for student in student_list %}
+                  <tr>
+                      {% if student.user_image and student.user_image != "False" %} 
+                          <td><img src="{{ student.user_image.url }}" height=80 width=80/></td>
+                      {% else %} 
+                          <td><img src="{% static 'home/img/account.png' %}" height=80 width=80/></td>
+                      {% endif %} 
+                      <td class="student_name">{{ student.username }}</td>
+                      <td style="margin-right: 10px;">
+                          <div style="width: 200px; height: 150px; display: block;" class="testchart">
+                          </div>
+                      </td>
+                      <td><a href="#"><img src="{% static 'class_management/images/Show-Info-icon.png' %}"/><div>Watch Student Detail</div></a>
+                      </td>
+                      <td>
+                          <a href="{% url 'classes:testhistory' student.pk chosen_class.pk %}"><img src="{% static 'class_management/images/Show-Test-icon.png' %}"/><div>Watch Score Detail</div></a>
+                      </td>
+                  </tr>
+              {% endfor %}
+          </table>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block script %}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var chart = {{chart}};
+      var len = chart.length;
+      var graph = document.getElementsByClassName("testchart");
+      for(var i = 0; i< len; i++){
+        basic_pie(graph[i], chart[i][0], chart[i][1], chart[i][2], chart[i][3] );
+      }
+    });
+    function basic_pie(container, d1, d2 , d3, d4) {
+	   var  graph = Flotr.draw(container, [
+      { data : d1 } ,
+      { data : d2 },
+      { data : d3 },
+      { data : d4 }
+    ], {
+          colors: ['#00A8F0', '#C0D800', '#CB4B4B', '#4DA74D', '#9440ED'],
+          ieBackgroundColor: '#FFFF',
+          fontSize: 6,
+          HtmlText : false,
+          grid : {
+            verticalLines : false,
+            horizontalLines : false,
+            outlineWidth: 0
+          },
+          xaxis : { showLabels : false },
+          yaxis : { showLabels : false },
+          pie : {
+            show : true, 
+            explode : 1
+          }
+        });
+    };
+  </script>
+{% endblock %}
+

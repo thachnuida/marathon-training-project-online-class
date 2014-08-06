@@ -1,75 +1,74 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      {% block title %} Lop hoc Online {% endblock %}
-    {% block link %}
-      {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
-  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-   <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-  <script src="{% static 'class_management/js/js.js' %}"></script>
-    {% endblock %}
-  </head>
-  <body>
-        {% block body %}
-        <div class="mycarousel" id="carousel">
-          <ul id="mycarousel" class="jcarousel-skin-tango" class="jcarousel">
-            {% for latest in recently_class %}
-              {% if latest.image_class and latest.image_class != "False" %}
-                <li><a href="{% url 'study:joinclass' latest.id %}"><img src="{{ latest.image_class.url }}" height=200 width=200/>
-                  <div class="plus_info">{{ latest.class_name }} - {{ latest.create_date|date:"H:i d/m/Y" }}</div></a></li>
-              {% else %}
-                <li><a href="{% url 'study:joinclass' latest.id %}"><img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
-                <div class="plus_info">{{ latest.class_name }} - {{ latest.create_date|date:"H:i d/m/Y" }}</div></a></li>
-              {% endif %}
-            {% endfor %}
-
-          </ul>
-          <a href="#" class="jcarousel-control-prev" data-jcarouselcontrol="true">‹</a>
-          <a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">›</a>
+{% block title %} Lop hoc Online {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+{% endblock %}
+{% block body %}
+    <div id="home">
+        <div id="carousel_div">
+            <h1>Recently Class</h1>
+            <div class="mycarousel" id="carousel">
+                <ul id="mycarousel" class="jcarousel-skin-tango" class="jcarousel">
+                    {% for latest in recently_class %}
+                        {% if latest.image_class and latest.image_class != "False" %}
+                            <li><a href="{% url 'study:joinclass' latest.id %}"><img src="{{ latest.image_class.url }}" height=200 width=200/>
+                            <div class="plus_info">{{ latest.class_name }} - {{ latest.create_date|date:"H:i d/m/Y" }}</div></a></li>
+                        {% else %}
+                            <li><a href="{% url 'study:joinclass' latest.id %}"><img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
+                            <div class="plus_info">{{ latest.class_name }} - {{ latest.create_date|date:"H:i d/m/Y" }}</div></a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <a href="#" class="jcarousel-control-prev" data-jcarouselcontrol="true">‹</a>
+                <a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">›</a>
+            </div>
         </div>
         <div id="ones_classes" style="clear: both">
-          {% for class in all_class %}
-          <div class="class_in_list">
-            {% if class.image_class and class.image_class != "False" %}
-              <img src="{{ class.image_class.url }}" height=200 width=200/>
-            {% else %}
-              <img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
-            {% endif %}
-            <div class="hover_detail">
-              <div class="class_name">{{ class.class_name }}</div>
-              <a href="{% url 'study:joinclass' class.id %}" class="chose_class">Chi Tiết Lớp Học </a>
-              <div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-
-        <div id="side_content" style="float: right">
-            <h4> Top Most Student </h4>
-            <ul id="topmost">
-             {% for topest in top_student_class %}
-             <li>
-              {% if topest.image_class and topest.image_class != "False" %}
-                <a href="google.com.vn"><img src="{{ topest.image_class.url }}"/>
-              <h6>{{ topest.class_name }}</h6>
-                </a>
-              {% else %}
-                <a href="google.com.vn"><img src="{% static 'class_management/images/classroom.jpg' %}"/>
-                  <h6>{{ topest.class_name }}</h6>
-                </a>
-              {% endif %}
-              
-              <div>{{ topest.students_in_class.count }}/{{ topest.quantity }}</div>
-            </li>
+            {% for class in all_class %}
+                <div class="class_in_list">
+                    {% if class.image_class and class.image_class != "False" %}
+                        <img src="{{ class.image_class.url }}" height=200 width=200/>
+                    {% else %}
+                        <img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
+                    {% endif %}
+                    <div class="hover_detail">
+                        <div class="class_name">{{ class.class_name }}</div>
+                        <a href="{% url 'study:joinclass' class.id %}" class="chose_class">Chi Tiết Lớp Học </a>
+                        <div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
+                    </div>
+                </div>
             {% endfor %}
-          </ul>
         </div>
-        <script>
+        <div id="side_content" style="float: right">
+            <h4> Largest Student Class</h4>
+            <ul id="topmost">
+                {% for topest in top_student_class %}
+                    <li>
+                        {% if topest.image_class and topest.image_class != "False" %}
+                            <a href="{% url 'study:joinclass' topest.id %}"><img src="{{ topest.image_class.url }}"/>
+                                <h6>{{ topest.class_name }}</h6>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'study:joinclass' topest.id %}"><img src="{% static 'class_management/images/classroom.jpg' %}"/>
+                                <h6>{{ topest.class_name }}</h6>
+                            </a>
+                        {% endif %}
+                        <div>{{ topest.students_in_class.count }}/{{ topest.quantity }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
         $('.mycarousel').jcarousel();
         $('.jcarousel-control-prev')
             .on('jcarouselcontrol:active', function() {
@@ -92,12 +91,6 @@
             .jcarouselControl({
                 target: '+=2'
             });
-        </script>
-        {% endblock %}
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
+    </script>
+{% endblock %}
 
-    </div><!--/.container-->
-  </body>
-</html>

@@ -2,29 +2,20 @@ $(document).ready(function(){
   $(".dropdown").hover(function(){
     $(".dropdown-menu").show();
   }, function(){
-$(".dropdown-menu").hide();
+    $(".dropdown-menu").hide();
   });
-  $("#id_image_class").parent().hide();
-
-  $("#id_image_ques").parent().hide();
-
-  $('.browse').click(function(){
-    $("#id_image_class").click();
-    $("#id_image_class").change(function() {
-            readURL($("#id_image_class"), $("image_class"));
+      $("#id_image_class").change(function() {
+            readURL($("#id_image_class"), $("#image_class"));
         });
-
-    $("#id_image_ques").click();
-    $("#id_image_ques").change(function() {
+      $("#id_image_ques").change(function() {
             readURL($("#id_image_ques"),$("#image_ques" ));
-        });
   });
 
   $('.class_in_list').hover(function(){
     $(this).find('.hover_detail').animate({top:'0px'},"slow");
   }, function(){
-     $(this).find('.hover_detail').stop();
-    $(this).find('.hover_detail').animate({top:'140px'},"slow");
+      $(this).find('.hover_detail').stop();
+      $(this).find('.hover_detail').animate({top:'140px'},"slow");
   });
 
   $(".lesson_wrapper").hover(function(){
@@ -39,11 +30,11 @@ function readURL(input, image_input) {
     if (input.prop('files') && input.prop('files')[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            image_input.attr('src', e.target.result).attr('height','100').attr('width','100');
-            console.log(e.target.rult);
+            image_input.attr('src', e.target.result);
         }
         reader.readAsDataURL(input.prop('files')[0]);
     }
+    image_input.attr('src', "/media/test/img-icon.png");
 };
 
 function basic_pie(container, d1, d2 , d3, d4) {

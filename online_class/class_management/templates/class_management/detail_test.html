@@ -1,216 +1,252 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
-    {% block title %}Quan ly lop hoc {% endblock %}
-    {% block link %}
-     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-          <link href="/static/home/css/onlineclass.css" rel="stylesheet">
-        <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
-        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-        <style>
-            ul li {
-                display: inline;
-            }
-        </style>
-    {% endblock %}
-</head>
-{% block user_form %}{% endblock %}
+{% block title %}Test Detail{% endblock %}
+{% block link %}
+    {{ block.super }}
+    <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <style>
+        ul li {
+            display: inline;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-<div id="detail_test">
-<div id="menu">
-	<img src="{% static 'class_management/images/Add-Text-icon.png' %}" title="Thêm Câu Hỏi" width="58" height="58" id="add_text">
-	<img src="{% static 'class_management/images/Edit-Text-icon.png' %}" title="Sửa Câu Hỏi" width="58" height="58" id="edit_text">
-	<img src="{% static 'class_management/images/Delete-Text-icon.png' %}" title="Xóa Câu Hỏi" width="58" height="58" id="del_text">
-	<img src="{% static 'class_management/images/Done-Text-icon.png' %}" title="Kết Thúc" width="58" height="58" id="done_text">
-</div>
-
-
-<div id="add_test_form">
-
-<form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;">
-	 {% csrf_token %} 
-     <input type="hidden" id="id" value=""/>
-     <input type="image" src="{% static 'class_management/images/browse.png' %}" width="48" height="48" class="browse"/>
-    <img id="image_test" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
-	{% for field in form %}
-	<div class="fieldWrapper">
-		 {{ field.errors }} 
-         {{ field.label_tag }} {{ field }}
-	</div>
-	 {% endfor %} 
-     <input type="button" value="Thêm Câu Hỏi"  id="add_question"  onclick="addquestion()"/>
-     <input type="button" value="Sửa Câu Hỏi"  id="update_question" onclick="updatequestion()"/>
-</form>
-<a href = "{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %} " id="del_test"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Xóa Bài tập" width="58" height="58" ></a>
-</div>
-
-<div id="testlist">
-    <h2 style="text-align: center;"> BÀI TẬP </h2>
-	 {% for question in question_list %}
-	<div id="{{ question.order_test }}">
-		<div>
-			<span class="id_test">{{ question.order_test }}</span><span>. </span> <span class="id_question_test">{{ question.question }}</span>
-		</div>
-		 {% if question.image_ques and question.image_ques != "False" %} 
-         <img src="{{ question.image_ques.url }}" height=150 width=150/>
-         {% else %}
-         <img src="#" height=0 width=0/>
-		{% endif %}
-		<ol style='list-style-type: upper-alpha'>
-			<li class="id_answerA_test">{{ question.answerA }}</li>
-			<li class="id_answerB_test">{{ question.answerB }}</li>
-			<li class="id_answerC_test">{{ question.answerC }}</li>
-			<li class="id_answerD_test">{{ question.answerD }}</li>
-		</ol>
-		<div>
-			Đáp Án Đúng: <span class="id_right_answer_test">{{ question.right_answer }}</span>
-		</div>
-	</div>
-	 {% endfor %}
-</div>
-</div>
+    <div id="detail_test">
+        <img src="{% static 'class_management/images/Add-Text-icon.png' %}" title="Add Question" width="58" height="58" id="add_text">
+        <div id="add_test_form">
+            <form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;">
+	           {% csrf_token %} 
+                <input type="hidden" id="id" value=""/>
+                <img id="image_ques" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
+	           {% for field in form %}
+    	           <div class="fieldWrapper">
+                        {{ field.errors }} 
+                        {{ field.label_tag }} {{ field }}
+    	           </div>
+	           {% endfor %} 
+                <input type="button" value="Add Question"  id="add_question"  onclick="addquestion()"/>
+                <input type="button" value="Edit Question"  id="update_question" onclick="updatequestion()"/>
+                <input type="button" value="Cancel" id="done_text"/>
+            </form>
+            <a href = "{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %} " id="del_test"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Delete Exercise" width="58" height="58" ></a>
+            <a href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}">Done</a>
+        </div>
+        <div id="testlist">
+            <h2 style="text-align: center;"> EXERCISE </h2>
+            {% if question_list|length == 0 %}
+                <div class="nonhaving">You Aren't Having Any Question in This Exercise!</div>
+            {% else %}
+                {% for question in question_list %}
+                    <div id="{{ question.order_test }}">
+                        <div>
+    			             <span class="id_test">{{ question.order_test }}</span><span>. </span> <span class="id_question_test">{{ question.question }}</span>
+                        </div>
+                        {% if question.image_ques and question.image_ques != "False" %} 
+                            <img src="{{ question.image_ques.url }}" height=150 width=150/>
+                        {% else %}
+                            <img src="#" height=0 width=0/>
+                        {% endif %}
+                        <ol style='list-style-type: upper-alpha'>
+                            <li class="id_answerA_test">{{ question.answerA }}</li>
+                            <li class="id_answerB_test">{{ question.answerB }}</li>
+                            <li class="id_answerC_test">{{ question.answerC }}</li>
+                            <li class="id_answerD_test">{{ question.answerD }}</li>
+                        </ol>
+                        <div>
+        			     Right Answer: <span class="id_right_answer_test">{{ question.right_answer }}</span>
+                        </div>
+                        <div class="option">
+                            <img src="{% static 'class_management/images/Edit-Text-icon.png' %}" title="Edit Question" width="58" height="58" id="edit_text">
+                            <img src="{% static 'class_management/images/Delete-Text-icon.png' %}" title="Delete Question" width="58" height="58" id="del_text">
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 {% block script %}
-    <script src="{% static 'class_management/js/detail_test_js.js' %}"></script>
     <script>
-    $('#del_text').click(function() {
-        alert("Kich vao cau hoi ban muon xoa!");
-        $("#add_text").animate({
-          height: '0px',
-          width: '0px'
-        },"slow");
+    $("#id_image_ques").hide();
+    $('label[for="id_image_ques"]').hide();
+    $('#add_ques').hide();
 
-        $("#edit_text").animate({
-          height: '0px',
-          width: '0px'}, 'slow');
-        
-        $("#testlist").children().hover(function() {
-            $(this).css("background-color", "#E8E8E8 ");
-        }, function() {
-            $(this).css('background-color', '');
+    $('#add_text').click(function(){
+        $("#testlist").animate({
+            'margin-left': '499px'
+        }, "slow");
+        $('#add_ques').show('slow');
+        $('#add_question').show('slow');
+        $('#update_question').hide();
+
+    });
+
+    
+    $("#edit_text").click(function() {
+        $("#testlist").animate({
+            'margin-left': '499px'
+        }, "slow");
+        $('#add_ques').show('slow');
+        $('#add_question').hide();
+        $('#update_question').show('slow');
+            var item = $(this).parent().parent();
+            $('#id_question').html(item.find(".id_question_test").html());
+            $("#id").val(item.find(".id_test").html());
+            if (item.children('img').attr('src') != "#") $('#image_test').attr('src', item.children('img').attr('src'));
+            else $('#image_test').attr('src', "/media/test/img-icon.png");
+            $('#id_question').html(item.find(".id_question_test").html());
+            $('#id_answerA').html(item.find(".id_answerA_test").html());
+            $('#id_answerB').html(item.find(".id_answerB_test").html());
+            $('#id_answerC').html(item.find(".id_answerC_test").html());
+            $('#id_answerD').html(item.find(".id_answerD_test").html());
+            $("input[name=right_answer][value=" + item.find(".id_right_answer_test").html() + "]").prop('checked', true);
         });
-        $("#testlist").children().click(function() {
-               if (confirm("Bạn chắc chắn muốn xóa câu hỏi này?")) {
-                var id_question = $(this).attr('id');
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'classes:deletequestion' chosen_test.pk %}",
-                    dataType: "json",
-                    data: { 
-                        csrfmiddlewaretoken : '{{ csrf_token }}',
-                        id : id_question },
-                    success: function(question_dict) {
-                      console.log("question"+id_question);
-                       
-                        var siblings = $('#'+id_question).nextAll();
-                        var len = siblings.length
-                        for(var i = 0; i< len; i++){
-                            var sibling = siblings[i];
-                            var id_sibling = $(sibling).attr('id');
-                            console.log("id_sibling"+id_sibling);
-                            $(sibling).attr('id', id_sibling - 1);
-                            $(sibling).find('.id_test').html(id_sibling -1);
 
+     $('#done_text').click(function(){
+        $("#add_ques").hide();
+         $("#testlist").animate({
+            'margin-left': '0px'
+        }, "slow");
+     });
+        $(".option").hide();
+        $("#testlist").children().hover(function(){
+            $(this).css("background-color", "#E8E8E8 ");
+            $(this).find(".option").show();
+        }, function(){
+            $(this).css('background-color', '');
+            $(this).find(".option").hide();
+        });
+        $('#del_text').click(function() {
+            console.log($(this).parent().parent());
+                   if (confirm("Are You Sure You Want to Detele This Question?")) {
+                    var id_question = $(this).parent().parent().attr('id');
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'classes:deletequestion' chosen_test.pk %}",
+                        dataType: "json",
+                        data: { 
+                            csrfmiddlewaretoken : '{{ csrf_token }}',
+                            id : id_question },
+                        success: function(question_dict) {
+                          console.log("question"+id_question);
+                           
+                            var siblings = $('#'+id_question).nextAll();
+                            var len = siblings.length
+                            for(var i = 0; i< len; i++){
+                                var sibling = siblings[i];
+                                var id_sibling = $(sibling).attr('id');
+                                console.log("id_sibling"+id_sibling);
+                                $(sibling).attr('id', id_sibling - 1);
+                                $(sibling).find('.id_test').html(id_sibling -1);
+
+                            }
+                            $("#"+id_question).remove();
+                        },
+                        error: function(errors_dict) {
+                            alert("error");
                         }
-                        $("#"+id_question).remove();
-                    },
-                    error: function(errors_dict) {
-                        alert("error");
+                    });
                     }
-                });
+                    return false;
+        });
+
+    var updatequestion = function() {
+        var data = new FormData($('form').get(0));
+        data.append('id', $("#id").val());
+        $.ajax({
+            type: "POST",
+            url: "{% url 'classes:updatequestion' chosen_test.pk %}",
+            dataType: "json",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(question_dict) {
+                var mom = $("#" + question_dict['id']);
+                mom.find(".id_question_test").html(question_dict['question']);
+                mom.find(".id_answerA_test").html(question_dict['answerA']);
+                mom.find(".id_answerB_test").html(question_dict['answerB']);
+                mom.find(".id_answerC_test").html(question_dict['answerC']);
+                mom.find(".id_answerD_test").html(question_dict['answerD']);
+                mom.find(".id_right_answer_test").html(question_dict['right_answer']);
+                if (question_dict['image_ques']) {
+                    mom.children('img').attr('src', question_dict['image_ques']).attr('height', '150').attr('width', '150');
+                } else {
+
+                    mom.children('img').attr('src', "#").attr('height', '0').attr('width', '0');
+                }
+            },
+            error: function(errors_dict) {
+                var errors = JSON.parse(errors_dict.responseText);
+                $('.errorlist').remove();
+                for (error in errors) {
+                    var id = '#id_' + error;
+                    console.log(id);
+                    $(id).parent().append(errors[error]);
+                }
+            }
+        });
+        return false;
+    };
+
+    var addquestion = function() {
+        var data = new FormData($('form').get(0));
+        $.ajax({
+            type: "POST",
+            url: "{% url 'classes:createtest' chosen_class.pk chosen_lesson.pk chosen_test.pk %}",
+            dataType: "json",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(question_dict) {
+                $(document).find(".nonhaving").html("");
+                var html = "<div id="+question_dict['order_test']+"><div>" + "<span class='id_test'>" + question_dict['order_test'] + "</span><span>. </span><span class='id_question_test'>" + question_dict['question'] + "</div>";
+                if (question_dict['image_ques']) {
+                    html += "<img src = '" + question_dict['image_ques'] + "' height=150 width=150 />";
+                } else {
+                    html += "<img src = '#' height=0 width=0 />";
+                }
+                html += "<ol style='list-style-type: upper-alpha'>" 
+                            + "<li class='id_answerA_test'>"+question_dict['answerA']
+                            + "</li>" 
+                            + "<li class='id_answerB_test'>"+question_dict['answerB']
+                            + "</li>" 
+                            + "<li class='id_answerC_test'>"+question_dict['answerC']
+                            + "</li>" 
+                            + "<li class='id_answerD_test'>"+question_dict['answerD']
+                            + "</li>" 
+                        +"</ol>" 
+                        + "<div> Right Answer: <span class='id_right_answer_test'>" 
+                            + question_dict['right_answer']+"</span>"
+                        +"</div></div>";
+            $("#testlist").append(html);
+            $("#image_ques").attr('src', '/media/test/img-icon.png');
+            $("#id_question").val("");
+            $("#id_answerA").val("");
+            $("#id_answerB").val("");
+            $("#id_answerC").val("");
+            $("#id_answerD").val("");
+            $("input[name=right_answer]").prop('checked', false);
+
+            },
+            error: function(errors_dict) {
+                var errors = JSON.parse(errors_dict.responseText);
+                $('.errorlist').remove();
+                for (error in errors) {
+                    var id = '#id_' + error;
+                    console.log(id);
+                    $(id).parent().append(errors[error]);
+                }
+            }
+        });
+        return false;
+    };
+            $("#del_test").click(function(){
+                if (confirm("Everything relating to This Exercise will be deleted too\nAre you sure you want to delete This Exercise? ")){
+                    return true;
                 }
                 return false;
-    });
-
-});
-
-
-var updatequestion = function() {
-    var data = new FormData($('form').get(0));
-    data.append('id', $("#id").val());
-    $.ajax({
-        type: "POST",
-        url: "{% url 'classes:updatequestion' chosen_test.pk %}",
-        dataType: "json",
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function(question_dict) {
-            var mom = $("#" + question_dict['id']);
-            mom.find(".id_question_test").html(question_dict['question']);
-            mom.find(".id_answerA_test").html(question_dict['answerA']);
-            mom.find(".id_answerB_test").html(question_dict['answerB']);
-            mom.find(".id_answerC_test").html(question_dict['answerC']);
-            mom.find(".id_answerD_test").html(question_dict['answerD']);
-            mom.find(".id_right_answer_test").html(question_dict['right_answer']);
-            if (question_dict['image_ques']) {
-                mom.children('img').attr('src', question_dict['image_ques']).attr('height', '150').attr('width', '150');
-            } else {
-
-                mom.children('img').attr('src', "#").attr('height', '0').attr('width', '0');
-            }
-        },
-        error: function(errors_dict) {
-            var errors = JSON.parse(errors_dict.responseText);
-            $('.errorlist').remove();
-            for (error in errors) {
-                var id = '#id_' + error;
-                console.log(id);
-                $(id).parent().append(errors[error]);
-            }
-        }
-    });
-    return false;
-};
-
-var addquestion = function() {
-    var data = new FormData($('form').get(0));
-    $.ajax({
-        type: "POST",
-        url: "{% url 'classes:createtest' chosen_class.pk chosen_lesson.pk chosen_test.pk %}",
-        dataType: "json",
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function(question_dict) {
-            var html = "<div id="+question_dict['order_test']+"><div>" + "<span class='id_test'>" + question_dict['order_test'] + "</span><span>. </span><span class='id_question_test'>" + question_dict['question'] + "</div>";
-            if (question_dict['image_ques']) {
-                html += "<img src = '" + question_dict['image_ques'] + "' height=150 width=150 />";
-            } else {
-                html += "<img src = '#' height=0 width=0 />";
-            }
-            html += "<ol style='list-style-type: upper-alpha'>" + "<li class='id_answerA_test'>" + question_dict['answerA'] + "</li>" + "<li class='id_answerB_test'>" + question_dict['answerB'] + "</li>" + "<li class='id_answerC_test'>" + question_dict['answerC'] + "</li>" + "<li class='id_answerD_test'>" + question_dict['answerD'] + "</li>" + "</ol>" + "<div> Dap An Dung: <span class='id_right_answer_test'>" + question_dict['right_answer'] + "</span></div></div>";
-            $("#testlist").append(html);
-        $("#image_test").attr('src', '/media/test/img-icon.png');
-        $("#id_question").val("");
-        $("#id_answerA").val("");
-        $("#id_answerB").val("");
-        $("#id_answerC").val("");
-        $("#id_answerD").val("");
-        $("input[name=right_answer]").prop('checked', false);
-
-        },
-        error: function(errors_dict) {
-            var errors = JSON.parse(errors_dict.responseText);
-            $('.errorlist').remove();
-            for (error in errors) {
-                var id = '#id_' + error;
-                console.log(id);
-                $(id).parent().append(errors[error]);
-            }
-        }
-    });
-    return false;
-};
-        $("#del_test").click(function(){
-            if (confirm("Tất cả các Bài làm liên quan đến Bài tập này sẽ bị xóa\nBạn chắc chắn xóa Bài tập này? ")){
-                return true;
-            }
-            return false;
-        });
-    </script>
+            });
+        </script>
     {% endblock %}
-</html>

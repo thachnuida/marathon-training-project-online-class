@@ -60,6 +60,7 @@ def delete_class(request, pk):
     return HttpResponseRedirect(reverse('classes:classlist'))
 
 def create_lesson(request, class_id):
+    chosen_class = Class.objects.get(pk=class_id)
     form = CreateLesson()
     if request.method == 'POST':
         form=CreateLesson(request.POST)
@@ -67,7 +68,7 @@ def create_lesson(request, class_id):
             createdlesson = Lesson(lesson_name = form.cleaned_data['lesson_name'], Class = Class.objects.get(pk=class_id), description=form.cleaned_data['description'], video_link = form.cleaned_data['video_link'])
             createdlesson.save()
             return HttpResponseRedirect(reverse('classes:detailclass', args=[class_id]))
-    return render(request, "class_management/create_lesson.html", {'form':form })
+    return render(request, "class_management/create_lesson.html", {'form':form, 'chosen_class':chosen_class})
 
 def delete_lesson(request, class_id, pk):
     Lesson.objects.get(Class=class_id, pk=pk).delete()
@@ -75,6 +76,7 @@ def delete_lesson(request, class_id, pk):
 
 def detail_lesson(request, class_id, pk):
     chosen_lesson = get_object_or_404(Lesson, pk=pk)
+    chosen_class = get_object_or_404(Class, pk=class_id)
     test_list = chosen_lesson.test_set.all()
     form = CreateLesson(chosen_lesson=chosen_lesson.__dict__)
     formtest = CreateTest()
@@ -90,15 +92,24 @@ def detail_lesson(request, class_id, pk):
                 test = Test(lesson = Lesson.objects.get(pk=pk), test_name = formtest.cleaned_data['test_name'])
                 test.save()
                 return HttpResponseRedirect(reverse('classes:createtest', args=[class_id, pk, test.id]))
-    return render(request, "class_management/detail_lesson.html", {"form": form, 'chosen_lesson':chosen_lesson, 'test_list':test_list, 'formtest':formtest, 'class_id':class_id})
+    return render(request, "class_management/detail_lesson.html", {"form": form, 'chosen_lesson':chosen_lesson, 'test_list':test_list, 'formtest':formtest, 'chosen_class':chosen_class})
      
-def studentclass(request, pk):
+def student_class(request, pk):
     chosen_class = get_object_or_404(Class, pk=pk)
     student_list = chosen_class.students_in_class.all()
     chart = []
     for student in student_list:
         chart.append(calpercent(chosen_class, student))
-    return render(request, "class_management/studentclass.html", {'chosen_class':chosen_class, 'student_list':student_list, 'chart': chart})
+    return render(request, "class_management/student_class.html", {'chosen_class':chosen_class, 'student_list':student_list, 'chart': chart})
+
+def student_process(request, user_id):
+    user = User.objects.get(pk=user_id)
+    class_list = Class.objects.filter(students_in_class=user_id)
+    chart = []
+    for class_item in class_list:
+        chart.append(calpercent(class_item, user))
+    return render(request, "class_management/student_process.html", {'user':user, 'class_list': class_list, 'chart':chart })
+
 
 def calpercent(chosen_class, user):
     num_test = Test.objects.filter(lesson__Class=chosen_class).count()
@@ -270,5 +281,9 @@ def test_history(request, user_id, class_id):
                 html = html + "</div>"
             return HttpResponse(html)
     test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))
-    
     return render(request, "class_management/test_history.html", {'user': user,'test_list':test_list, 'chosen_class':chosen_class})
+
+def student_detail(request, user_id):
+    user = get_object_or_404(User,pk=user_id)
+    class_list = Class.objects.filter(students_in_class=user_id)
+    return render(request, "class_management/student_detail.html", {'user':user, 'class_list':class_list})
