@@ -4,26 +4,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      {% block title %} Lop hoc Online {% endblock %}
-    {% block link %}
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-  <script src="{% static 'class_management/js/js.js' %}"></script>
-    {% endblock %}
+  {% block title %} On line Class {% endblock %}
+  {% block link %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+  {% endblock %}
   </head>
-        {% block body %}
-<h1>Danh Sach Lop Hoc Da Dang Ki</h1>
-{% for class in all_class %}
+  {% block body %}
+  <div id="studylist">
+    <div class="header">
+      <h2>LIST CLASS</h2>
+    </div>
+    <div class="content">
+      {% for class in all_class %}
+            {% if class.image_class and class.image_class != "False" %}
+              <img src="{{ class.image_class.url }}" height=150 width=150/><br>
+            {% else %}
+             <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
+            {% endif %}
 
-{% if class.image_class and class.image_class != "False" %}
-   <img src="{{ class.image_class.url }}" height=150 width=150/>
-{% else %}
-  <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
-{% endif %}
-  <a href="{% url 'study:studyclass' class.id %}">{{ class.class_name }}</a><br>
-  <a href="">{{ class.teacher }}</a><br>
-{% endfor %}
-{% endblock %}
+            <a href="{% url 'study:studyclass' class.id %}">{{ class.class_name }}</a><br>
+            <p> {{ class.description }}</p>
+            <p> {{ class.teacher }}    </p>
+            <p> {{ class.create_date }}</p>
+      {% endfor %}
+      </div>
+    </div>
+  {% endblock %}

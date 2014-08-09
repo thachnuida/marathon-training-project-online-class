@@ -15,15 +15,16 @@ def register(request):
     registered=False
     if request.method =='POST':
         user_form=UserForm(data=request.POST) 
-        profile_form=UserProfileForm(data=request.POST)
+        profile_form=UserProfileForm(request.POST, request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            # profile.user_image=profile_form.cleaned_data['user_image'],
+            if 'user_image' in request.FILES:
+                profile.user_image = request.FILES['user_image']
             profile.save()
             registered = True
             user = authenticate(username=request.POST['username'], password=request.POST['password'])
@@ -37,7 +38,6 @@ def register(request):
     return render(request,
             'home/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
 
 def login(request):
     if request.method == 'POST':
@@ -91,5 +91,15 @@ def home(request):
         top_student_class = Class.objects.exclude(students_in_class=request.user).annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
         return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
 
-def alone(request):
-    return render(request,'home/alone.html')
+def profile(request):
+    user_using=request.user
+    print user_using
+
+    profiles = UserProfile.objects.filter(user=user_using)
+    profiles2  =User.objects.filter(pk=user_using.id)
+    # all_question1  = chosen_test.question_set.all()
+    print profiles2
+    return render(request,'home/profile.html',{
+        'profiles':profiles,
+        'profiles2':profiles2
+        })

@@ -12,7 +12,7 @@
   {% csrf_token %}
   <input class="question_id"  name="question_id" value = "{{ one_question.id  }}"/>
   <input class="order" name="number" value ="{{ one_question.order_test}}"/>
-  <input class="answer_user" name="answer_user" value=""/>
+  <input class="answer_user" name="answer_user"/>
   <p class="numbertest">{{one_question.order_test}}</p>
   <p class="question">{{ one_question.question}}</p>
 
@@ -41,11 +41,9 @@ var next = function(){
     processData: false,
     contentType: false,
     success: function(topic_list) {
-      console.log(topic_list.array_user_choose);
       order  = topic_list.load['order_test']
       lenght = topic_list.load['lenght'];
-      console.log(order,lenght);
-      if (order <= lenght) {
+      if (order<=lenght){
       $(".order").val(topic_list.load['order_test']);
       $(".question_id").val(topic_list.load['id']);
       $(".answer_user").val(topic_list.array_user_choose);
@@ -60,16 +58,17 @@ var next = function(){
       $(".span3").html(topic_list.load['answerC']);
       $(".span4").html(topic_list.load['answerD']);
       }
-      if (order == lenght) {
-        $(".button2").val("Finish");
-        // $(".button2").attr('type','submit');
-        // $(".button2").attr('onclick',null);
-        console.log("aaa");
-        // window.location.pathname="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}";
-        // $('ajaxloader').remove() // remove the ajax-loader
-        // submitbutton.show() // return the submit butto
+      if (order==lenght+1){
+        console.log("qua han roi");
+        $(".answer_user").val(topic_list.array_user_choose);
+        $(".order").val(topic_list.load['order_test']);
+        $(".button2").trigger( "click" );
       }
-     
+      if(order==lenght+2){
+        console.log("xing");
+        $(".button2").attr('type','submit');
+        $(".button2").trigger( "click" );
+      }    
     }
   });
   return false;

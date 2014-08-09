@@ -14,67 +14,95 @@
         {% endblock %}
     </head>
     <body>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-9">
-            {%block banner %}
-              <image id="banner" src="{% static 'images/banner.jpg' %}"/>
-            {% endblock %}
+        <div class="welcome">
+          <p class="header1">WELLCOME</p>   
+        </div>
+        <div class="logo">
+          <!-- <p class="header1">WELLCOME</p>    -->
+          <image id="baner2"src="{% static 'images/logo.jpg' %}"/>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-login">
+              {% block banner %}
+                <image id="banner" src="{% static 'images/banner.jpg' %}"/>
+                <!-- <h1>ONLINE CLASS</h1> -->
+              {% endblock %}
+              </div>
+            </div>
+            <div class="col-xs-6" >
+              <div class="form-login">
+                  {% if user.is_authenticated %}
+                    <a class="hello" href="{% url 'home:profile'%}">HELLO {{ user.username }}!</a><br>
+                    <a class="hello" href="{% url 'home:logout'%}">LOG OUT</a>
+                  {% else %}
+                <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next_url }}"/>
+                    <ul>
+                      {% if error %}
+                      <li class="error-message">
+                          {{ error|safe }}
+                      </li>
+                      {% endif %}
+                    </ul>
+                    <p class="ever"> STUDY EVER WHERE</p>
+                    <p class="loginto"> LOGIN TO STUDY </p>    
+                    <input id="id_username" name="username" type="text" value="{{ username }}" placeholder="Username..."/>
+                    <br/>
+                    <input id="id_password" name="password" type="password" placeholder="Password..."/>
+                    <br/>
+                    <button class="button" type="submit">LOG IN</button>
+                    <a class="button" href="{% url 'home:register' %}" >SIGN UP</a>
+                </form>  
+                  {% endif %}
+              </div>
           </div>
-          <div class="col-xs-6 col-md-3 sidebar-offcanvas well well-lg" role="navigation">
-              {% if user.is_authenticated %}
-                <a href="{% url 'home:alone'%}">HELLO {{ user.username }}!</a>
-                <a href="{% url 'home:logout'%}">LOG OUT</a>
-              {% else %}
-          <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
-              {% csrf_token %}
-              <input type="hidden" name="next" value="{{ next_url }}"/>
-              <ul>
-                {% if error %}
-                <li class="error-message">
-                    {{ error|safe }}
-                </li>
-                {% endif %}
-              </ul>    
-              <input id="id_username" name="username" type="text" class="form-control" value="{{ username }}" placeholder="Username..."/>
-              <br/>
-              <input id="id_password" name="password" type="password" class="form-control" placeholder="Password..."/>
-              <br/>
-              <button class="btn btn-primary" type="submit" style="margin-left: 20px;">LOG IN</button>
-              <a class="btn btn-primary" href="{% url 'home:register' %}" style="float: right; margin-right: 20px;">SIGN UP</a>
-          </form>  
-          {% endif %}
-        </div>
-        </div>
-        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-            <div class="navbar-collapse collapse">
-              <span class="navbar-brand">Online Class</span>
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
-                <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
-                <li><a href="#contact">ABOUT</a></li>
-                {% if user.is_authenticated %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOUR SCOPE<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">Learning Process</a></li>
-                    {% if user.userprofile.role == 'T' %}
-                     <li role="presentation" class="divider"></li>
+          </div>
+          <div id="navigation" class="navbar navbar-inverse navbar-static-top" role="navigation">
+              <div id="navigation" class="navbar-collapse collapse">
+                <span class="navbar-brand">Online Class</span>
+                <ul id="navigation-ul" class="nav navbar-nav">
+                  <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
+                  <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
+                  <li><a href="#contact">ABOUT</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOUR SCOPE<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">Learning Process</a></li>
+                      {% if user.userprofile.role == 'T' %}
+                      <li role="presentation" class="divider"></li>
                       <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">Class Management</a></li>
                     {% endif %}
-                  </ul>
-                </li>
-                {% endif %}
-              </ul>
-            </div>
-        </div><!--end dropdown -->
-        <div id="content">
-        {% block body %}
+                    </ul>
+                  </li>
+                    {% endif %}
+                </ul>
+              </div>
+          </div><!--end dropdown -->
+          <div id="content" style="min-height: 800px;">
+          {% block body %}
 
-        {% endblock %}
-      </div><!-- end content div -->
-    	</div><!-- end contanier -->
+          {% endblock %}
+        </div>
+        </div><!-- end contanier -->
+
       {% block script %}
       {% endblock %}
+      <!-- <div class="container">
+        <div id="footer"> -->
+         <!--  <span class="divider"></span>
+          <div class="area">
+            <div id="connect">
+              <a href="http://freewebsitetemplates.com/go/googleplus/" target="_blank" class="googleplus"></a> <a href="http://www.freewebsitetemplates.com/misc/contact/" target="_blank" class="mail"></a> <a href="http://freewebsitetemplates.com/go/facebook/" target="_blank" class="facebook"></a> <a href="http://freewebsitetemplates.com/go/twitter/" target="_blank" class="twitter"></a>
+            </div>
+            <p>
+              © 2023 AZ Logistics. All Rights Reserved.
+            </p>
+          </div> -->
+        <!-- </div>
+      </div> -->
     </body>
 </html>

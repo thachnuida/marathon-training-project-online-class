@@ -68,14 +68,20 @@ margin-top: 20px;
     border-radius: 5px;
     overflow: hidden;
 }
+#home .class{
+    float: left;
+display: block;
+width: 200px;
+margin-right: 20px;
+margin-top: -28px;
+height: 280px;
+}
 
 #home .hover_detail {
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
     position: absolute;
-    top: 140px;
-    height: 180px;
-    width: 180px;
     border-radius: 5px;
+    padding: 41px;
 }
 #ones_classes .hover_detail {
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
@@ -133,6 +139,7 @@ margin: 0px auto;
     padding: 20px;
     border-top: 5px groove rgb(137, 136, 170);
     overflow: hidden;
+    height: 605px;
 }
 
 #detail_class .lesson_wrapper{
@@ -249,16 +256,16 @@ border-radius: 3px;
     padding: 10px;
     display: inline-block;
     position: absolute;
-    top: 340px;
+    top: 888px;
     right: 165px;
 }
 
 #studentclass #bonus #goodscore, #student_process #bonus #goodscore{
     background: #00A8F0;
-display: inline-block;
-width: 15px;
-height: 15px;
-margin-right: 10px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }
 #studentclass #bonus #mediumscore, #student_process #bonus #mediumscore{
     background: #C0D800;

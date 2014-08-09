@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-    <div id="detail_test" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);">
+    <div id="detail_test" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);min-height:1000px;" class="bg">
         <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">DELETE TEST</button>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,7 +99,7 @@
 <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>300){
+       if ($(window).scrollTop()>880){
             $("#add_test_form").addClass("fixed_class");
         }
         else {

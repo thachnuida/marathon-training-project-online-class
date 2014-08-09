@@ -7,7 +7,7 @@
 	<link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-	<div id="test_history">
+	<div id="test_history" class="bg" style="min-height: 900px;">
 		<div id="student">
 			{% if user.user_image %}
 				<img src="{{ user.user_image}}"/>

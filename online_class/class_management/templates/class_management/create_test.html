@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-    <div id="create_test" class="well" style="overflow:hidden;">
+    <div id="create_test" class="bg" style="overflow:hidden;min-height:900px;" >
         <div id="create_test_form" class="pull-right">
             <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
             <div id="img_error" class="text-danger"></div>
@@ -57,7 +57,7 @@
     <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>380){
+       if ($(window).scrollTop()>880){
             $("#create_test_form").addClass("fixed_class");
         }
         else {

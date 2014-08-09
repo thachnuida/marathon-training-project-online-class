@@ -24,7 +24,8 @@ ul#topmost{
 	border-bottom: solid 1px #CCC;
 }
 #topmost img{
-	height: 100px;
+	height: 106px;
+    width: 106px;
 	padding-bottom: 10px;
 }
 .plus_info{
@@ -60,11 +61,12 @@ ul#topmost{
     color:black;
 }
 .form-login{
-    height: 245px;
     /*opacity: 0.8;*/
+    margin-top: 20px;
     display: block;
     background-color: rgba(255, 255, 255, 0.741176);
     margin-bottom: 20px;
+    height: 277px;
 }
 .form-login input{
     border: 1px solid rgb(107, 163, 167);
@@ -74,18 +76,15 @@ ul#topmost{
     border-image-outset: initial;
     border-image-repeat: initial;
     padding: 5px;
-    width:60%;
+    width:70%;
     margin: 0px 0px 5px;
     margin-left: 10%;
     display: block;
 }
 
-.form-login button{
+.button{
     border-radius: 0px;
-    position: absolute;
     background-color: rgb(39, 131, 137);
-    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
-    -webkit-transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
     border: 1px solid rgb(73, 73, 73);
     border-image-source: initial;
     border-image-slice: initial;
@@ -93,11 +92,162 @@ ul#topmost{
     border-image-outset: initial;
     border-image-repeat: initial;
     font: normal normal normal 14px/1.4em 'noticia text', serif;
-    transition: color 0.4s ease 0s;
-    -webkit-transition: color 0.4s ease 0s;
+    color: rgb(255, 255, 255);
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 10%;
+    margin-left: 10%;
+}
+.hello{
+    font-size: 30px !important;
+    margin-top: 20px !important;
+}
+
+#navigation{
+    background-color: rgba(8, 8, 8, 0.921569)!important;
+   
+}
+
+#navigation-ul li{
+     color: rgb(255, 255, 255)!important;
+}
+
+#footer{
+    height: 245px;
+    opacity: 0.6;
+    margin-top: 20px;
+    display: block;
+    /*background-color: rgba(255, 255, 255, 0.741176);*/
+    background-color: rgb(172, 216, 226);
+    margin-bottom: 20px;
+}
+h2, h3{
+    font: normal normal normal 25px/1.2em impact, impact-w01-2010, impact-w02-2010, impact-w10-2010, sans-serif;
+    color: rgb(86, 108, 113);
+    line-height: 1.2em;
+}
+#top9class{
+    display: block;
+    background-color: rgba(255, 255, 255, 0.890196)!important;
+    margin-top: 17px;
+}
+#popularclass{
+ 
+}
+.h3_popular{
+    margin-top: 20px;
+}
+.logo{
+    background-color: rgba(8, 8, 8, 0.921569)!important;
+    margin-left: 145px;
+    width:960px;
+    /*height: 150px;*/
+}
+
+.baner2{
+    display: block;
+}
+
+.form-register{
+    padding-top:20px;
+    padding-bottom:50px;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.741176);
+    margin-bottom: 20px;
+}
+.form-register h1{
+    margin-left: 30%;
+}
+.form-register2{
+    margin-top: 3%;
+    margin-left: 20%;
+    margin-right: 21%;
+    background-color: rgba(255, 255, 255, 0.741176);
+}
+.form-register2 ul{
+    list-style-type: none;
+}
+.form-register2 ul li{
+    color: #8B008B;
+    font: 25px/1 Helvetica, Verdana, sans-serif;
+}
+.form-register2 p label{
+    margin-top: 3%;
+    margin-left: 5%;
+    font: normal normal normal 23px/1.4em 'times new roman', times, serif;
+    color: rgb(0, 0, 0);
+}
+.form-register2 button{
+    border-radius: 0px;
+    background-color: rgb(39, 131, 137);
+   
+    border: 1px solid rgb(73, 73, 73);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    font: normal normal normal 14px/1.4em 'noticia text', serif;
     color: rgb(255, 255, 255);
     white-space: nowrap;
     display: inline-block;
     position: relative;
     padding: 2%;
+    margin-left: 45%;
+    padding-bottom: 6%;
+}
+
+.form-register input{
+    border: 1px solid rgb(107, 163, 167);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    padding: 5px;
+    width:70%;
+    margin: 0px 0px 5px;
+    margin-left: 10%;
+    display: block;
+}
+
+#studylist{
+    background-color: rgba(255, 255, 255, 0.890196)!important;
+    width: 821px;
+    float: left;
+}
+
+#studylist .header{
+    height: 65px;
+    width: 821px;
+    float: left;
+    display: block;
+}
+#studylist .header h2{
+    color: #2f2203 ;
+    font: 30px/30px 'Abel-Regular';
+    letter-spacing: 1px;
+    display: block;
+    float: left;
+}
+#studylist .content{
+    width: 821px;
+    float: left;
+}
+/*#studylist .studylist-content img{
+    height: 125px;
+    width: 125px;
+    margin-left: 10px;
+    margin-top: 10px;
+
+}*/
+#studylist .classes {
+    background-color: rgba(255, 255, 255, 0.741176);
+    margin-left: 9%;
+    margin-top: 6%;
+/*    height:10px;
+    width: 20px;*/
+    float: left;
+    display: block;
 }

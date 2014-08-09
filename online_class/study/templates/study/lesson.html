@@ -2,18 +2,18 @@
 {% load url from future %}
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-      {% block title %} Lop hoc Online {% endblock %}
-    {% block link %}
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+
+<head>
+  {% block title %} Lop hoc Online {% endblock %}
+  {% block link %}
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="/static/home/css/bootstrap.css" rel="stylesheet">
+  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-  <script src="{% static 'class_management/js/js.js' %}"></script>
-    {% endblock %}
-  </head>
+<script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+<script src="{% static 'class_management/js/js.js' %}"></script>
+  {% endblock %}
+</head>
 {% block body %}
 <h3>{{ chosen_class}}</h3>
 
