@@ -26,10 +26,11 @@
 		</div>
 		<div id="history">
 			<div class="fill-green">Exercise History - {{ chosen_class.class_name }} Class</div>
-			<div class="substrate">
 				{% if test_list|length == 0 %}
-					<div class="nonhaving">Any Exercise Haven't Been Done!</div>
+				<div class="alert alert-info nonhaving" role="alert">
+					Any Exercise Haven't Been Done!</div>
 				{% else %}
+				<div class="substrate">
 					<div class="left-blue">
 						{% for test in test_list %}
 						<div class="muc">

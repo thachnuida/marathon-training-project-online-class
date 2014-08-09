@@ -2,43 +2,30 @@
 	text-align: center;
 	background-color: #f1f1f1;
 }
+#content{
+	margin-bottom: 30px;
+}
+.margin-top{
+	margin-top: 10px;
+}
 #banner{
-	height: 250px;
-	width: 85%;
-	margin: 0px auto;
-	display: block;
+	height: 202px;
+	width: 850px;
 }
-#sidebar{
-	border: 2px solid black;
-	padding: 20px;
-	float: right;
-	top: -328px;
-}
-#mid_container{
-	margin: 0px auto;
-	width: 85%;
-}
-#side_content{
-	margin-top: -200px;
-	width: 175px;
-}
+
 ul#topmost{
 	padding-left: 5px;
 }
 #topmost li{
 	display: inline-block;
-	height: 100px;
 	width: 200px;
-padding-bottom: 10px;
-margin-bottom: 10px;
-border-bottom: solid 1px #CCC;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: solid 1px #CCC;
 }
 #topmost img{
-	margin-right: 20px;
 	height: 100px;
-	width: 100px;
-	float: left; 
-	padding: 10px;
+	padding-bottom: 10px;
 }
 .plus_info{
 	text-align: center;
@@ -46,4 +33,71 @@ border-bottom: solid 1px #CCC;
 	color: #FFFFFF;
 	border-bottom-left-radius: 55px;
  	border-bottom-right-radius: 55px;
+}
+
+#body-childer{
+    position: fixed;
+    width: 100%;
+    height: 328px;
+    background-image: url(http://static.wixstatic.com/media/41d000_c5a0ca1893896b25c0902ca4e23c63c3.png_srz_p_1068_868_75_22_0.50_1.20_0.00_png_srz);
+    background-color: rgb(215, 215, 215);
+    background-size: cover;
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+}
+.welcome{
+    height: 50px;
+    opacity: 0.8;
+    display: block;
+    background-color: white;
+}
+.header1{
+    line-height: 20px;
+    margin-left: 580px;
+    margin-top: 15px;
+    width: auto;
+    display: inline-block;
+    color:black;
+}
+.form-login{
+    height: 245px;
+    /*opacity: 0.8;*/
+    display: block;
+    background-color: rgba(255, 255, 255, 0.741176);
+    margin-bottom: 20px;
+}
+.form-login input{
+    border: 1px solid rgb(107, 163, 167);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    padding: 5px;
+    width:60%;
+    margin: 0px 0px 5px;
+    margin-left: 10%;
+    display: block;
+}
+
+.form-login button{
+    border-radius: 0px;
+    position: absolute;
+    background-color: rgb(39, 131, 137);
+    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+    -webkit-transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+    border: 1px solid rgb(73, 73, 73);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    font: normal normal normal 14px/1.4em 'noticia text', serif;
+    transition: color 0.4s ease 0s;
+    -webkit-transition: color 0.4s ease 0s;
+    color: rgb(255, 255, 255);
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    padding: 2%;
 }

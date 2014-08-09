@@ -1,8 +1,47 @@
+.nonhaving{
+  margin-top: 20px; 
+  text-align: center;
+}
+.btgroupclass{
+    position: absolute;
+    left: 40px;
+    bottom: 25px;
+}
+.bg{
+    border: 4px solid #e3e3e3;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    margin-top: -16px;
+    padding: 10px;
+}
+.image_class{
+    margin-right: 155px;
+margin-top: 20px;
+ width:100px;
+  height:100px;
+  margin-bottom: 5px;
+  }
+  .image_ques{
+ width:100px;
+  height:100px;
+   margin-bottom: 5px;
+  }
+  .image_class:hover, .image_ques:hover{
+    cursor: pointer;
+  }
+ 
+  .delete_btn{
+    margin-top: 70px;
+  }
+   .delete_btn2{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 #ones_classes a,#detail_class a, #detail_lesson a {
     text-decoration: none;
 }
 
-#ones_classes .title,#student_detail .title, #create_test #testlist .title, #create_lesson .title, #detail_lesson .title, #detail_class .title, #create_class .title{
+#ones_classes .title,#student_detail .title, #create_test #testlist .title, #create_lesson .title, #detail_lesson .title, #detail_class .title, #create_class .title, #studentclass .title, #student_process .title{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Roboto Condensed',sans-serif;
@@ -11,8 +50,17 @@
     color: #B31B3B;
 }
 
+#home .class_in_list {
+    height: 180px;
+    width: 180px;
+    position: relative;
+    margin: 10px;
+    float: left;
+    border-radius: 5px;
+    overflow: hidden;
+}
 #ones_classes .class_in_list {
-    height: 200px;
+    height: 180px;
     width: 200px;
     position: relative;
     margin: 10px;
@@ -21,31 +69,32 @@
     overflow: hidden;
 }
 
+#home .hover_detail {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 140px;
+    height: 180px;
+    width: 180px;
+    border-radius: 5px;
+}
 #ones_classes .hover_detail {
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
     position: absolute;
     top: 140px;
-    height: 200px;
+    height: 180px;
     width: 200px;
     border-radius: 5px;
 }
 
-#ones_classes .chose_student {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-}
-
-#ones_classes .chose_class {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-}
-
 #ones_classes .create_date_class {
-    font-size: 12px;
-    text-align: right;
+     margin-left: 15px;
     color: blue;
+    font-weight: bold;
+}
+#ones_classes .quantity {
+    color: blue;
+    margin-left: 15px;
+    font-weight: bold;
 }
 
 #ones_classes .class_name {
@@ -54,12 +103,31 @@
     margin: 10px;
     color: red;
 }
+#create_class #add_class_form{
+margin: 0px auto;
+ width: 50%;
+ border: 5px groove rgb(137, 136, 170);
+    padding: 20px;
+    padding-bottom: 60px;
+}
+#detail_class #add_class_form{
+    border: 5px groove rgb(137, 136, 170);
+    padding: 20px;
+    float: left;
+    width: 50%;
+}
 
-#detail_class #add_class_form,#create_class #add_class_form, #create_lesson #add_lesson_form, #detail_lesson #detail_lesson_form, #create_test #create_test_form, #detail_test #add_test_form{
+ #create_test #create_test_form{
 	border: 5px groove rgb(137, 136, 170);
-	padding: 20px;
-	display: inline-block;
-	float: left;
+    padding: 20px;
+    margin-top: 53px;
+    margin-right: 2px;
+    position: relative;
+    padding-top: 5px;
+}
+#create_lesson #add_lesson_form, #detail_lesson #detail_lesson_form{
+    border: 5px groove rgb(137, 136, 170);
+    padding: 20px;
 }
 #detail_class .lesson{
     padding: 20px;
@@ -69,12 +137,12 @@
 
 #detail_class .lesson_wrapper{
 	display: inline-block;
-border: 5px groove rgb(116, 56, 56);
-padding: 10px;
-width: 177px;
-height: 155px;
-margin: 7px;
-background: rgb(214, 210, 212);
+    margin: 7px;
+    width: 235px;
+}
+#detail_class .lesson_wrapper:hover{
+    background-color: rgb(212, 241, 248);
+    cursor: pointer;
 }
 
 #detail_class .date, #detail_lesson .date{
@@ -91,12 +159,8 @@ background: rgb(214, 210, 212);
     display: inline-block;
     background-repeat: no-repeat;
     padding: 10px;
-    margin: 20px;
-    border: 2px solid black;
-    height: 120px;
-    width: 150px;
-    background-color: rgb(125, 243, 163);
-    margin-top: -10px
+    margin: 10px;
+    border: 2px solid rgb(55, 18, 172);
 }
 #detail_lesson .test_name{
     color: red;
@@ -114,43 +178,65 @@ background: rgb(214, 210, 212);
     padding-top: 15px;
     padding-left: 20px;
     background-image: url('/static/class_management/images/paper-clip.png');
-    background-position:  550px 51px;
+    background-position:  189px 55px;
     background-repeat: no-repeat;
 }
-#detail_lesson #add_test_form{
-    border: 1px solid #000000;
-    float: right;
-    display: inline-block;
+
+.bs-callout {
+padding: 20px;
+margin: 20px 0;
+border-left: 5px solid #51A573;;
+border-radius: 3px;
+}
+#detail_lesson{
+    border-top: 5px groove rgb(137, 136, 170);
+}
+#detail_test #add_test_form2{
+    border: 1px solid rgb(137, 136, 170);
     padding: 20px;
     padding-top: 30px;
-    margin-right: 31px;
-    margin-top: 50px;
+    margin-top: 53px;
+    float: left;
 }
-#detail_test #testlist{
+
+#detail_test #add_test_form{
+    border: 5px groove rgb(137, 136, 170);
+    padding: 20px;
+    margin-top: 53px;
+    margin-right: -60px;
+    position: relative;
+    padding-top: 5px;
+}
+.fixed_class{
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    position: fixed !important;
+    right: 95px;
+    top: 18px;
+}
+#detail_test #test_list{
+    overflow: hidden;
+}
+#detail_lesson #testlist{
     border: 2px solid black;
     padding: 50px;
     width: 600px;
 }
 
 .mycarousel{
-    margin: 20px auto;
-position: relative;
-border: 10px solid #fff;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
--webkit-box-shadow: 0 0 2px #999;
--moz-box-shadow: 0 0 2px #999;
-box-shadow: 0 0 2px #999;
-overflow: hidden;
     position: relative;
-    width: 1020px
+    border: 10px solid #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
+    overflow: hidden;
 }
 .mycarousel ul{
-        width: 20000em;
+    width: 20000em;
     position: relative;
-
-    /* Optional, required in this case since it's a <ul> element */
     list-style: none;
     margin: 0;
     padding: 0;
@@ -158,30 +244,30 @@ overflow: hidden;
 #mycarousel li{
     float: left;
 }
-#studentclass #bonus{
+#studentclass #bonus, #student_process #bonus{
     border: 1px solid black;
     padding: 10px;
     display: inline-block;
     position: absolute;
-    top: 350px;
+    top: 340px;
     right: 165px;
 }
 
-#studentclass #bonus #goodscore{
+#studentclass #bonus #goodscore, #student_process #bonus #goodscore{
     background: #00A8F0;
 display: inline-block;
 width: 15px;
 height: 15px;
 margin-right: 10px;
 }
-#studentclass #bonus #mediumscore{
+#studentclass #bonus #mediumscore, #student_process #bonus #mediumscore{
     background: #C0D800;
 display: inline-block;
 width: 15px;
 height: 15px;
 margin-right: 10px;
 }
-#studentclass #bonus #badscore{
+#studentclass #bonus #badscore, #student_process #bonus #badscore{
     background: #CB4B4B;
 display: inline-block;
 width: 15px;
@@ -189,30 +275,29 @@ height: 15px;
 margin-right: 10px;
 }
 
-#studentclass #bonus #nonscore{
+#studentclass #bonus #nonscore, #student_process #bonus #nonscore{
     background: #4DA74D;
 display: inline-block;
 width: 15px;
 height: 15px;
 margin-right: 10px;
 }
-#studentclass h1{
+#studentclass h1, #student_process h1{
     text-align: center;
 }
 
 
-#studentclass table#student_score_detail{
-    margin: 97px auto;
+#studentclass table#student_score_detail,#student_process table#student_score_detail{
+    margin: 120px auto;
 }
 
-#studentclass table#student_score_detail td{
+#studentclass table#student_score_detail td, #student_process table#student_score_detail td{
     padding-left: 25px;
     padding-right: 25px;
     line-height: 50px;
     text-align: center;
-    border: 1px solid black;
 }
-#studentclass table#student_score_detail th{
+#studentclass table#student_score_detail th, #student_process table#student_score_detail th{
     padding-left: 25px;
     padding-right: 25px;
     text-align: center;
@@ -308,10 +393,7 @@ margin-right: 10px;
 }
 
 #test_history #history{
-    overflow: hidden;
     width: 918px;
-    margin-left: 5px;
-   margin-top: -354px;
     float: right;
 }
 

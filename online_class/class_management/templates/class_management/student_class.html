@@ -7,10 +7,11 @@
     <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <div id="studentclass">
-        <h1>Student List In {{ chosen_class.class_name }} Class</h1>
+    <div id="studentclass" class="bg">
+        <h1 class="title">Student List In {{ chosen_class.class_name }} Class</h1>
         {% if student_list|length == 0 %}
-          <div class="nonhaving">Any Student Haven't Joined This Class</div>
+       <div class="alert alert-info nonhaving" role="alert">
+                    Any Student Haven't Joined This Class</div>
         {% else %}
           <div id="bonus">
               <div><div id="goodscore"></div><span>Good Mark (Mark >= 70%)</span></div>
@@ -38,7 +39,7 @@
                           <div style="width: 200px; height: 150px; display: block;" class="testchart">
                           </div>
                       </td>
-                      <td><a href="#"><img src="{% static 'class_management/images/Show-Info-icon.png' %}"/><div>Watch Student Detail</div></a>
+                      <td><a href="{% url 'classes:studentdetail' student.pk %}"><img src="{% static 'class_management/images/Show-Info-icon.png' %}"/><div>Watch Student Detail</div></a>
                       </td>
                       <td>
                           <a href="{% url 'classes:testhistory' student.pk chosen_class.pk %}"><img src="{% static 'class_management/images/Show-Test-icon.png' %}"/><div>Watch Score Detail</div></a>
@@ -56,7 +57,12 @@
       var len = chart.length;
       var graph = document.getElementsByClassName("testchart");
       for(var i = 0; i< len; i++){
+        if (chart[i][4] === 0){
+          graph[i].innerHTML = "Class Haven't Any Test";
+          graph[i].style.height = "";
+        }else{
         basic_pie(graph[i], chart[i][0], chart[i][1], chart[i][2], chart[i][3] );
+        }
       }
     });
     function basic_pie(container, d1, d2 , d3, d4) {

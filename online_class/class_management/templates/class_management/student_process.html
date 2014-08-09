@@ -7,10 +7,11 @@
     <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <div id="studentclass">
-        <h1>Learning Progress of {{ user.username }}</h1>
+    <div id="student_process" class="bg">
+        <h1 class="title">Learning Progress of {{ user.username }}</h1>
         {% if class_list|length == 0 %}
-          <div class="nonhaving">You Aren't Joined Any Class!</div>
+          <div class="alert alert-info nonhaving" role="alert">
+                    You Aren't Joined Any Class!</div>
         {% else %}
           <div id="bonus">
               <div><div id="goodscore"></div><span>Good Mark (Mark >= 70%)</span></div>
@@ -18,7 +19,7 @@
               <div><div id="badscore"></div><span>Bad Mark (Mark &lt 50%)</span></div>
               <div><div id="nonscore"></div><span>Haven't Done</span></div>
           </div>
-          <table id="student_score_detail">
+          <table id="student_score_detail" class="table-bordered table-hover table-condensed ">
               <tr>
                   <th>Class Image</th>
                   <th>Class Name</th>
@@ -27,7 +28,7 @@
                   <th>Score Detail</th>
               </tr>
               {% for Class in class_list %}
-                  <tr>
+                  <tr class="info">
                       {% if Class.image_class and Class.image_class != "False" %} 
                           <td><img src="{{ Class.image_class.url }}" height=80 width=80/></td>
                           {% else %} 
@@ -55,8 +56,13 @@
       var len = chart.length;
       var graph = document.getElementsByClassName("testchart");
       for(var i = 0; i< len; i++){
+        if (chart[i][4] === 0){
+      graph[i].innerHTML = "Class Haven't Any Test";
+       graph[i].style.height = "";
+    }else{
         basic_pie(graph[i], chart[i][0], chart[i][1], chart[i][2], chart[i][3] );
       }
+    }
     });
     function basic_pie(container, d1, d2 , d3, d4) {
      var  graph = Flotr.draw(container, [

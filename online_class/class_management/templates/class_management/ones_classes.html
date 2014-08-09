@@ -7,11 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-	<div id="ones_classes">
-		<a href = {% url 'classes:createclass' %}><image src="{% static 'class_management/images/Add-Class-icon.png' %} " title="Create Class"/ height=100 width=100></a>
+	<div id="ones_classes" class="bg" style="overflow: hidden;">
+		<a class="btn btn-primary" href="{% url 'classes:createclass' %}" role="button">ADD CLASS</a>
 		<h1 class="title">CLASS LIST</h1>
 		{% if ones_classes|length == 0 %}
-			<div class="nonhaving">You Aren't Having Any Class. Let's Create Class!</div>
+			 <div class="alert alert-info nonhaving" role="alert">
+                    You Aren't Having Any Class. Let's Create Class!</div>
 		{% else %}
 			{% for class in ones_classes %}
 				<div class="class_in_list">
@@ -22,12 +23,20 @@
 					{% endif %}
 					<div class="hover_detail">
 						<div class="class_name">{{ class.class_name }}</div>
-						<a href="{% url 'classes:detailclass' class.id %}" class="chose_class"><image src="{% static 'class_management/images/Class-Detail-icon.png' %}" title="Class Detail" ></a>
-						<a href="{% url 'classes:studentclass' class.id %}" class="chose_student"><image src="{% static 'class_management/images/Student-In-Class-icon.png' %}" title="Student List" ></a>
-						<div class="create_date_class">{{ class.create_date|date:"d/m/Y" }}</div>
+						<div class="btn-group btn-group-sm btgroupclass">
+  				<a href="{% url 'classes:detailclass' class.id %}" class="btn btn-success" role="button">Lesson</a>
+  				<a href="{% url 'classes:studentclass' class.id %}" class="btn btn-success" role="button">Student</a>
+					</div>
+					<div class="quantity">Number of Class: {{ class.students_in_class.count }}/{{ class.quantity }}</div>
+					<br/>
+						<div class="create_date_class">Create Date: {{ class.create_date|date:"d/m/Y" }}</div>
 					</div>
 				</div>
 			{% endfor %}
 		{% endif %}
 	</div>
  {% endblock %}
+{% block script %}
+
+<script src="{% static 'class_management/js/js.js' %}"></script>
+{% endblock %}

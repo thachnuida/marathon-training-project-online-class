@@ -10,51 +10,78 @@
 {% endblock %}
 {% block body %}
 	<div id="detail_class">
-		<div id="add_class_form">
+		<div id="add_class_form" class="well">
 			<h1 class="title">CLASS DETAIL</h1>
 			{% if Chose_class.image_class and Chose_class.image_class != "False" %}
-				<img src="{{ Chose_class.image_class.url }}" height=100 width=100 id="image_class"/>
+				<img src="{{ Chose_class.image_class.url }}" class ="pull-right image_class"/>
 			{% else %}
-				<img src="{% static 'class_management/images/classroom.jpg' %}" height=100 width=100 id="image_class"/>
+				<img src="{% static 'class_management/images/classroom.jpg' %}" class ="pull-right image_class"/>
 			{% endif %}
-			<form enctype="multipart/form-data" method="post" action="">
+			<div id="img_error"  class="text-danger"></div>
+			<form enctype="multipart/form-data" method="post" action="" role="form">
 				{% csrf_token %}
 				{% for field in form %}
-    				<div class="fieldWrapper">
-        				{{ field.errors }}
-        				{{ field.label_tag }} {{ field }}
+    				<div class="form-group">
+        				{{ field.label_tag }}<br/>{{ field }}
+        				<div class="text-danger">
+        					{{ field.errors }}
+        				</div>
     				</div>
 				{% endfor %}
-    			<input type="submit" value="Update"/>
+				
+    			<input type="submit" value="UPDATE CLASS" class="btn btn-success pull-right"/>
 			</form>
-			<a href = "{% url 'classes:deleteclass' Chose_class.id %} " id="del_class"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Delete Class" width="58" height="58" ></a>
-		</div>
+			<button class="btn btn-danger btn-block delete_btn" data-toggle="modal" data-target="#myModal">DELETE CLASS</button>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			        <h4 class="modal-title" id="myModalLabel">DELETE CLASS</h4>
+			      </div>
+			      <div class="modal-body">
+			        Everything relating to This Class will be deleted too!<br/>Are you sure you want to delete This Class?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <a class="btn btn-danger" href="{% url 'classes:deleteclass' Chose_class.id %}" role="button">Delete Class</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div><!-- end form -->
 		<div class="lesson">
-			<a href = "{% url 'classes:createlesson' Chose_class.id %}"><image src="{% static 'class_management/images/Add-Lesson-icon.png' %}" title="Create Lesson" height=50 width=50/></a>
+			<a class="btn btn-primary" href="{% url 'classes:createlesson' Chose_class.id %}" role="button">ADD LESSON</a>
 			<div id="lesson-list" >
 				{% if lesson_list|length == 0 %}
-					<div class="nonhaving">You Aren't Having Any Lesson. Let's Create Lesson!</div>
+				<div class="alert alert-info nonhaving" role="alert">
+					You Aren't Having Any Lesson. Let's Create Lesson!</div>
 				{% else %}
 					{% for lesson in lesson_list %}
-	    				<a class="lesson_wrapper" href="{% url 'classes:detaillesson' Chose_class.id lesson.id %}">
-	    				<p>{{ lesson.lesson_name }}</p>
-	    				<div class="shortcut">{{ lesson.description|safe|lower|slice:":20" }}</div>
-	    				<p class="date">Create Date {{ lesson.create_date|date:"H:i d/m/Y" }}</p>
-	    				<p class="date">Update Date {{ lesson.latest_update_date|date:"H:i d/m/Y" }}</p>
-	    				</a>
+					<a class="panel panel-primary lesson_wrapper" href="{% url 'classes:detaillesson' Chose_class.id lesson.id %}">
+  						<div class="panel-heading">{{ lesson.lesson_name }}</div>
+  						<div class="panel-body">
+  							<div class="shortcut">{{ lesson.description|safe|lower|slice:":20" }}</div>
+    						<p class="date">Create Date {{ lesson.create_date|date:"H:i d/m/Y" }}</p>
+	    					<p class="date">Update Date {{ lesson.latest_update_date|date:"H:i d/m/Y" }}</p>
+  						</div>
+					</a>
 					{% endfor %}
 				{% endif %}
-			</div>
-		</div>
-	</div>
+			</div><!-- end lesson list div -->
+		</div><!-- end body lesson -->
+	</div><!-- end main id -->
 {% endblock %}
 {% block script %}
+	<script src="{% static 'class_management/js/js.js' %}"></script>
 	<script>
-		$("#del_class").click(function(){
-			if (confirm("Everything relating to This Class will be deleted too!\nAre you sure you want to delete This Class? ")){
-				return true;
-			}
-			return false;
+		$("#img_error").text($("#id_image_class").parent().find("li").text());
+		$("#id_image_class").parent().hide();
+		$("#image_class").click(function(){
+    	$("#id_image_class").click();
 		});
 	</script>
+
 {% endblock %}
+

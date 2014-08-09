@@ -10,22 +10,34 @@
 {% endblock %}
 {% block body %}
     <div id="create_class">
-        <div id="add_class_form">
+        <div id="add_class_form" class="well">
             <h1 class="title">CREATE CLASS</h1>
-            <img id="image_class" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
-            <form enctype="multipart/form-data" method="post" action="">
+            <img class ="pull-right image_class" src="/media/test/img-icon.png" alt="Preview"/>
+            <div id="img_error" class="text-danger"></div>
+            <form enctype="multipart/form-data" method="post" action="" role="form">
 	           {% csrf_token %}
 	           {% for field in form %}
-                    <div class="fieldWrapper">
+                    <div class="form-group">
+                        {{ field.label_tag }}<br/>{{ field }}
+                        <div class="text-danger">
                         {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
+                        </div>
                     </div>
 	           {% endfor %}
-                <input type="submit" value="Create Class" />
-                <a href="{% url 'classes:classlist' %}">Cancel</a>
+               <div class="pull-right">
+                    <a class="btn btn-default" href="{% url 'classes:classlist' %}" role="button">Cancel</a>
+                <button type="submit" class="btn btn-primary ">Create Class</button>
+           </div>
             </form>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'class_management/js/js.js' %}"></script>
+<script>
+$("#img_error").text($("#id_image_class").parent().find("li").text());
+$("#id_image_class").parent().hide();
+</script>
 {% endblock %}
 
 

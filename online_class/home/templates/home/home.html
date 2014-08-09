@@ -6,15 +6,15 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
-    <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
     <div id="home">
-        <div id="carousel_div">
-            <h1>Recently Class</h1>
-            <div class="mycarousel" id="carousel">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h2>Recently Class</h2>
+                <div class="mycarousel">
                 <ul id="mycarousel" class="jcarousel-skin-tango" class="jcarousel">
                     {% for latest in recently_class %}
                         {% if latest.image_class and latest.image_class != "False" %}
@@ -29,14 +29,17 @@
                 <a href="#" class="jcarousel-control-prev" data-jcarouselcontrol="true">‹</a>
                 <a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">›</a>
             </div>
-        </div>
-        <div id="ones_classes" style="clear: both">
+            </div>
+        </div><!--end row carousel-->
+        <div class="row margin-top well">
+            <div id="ones_classes" class="col-md-9">
+                <h2>CLASS LIST</h2>
             {% for class in all_class %}
                 <div class="class_in_list">
                     {% if class.image_class and class.image_class != "False" %}
-                        <img src="{{ class.image_class.url }}" height=200 width=200/>
+                        <img src="{{ class.image_class.url }}" height=180 width=180/>
                     {% else %}
-                        <img src="{% static 'class_management/images/classroom.jpg' %}" height=200 width=200/>
+                        <img src="{% static 'class_management/images/classroom.jpg' %}" height=180 width=180/>
                     {% endif %}
                     <div class="hover_detail">
                         <div class="class_name">{{ class.class_name }}</div>
@@ -45,27 +48,32 @@
                     </div>
                 </div>
             {% endfor %}
-        </div>
-        <div id="side_content" style="float: right">
-            <h4> Largest Student Class</h4>
+        </div><!-- end id ones-classes div -->
+        <div id="side_content" class="col-md-2" >
+            <h3 style="margin-bottom: 26px;">Popular Class</h3>
             <ul id="topmost">
                 {% for topest in top_student_class %}
                     <li>
+                        <div class = "row">
+                            <div class="col-md-7">
                         {% if topest.image_class and topest.image_class != "False" %}
                             <a href="{% url 'study:joinclass' topest.id %}"><img src="{{ topest.image_class.url }}"/>
-                                <h6>{{ topest.class_name }}</h6>
-                            </a>
                         {% else %}
                             <a href="{% url 'study:joinclass' topest.id %}"><img src="{% static 'class_management/images/classroom.jpg' %}"/>
-                                <h6>{{ topest.class_name }}</h6>
-                            </a>
+                            
                         {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <h6>{{ topest.class_name }}</h6>
+                        </a>
                         <div>{{ topest.students_in_class.count }}/{{ topest.quantity }}</div>
+                    </div>
                     </li>
                 {% endfor %}
             </ul>
-        </div>
-    </div>
+        </div><!-- end side_content  -->
+        </div><!--end class row content -->
+    </div><!-- end id home div -->
 {% endblock %}
 {% block script %}
     <script>
@@ -93,4 +101,3 @@
             });
     </script>
 {% endblock %}
-
