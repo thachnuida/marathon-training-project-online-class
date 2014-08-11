@@ -3,83 +3,112 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}Lớp Học Online{% endblock %}</title>
+        <title>{% block title %}ONLINE CLASS{% endblock %}</title>
         {% block link %}
-         <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-    	  <link href="/static/home/css/onlineclass.css" rel="stylesheet">
-        <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-        <script src="{% static 'class_management/js/js.js' %}"></script>
+          <link href="/static/home/css/bootstrap.min.css" rel="stylesheet">
+          <link href="/static/home/css/bootstrap-theme.min.css" rel="stylesheet">
+          <link href="/static/home/css/onlineclass.css" rel="stylesheet">
+          <link href="{% static 'css/style.css' %}" rel="stylesheet">
+          <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
+          <script src="{% static 'home/js/bootstrap.min.js' %}"></script>
         {% endblock %}
     </head>
-
     <body>
-    	<div>{%block banner %}
-				<image id="banner" src="{% static 'images/banner.jpg' %}"/>
-    		{% endblock %}
-    	</div>
-        <div class="container" style="width:1130px; margin-bottom: -13px;">
-			{% block menu %}
-        	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
-          	<div class="container">
-            <div class="navbar-collapse collapse">
-            	<span class="navbar-brand" href="#">Online Class</span>
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
-                <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
-                <li><a href="#contact">ABOUT</a></li>
-                {% if user.is_authenticated %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOUR SCOPE<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="{% url 'classes:studentprocess' user.id %}">Learning Process</a></li>
-                    {% if user.userprofile.role == 'T' %}
-                    <li class="divider"></li>
-                    <li><a href="{% url 'classes:classlist' %}">Class Management</a></li>
-                    {% endif %}
-                  </ul>
-                </li>
-                {% endif %}
-              </ul>
+        <div class="welcome">
+          <p class="header1">WELLCOME</p>   
+        </div>
+        <div class="logo">
+          <!-- <p class="header1">WELLCOME</p>    -->
+          <image id="baner2"src="{% static 'images/logo.jpg' %}"/>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-login">
+              {% block banner %}
+                <image id="banner" src="{% static 'images/banner.jpg' %}"/>
+                <!-- <h1>ONLINE CLASS</h1> -->
+              {% endblock %}
+              </div>
             </div>
+            <div class="col-xs-6" >
+              <div class="form-login">
+                  {% if user.is_authenticated %}
+                    <a class="hello" href="{% url 'home:profile'%}">HELLO {{ user.username }}!</a><br>
+                    <a class="hello" href="{% url 'home:logout'%}">LOG OUT</a>
+                  {% else %}
+                <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next_url }}"/>
+                    <ul>
+                      {% if error %}
+                      <li class="error-message">
+                          {{ error|safe }}
+                      </li>
+                      {% endif %}
+                    </ul>
+                    <p class="ever"> STUDY EVERY WHERE</p>
+                    <p class="loginto"> LOGIN TO STUDY </p>    
+                    <input id="id_username" name="username" type="text" value="{{ username }}" placeholder="Username..."/>
+                    <br/>
+                    <input id="id_password" name="password" type="password" placeholder="Password..."/>
+                    <br/>
+                    <button class="button" type="submit">LOG IN</button>
+                    <a class="button" href="{% url 'home:register' %}" >SIGN UP</a>
+                </form>  
+                  {% endif %}
+              </div>
+          </div>
+          </div>
+          <div id="navigation" class="navbar navbar-inverse navbar-static-top" role="navigation">
+              <div id="navigation" class="navbar-collapse collapse">
+                <span class="navbar-brand">Online Class</span>
+                <ul id="navigation-ul" class="nav navbar-nav">
+                  <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
+                  <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
+                  <li><a href="#contact">ABOUT</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOUR SCOPE<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">Learning Process</a></li>
+                      {% if user.userprofile.role == 'T' %}
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">Class Management</a></li>
+                    {% endif %}
+                    </ul>
+                  </li>
+                    {% endif %}
+                </ul>
+              </div>
+          </div><!--end dropdown -->
+          {% block body %}
+
+          {% endblock %}
+        </div><!-- end contanier -->
+
+      {% block script %}
+      {% endblock %}
+      <div class="container">
+        <div id="footer">
+          <div class= "col-xs-6 col-md-4">
+              <h4>Description</h4>
+              <p>    This is a Website for people learning that tool will help you in learning!!!</p>
+              <p>  And the Sun will set for you !</p>
+          </div>
+          <div class= "col-xs-6 col-md-4">
+              <h4>Contact<h4>
+              <p>@2006 - 2013 HTK-INC. All rights reserved.</p>
+              <p>PHONE: (+84) 100 202 989 </p>
+              <p>EMAIL: htk-inc@gmail.com </p>
+          </div>
+          <div class= "col-xs-6 col-md-4">
+              <h4>Follow Us<h4>
+            <a href="#" class="icon"><img src="/static/images/facebook-icon.png"/>Facebook</a><br>
+            <a href="#" class="icon"><img src="/static/images/google-icon.png"/>Google+</a><br>
+            <a href="#" class="icon"><img src="/static/images/twitter-icon.png"/>Twitter</a><br>
           </div>
         </div>
-	{% endblock %}
       </div>
-      <div id="mid_container">
-      	{% block user_form %}
-      	<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">          
-          {% if user.is_authenticated %}
-          <a href="{% url 'home:alone'%}">HELLO {{ currentuser.username }}!</a>
-          <a href="{% url 'home:logout'%}">LOG OUT</a>
-          {% else %}
-          <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
-              {% csrf_token %}
-              <input type="hidden" name="next" value="{{ next_url }}"/>
-              <ul>
-                {% if error %}
-                <li class="error-message">
-                    {{ error|safe }}
-                </li>
-                {% endif %}
-              </ul>    
-              <input id="id_username" name="username" type="text" class="form-control" value="{{ username }}" placeholder="Username..."/>
-              <br/>
-              <input id="id_password" name="password" type="password" class="form-control" placeholder="Password..."/>
-              <br/>
-              <button class="btn btn-primary" type="submit" style="margin-left: 20px;">LOG IN</button>
-              <a class="btn btn-primary" href="{% url 'home:register' %}" style="float: right; margin-right: 20px;">SIGN UP</a>
-          </form>  
-          {% endif %}
-        </div>
-      	{% endblock %}
-      	{% block lastest_class %}{% endblock %}
-        <div id="content">
-        {% block body %}{% endblock %}
-      </div>
-     
-      {% block script %}{% endblock %}
-      
-    </div>
     </body>
 </html>

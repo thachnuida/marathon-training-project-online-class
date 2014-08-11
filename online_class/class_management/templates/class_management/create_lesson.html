@@ -9,27 +9,38 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-	<div id="create_lesson">
+	<div id="create_lesson" class="bg">
 		<div id="add_lesson_form">
 			<h1 class="title">CREATE LESSON</h1>
-			<iframe id = "video_link" width="420" height="345">
+			<div class="row">
+				<div class="col-md-6">
+			<iframe id = "video_link" width="515" height="345" style="margin-top: 25px;">
 			</iframe>
-			<form method="post" action="">
+			</div>
+				<div class="col-md-6">
+			<form method="post" action="" role="form" >
 				{% csrf_token %}
 				{% for field in form %}
-	    		<div class="fieldWrapper">
-	        		{{ field.errors }}
-	        		{{ field.label_tag }} {{ field }}
+	    		<div class="form-group">
+	    			{{ field.label_tag }}<br/>{{ field }}
+                        <div class="text-danger">
+                        {{ field.errors }}
+                        </div>
 	    		</div>  
 				{% endfor %}
-	    		<input type="submit" value="Create Lesson" />
-	    		<a href="{% url 'classes:detailclass' chosen_class.id %}">Cancel</a>
+				<div class="pull-right">
+                    <a class="btn btn-default" href="{% url 'classes:detailclass' chosen_class.id %}" role="button">Cancel</a>
+                <button type="submit" class="btn btn-primary ">Create Lesson</button>
+            </div>
 			</form>
+		</div>
 		</div>
 	</div>
 {% endblock %}
 {% block script %}
+<script src="{% static 'class_management/js/js.js' %}"></script>
 <script type="text/javascript">
+
 	$("#id_video_link").change(function(){
 			$("#video_link").attr('src', $('#id_video_link').val());
 		});

@@ -1,37 +1,39 @@
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<head>
-  <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
-  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-</head>
+{% block title %} Online Class {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div id="test"> 
+  <h2>THE WORLD IS BIG</h2>
+  <div id="div1">
+  <form enctype="multipart/form-data"  class="dynamic-form" method="POST" id="question" action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
+    {% csrf_token %}
+    <input class="question_id" type="hidden" name="question_id" value = "{{ one_question.id  }}"/>
+    <input class="order" type="hidden" name="number" value ="{{ one_question.order_test}}"/>
+    <input class="answer_user" type="hidden" name="answer_user"/>
+    <p class="numbertest">{{one_question.order_test}}.</p>
+    <p class="question"> Question: {{ one_question.question}}</p>
 
-<h2>Ban hay lam bai tap</h2>
-<div>{{ answer3 }}</div>
-<div id="div1">
-<form enctype="multipart/form-data"  class="dynamic-form" method="POST" id="question" action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
-  {% csrf_token %}
-  <input class="question_id"  name="question_id" value = "{{ one_question.id  }}"/>
-  <input class="order" name="number" value ="{{ one_question.order_test}}"/>
-  <input class="answer_user" name="answer_user" value=""/>
-  <p class="numbertest">{{one_question.order_test}}</p>
-  <p class="question">{{ one_question.question}}</p>
-
-  <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
-  <input class="2" type="radio" name="answer" value="B" /><span class="span2">
-  {{ one_question.answerB }}</span><br>
-  <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
-  <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
-  <input class="button2" type="button" value="Next" onclick="next()"/>
-</form>
-
-<!-- <form action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
-<button type ="POST"> Xong</button>
-</form> -->
-
-</div>
-
+    <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
+    <input class="2" type="radio" name="answer" value="B" /><span class="span2">{{ one_question.answerB }}</span><br>
+    <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
+    <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
+    <input class="button2" type="button" value="Next" onclick="next()"/>
+  </form>
+  </div>
+</div> 
 <script>
+
 var next = function(){
+if($("input:radio[name=answer]").is(":checked")){
   var data = new FormData($('form').get(0));
   $.ajax({
     type: "POST",
@@ -41,11 +43,9 @@ var next = function(){
     processData: false,
     contentType: false,
     success: function(topic_list) {
-      console.log(topic_list.array_user_choose);
       order  = topic_list.load['order_test']
       lenght = topic_list.load['lenght'];
-      console.log(order,lenght);
-      if (order <= lenght) {
+      if (order<=lenght){
       $(".order").val(topic_list.load['order_test']);
       $(".question_id").val(topic_list.load['id']);
       $(".answer_user").val(topic_list.array_user_choose);
@@ -60,18 +60,25 @@ var next = function(){
       $(".span3").html(topic_list.load['answerC']);
       $(".span4").html(topic_list.load['answerD']);
       }
-      if (order == lenght) {
-        $(".button2").val("Finish");
-        // $(".button2").attr('type','submit');
-        // $(".button2").attr('onclick',null);
-        console.log("aaa");
-        // window.location.pathname="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}";
-        // $('ajaxloader').remove() // remove the ajax-loader
-        // submitbutton.show() // return the submit butto
+      if (order==lenght+1){
+        $(".answer_user").val(topic_list.array_user_choose);
+        $(".order").val(topic_list.load['order_test']);
+        $(".button2").trigger( "click" );
       }
-     
+      if(order==lenght+2){
+        $(".button2").attr('type','submit');
+        $(".button2").trigger( "click" );
+      }    
     }
   });
   return false;
+}
+else{
+  alert("Please chosse one answer !!!");
+}
+
 };
+
 </script>
+
+{%endblock%}

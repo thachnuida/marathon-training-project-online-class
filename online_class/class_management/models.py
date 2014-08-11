@@ -20,7 +20,7 @@ class Lesson(models.Model):
     lesson_name = models.CharField(max_length=100)
     Class = models.ForeignKey(Class)
     description = models.TextField(null=True, blank=True)
-    video_link = models.URLField(max_length=45)
+    video_link = models.CharField(max_length=45)
     create_date = models.DateTimeField(auto_now_add=True)
     latest_update_date = models.DateTimeField(auto_now=True)
 

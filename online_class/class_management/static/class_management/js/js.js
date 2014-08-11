@@ -1,14 +1,16 @@
 $(document).ready(function(){
-  $(".dropdown").hover(function(){
-    $(".dropdown-menu").show();
-  }, function(){
-    $(".dropdown-menu").hide();
+  $(".errorlist").addClass("list-unstyled");
+  $(".image_class").click(function(){
+    $("#id_image_class").click();
+  });
+  $(".image_ques").click(function(){
+    $("#id_image_ques").click();
   });
       $("#id_image_class").change(function() {
-            readURL($("#id_image_class"), $("#image_class"));
+            readURL($("#id_image_class"), $(".image_class"));
         });
       $("#id_image_ques").change(function() {
-            readURL($("#id_image_ques"),$("#image_ques" ));
+            readURL($("#id_image_ques"),$(".image_ques" ));
   });
 
   $('.class_in_list').hover(function(){
@@ -17,15 +19,7 @@ $(document).ready(function(){
       $(this).find('.hover_detail').stop();
       $(this).find('.hover_detail').animate({top:'140px'},"slow");
   });
-
-  $(".lesson_wrapper").hover(function(){
-    $(this).css("background-color", 'rgb(192, 188, 190)');
-  }, function(){
-    $(this).css("background-color", '');
-  });
-
 });
-
 function readURL(input, image_input) {
     if (input.prop('files') && input.prop('files')[0]) {
         var reader = new FileReader();
@@ -61,3 +55,7 @@ function basic_pie(container, d1, d2 , d3, d4) {
     }
   });
 };
+function reset_form_element (e) {
+    e.wrap('<form>').parent('form').trigger('reset');
+    e.unwrap();
+    };

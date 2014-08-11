@@ -1,18 +1,31 @@
-
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-{% if joined %}
-  <h3>{{ join_class }}</h3>
-  <ul>
+{% block title %} Online Class {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+  <div id="studyclass">
+    {% if joined %}
+    <h3>{{ join_class }}</h3>
+    <ul>
     {% for lesson in all_lesson %}
-    <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}">{{ lesson.lesson_name }}</a></li>
-    {% endfor %}  
-  </ul>
-<form enctype="multipart/form-data"  method="post" action="" id="add_ques">
-  {% csrf_token %}
-  <button type="submit"> Remove </button>
-</form>
-{% else %}
-<h3>Ban da xoa ki thang cong</h3>
-<a href="/study/study/">Tro ve danh sach lop hoc da dang ki</a>
-{% endif %}
+      <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}">{{ lesson.lesson_name }}</a></li>
+      {% endfor %}  
+    </ul>
+    <form enctype="multipart/form-data"  method="post" action="" id="add_ques">
+    {% csrf_token %}
+      <button type="submit"> Leave class </button>
+    </form>
+    {% else %}
+    <h3>You leave class!! See you again</h3>
+    <a href="/study/study/">Back to list</a>
+    {% endif %}
+  </div>  
+{% endblock body %}

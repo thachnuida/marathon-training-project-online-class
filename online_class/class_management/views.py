@@ -50,7 +50,8 @@ def detail_class(request, pk):
         if form.is_valid():
             Class.objects.filter(pk=pk).update(class_name = form.cleaned_data['class_name'], teacher = request.user, quantity = form.cleaned_data['quantity'], description=request.POST['description'])
             updatedclass = get_object_or_404(Class, pk = pk)
-            updatedclass.image_class = form.cleaned_data['image_class']
+            if form.cleaned_data['image_class'] != None:
+                updatedclass.image_class = form.cleaned_data['image_class']
             updatedclass.save()
             return HttpResponseRedirect(reverse('classes:detailclass', args=[pk]))
     return render(request, "class_management/detail_class.html", {"form": form, 'Chose_class':Chose_class, 'lesson_list':lesson_list })
@@ -123,7 +124,7 @@ def calpercent(chosen_class, user):
         good_test += Score.objects.filter(test=test, user=user, score__gte = float(question_num*70)/100).values_list('test',flat=True).distinct().count()
         medium_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*70)/100, score__gte = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
         bad_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
-    chart = [[[0, good_test]], [[0, medium_test]], [[0,bad_test]], [[0,non_test]]]
+    chart = [[[0, good_test]], [[0, medium_test]], [[0,bad_test]], [[0,non_test]], num_test ]
     return chart
 
 from django.utils import simplejson
@@ -206,21 +207,16 @@ def update_question(request, test_id):
         if request.is_ajax():
             form = CreateQuestion(request.POST, request.FILES)
             if form.is_valid():
-                print "value"
-                print request.POST
                 id_question = request.POST['id']
                 print form.cleaned_data['image_ques']
-                Question.objects.filter(pk=id_question).update(question = form.cleaned_data['question'], answerA = form.cleaned_data['answerA'], answerB = form.cleaned_data['answerB'], answerC = form.cleaned_data['answerC'], answerD = form.cleaned_data['answerD'], right_answer = form.cleaned_data['right_answer'])
-                updatedquestion = get_object_or_404(Question, pk = id_question)
+                Question.objects.filter(test=test_id, order_test=id_question).update(question = form.cleaned_data['question'], answerA = form.cleaned_data['answerA'], answerB = form.cleaned_data['answerB'], answerC = form.cleaned_data['answerC'], answerD = form.cleaned_data['answerD'], right_answer = form.cleaned_data['right_answer'])
+                updatedquestion = get_object_or_404(Question, test=test_id, order_test = id_question)
                 if form.cleaned_data['image_ques'] != None:
                     updatedquestion.image_ques = form.cleaned_data['image_ques']
                 updatedquestion.save()
-                question =Question.objects.get(pk=id_question)
+                question =Question.objects.get(test=test_id, order_test=id_question)
                 question_dict = question.__dict__
-                print question_dict
                 del question_dict['_state']
-                print "question_dict"
-                print question_dict
                 if question_dict['image_ques'] != "":
                     question_dict['image_ques'] = question.image_ques.url
                 print question_dict

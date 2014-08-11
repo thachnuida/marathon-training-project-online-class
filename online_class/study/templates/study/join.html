@@ -1,14 +1,24 @@
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-
+{% block title %} Online Class {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
 <h1>Danh Sach Lop Hoc Chua Dang Ki</h1>
-{% for class in all_class %}
-
-{% if class.image_class and class.image_class != "False" %}
-   <img src="{{ class.image_class.url }}" height=150 width=150></img>
-{% else %}
+  {% for class in all_class %}
+  {% if class.image_class and class.image_class != "False" %}
+    <img src="{{ class.image_class.url }}" height=150 width=150></img>
+  {% else %}
   <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
-{% endif %}
+  {% endif %}
   <h5><a href="{% url 'study:joinclass' class.id %}">{{ class.class_name }}</a></h5><br>
   <h5>{{ class.teacher }}</h5><br>
-{% endfor %}
+  {% endfor %}
+{% endblock%}

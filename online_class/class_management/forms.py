@@ -8,7 +8,7 @@ class CreateClass(forms.Form):
     class_name = forms.CharField(max_length=100)
     quantity = forms.IntegerField()
     image_class = forms.ImageField(required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         class_details = kwargs.pop('class_details', None)
@@ -23,8 +23,8 @@ class CreateClass(forms.Form):
 
 class CreateLesson(forms.Form):
     lesson_name = forms.CharField(max_length=100)
-    video_link = forms.URLField()
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    video_link = forms.CharField()
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         chosen_lesson = kwargs.pop('chosen_lesson', None)
@@ -39,7 +39,7 @@ class CreateTest(forms.Form):
 
 class CreateQuestion(forms.Form):
     CHOICES=[('A','A'), ('B','B'), ('C','C'), ('D','D')]
-    question = forms.CharField(max_length=255,label="",widget=forms.Textarea(attrs={'cols' : "50", 'rows': "5", }))
+    question = forms.CharField(max_length=255,label="",widget=forms.Textarea(attrs={'cols' : "50", 'rows': "3", }))
     answerA = forms.CharField(max_length=255, label="A. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))
     answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", }))

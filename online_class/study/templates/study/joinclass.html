@@ -1,54 +1,31 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-      {% block title %} Lop hoc Online {% endblock %}
-    {% block link %}
-   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <link href="/static/home/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/home/css/onlineclass.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-  <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
-  <script src="{% static 'class_management/js/js.js' %}"></script>
-    {% endblock %}
-  </head>
-  <body>
-        {% block body %}
-{% if joined %}
-
-<h3>{{ join_class }}</h3>
-{% for lesson in all_lesson %}
+{% block title %} Online Class {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div id="joinclass">
+  {% if joined %}
+    <h3>{{ join_class }}</h3>
+  {% for lesson in all_lesson %}
   <ul>
     <li>{{ lesson.lesson_name }}</li>
   </ul>
-{% endfor %} 
-<form enctype="multipart/form-data"  method="post" action="" id="add_ques">
+  {% endfor %} 
+  <form enctype="multipart/form-data" method="post" action="" id="add_ques">
   {% csrf_token %}
-  <button type="submit"> Join </button>
-    <!-- <input type="button" value="Join" onclick="tam()"/> -->
-</form>
-{% else %}
-  <h3>Ban da dang ki thang cong</h3>
-  <a href="{% url 'study:study' %}">Tro ve danh sach lop hoc da dang ki</a>
-{% endif %}
+    <button type="submit"> Join </button>
+  </form>
+  {% else %}
+  <h3>Congratulation!! You joined class!! </h3>
+  <a href="{% url 'study:study' %}">Back to list class </a>
+  {% endif %}
+</div>
 {% endblock %}
-<script>
-//     var tam = function(){
-//         var data = new FormData($('form').get(0));
-//      $.ajax({
-//        type:"POST",
-//        url : "{% url 'study:study' %}",
-//        dataType: "json",
-//        data : data,
-//             processData: false,
-//             contentType: false,
-//        success : function(question_dict){
-//               alert("Có lỗi xảy ra!");
-//          },
-//          error: function(errors_dict){
-//            alert("Có lỗi xảy ra!");
-//         return false;
-//  };
-</script>

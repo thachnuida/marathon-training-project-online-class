@@ -1,0 +1,41 @@
+{% extends "home/home.html" %}
+{% load url from future %}
+{% load staticfiles %}
+{% block body %}
+<head>
+  <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
+  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+</head>
+{% for profile in profiles %}
+  sinh nhat:<label>{{profile.birthday}}</label><br>
+  dia chi :  <label>{{profile.address}}</label><br>
+  sdt: <label>{{profile.phone}}</label><br>
+  gioi tinh: <label>{{profile.gender}}</label><br>
+  {% if profile.user_image and profile.user_image != "False" %}
+    <img src="{{ profile.user_image.url }}" height=100 width=100 id="image_class"/>
+  {% else %}
+    <img src="{% static 'home/images/images.jpg' %}" height=100 width=100 id="image_class"/>
+  {% endif %}
+{% endfor %}
+
+{% for profile in profiles2 %}
+  ho:<label>{{profile.first_name}}</label><br>
+  ten:<label>{{profile.last_name}}</label><br>
+  email:<label>{{profile.email}}</label><br>
+{% endfor %}
+<button class="Edit222"> Edit profile</button>
+<div id="edit_form" style=" display: none;">
+  <p>aaaa</p>
+</div>
+{% endblock %}
+
+<script>
+$(document).ready(function(){
+  $(".Edit222").click(function(){
+    // $("#edit_form").show( "slow" );
+    console.log("aaa");
+  });
+});
+</script>

@@ -21,7 +21,10 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=12,blank=True)
     role= models.CharField(max_length=2,choices=ROLE_CHOICES)
     gender =models.CharField(max_length=2,choices=GENDERS_CHOICES)
-    user_image = models.ImageField(upload_to='profile_images', blank=True)
+    user_image = models.ImageField(upload_to="home", null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
 # class Teacher(User):
 #     def __unicode__(self):
 #         return self.username

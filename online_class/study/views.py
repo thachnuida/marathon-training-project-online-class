@@ -67,8 +67,6 @@ def test(request,class_id,lesson_id,pk):
     # one_question2 = Question.objects.filter(test=pk).values_list('right_answer', flat=True)
     one_question = Question.objects.get(test=chosen_test, order_test=1)
 
-
-
     return render(request,"study/test.html",{
         'one_question':one_question,
         'chosen_class':chosen_class,
@@ -78,55 +76,48 @@ def test(request,class_id,lesson_id,pk):
     
 import json
 def question(request, test_id):
-    score=0
+    array_user_choose=[]
     if request.method == "POST":
-        all_question2 = Question.objects.filter(test=test_id)
-        lenght_question= len(all_question2)
-      
-        order_test  = int(request.POST['number'])
-        question_id = request.POST['question_id']
-        answer_user = request.POST['answer']
-        if order_test==1:
-            array_user_choose=[]
-            array_user_choose.append(answer_user)
-            print type (array_user_choose)
-            print type (answer_user)
-            print "lan so 1"
-        elif order_test<=lenght_question:
-            array_user_choose=request.POST['answer_user']
-            array_user_choose+=answer_user
-            # array_user_choose.append(answer_user)
-            print (array_user_choose)
-            print type (array_user_choose)
-            # array_user_choose[question_id]=answer_user
-            print "lan so 2"            
-        if order_test < lenght_question:          
-            order_test+=1    
-            # one_right_answer = Question.objects.filter(test=test_id,id=question_id).values_list('right_answer', flat=True)
-            nextquestion = Question.objects.get(test=test_id, order_test=order_test)
-            print type(nextquestion)
-            load = nextquestion.__dict__
-            del load['_state']
-            del load['right_answer']
-            load['lenght']=lenght_question
-            if load['image_ques'] != "":
-                load['image_ques'] = nextquestion.image_ques.url
-            topic_list = json.dumps({'load':load,'array_user_choose':array_user_choose})
-            return HttpResponse(topic_list)
-        else:
-            jsaction = 'window.location.pathname="study/result.html"'
-            topic_list = json.dumps({
-                'array_user_choose':array_user_choose,
-                'jsaction':jsaction
-                })
-            return HttpResponse(topic_list)      
+        order_test  = int(request.POST['number'])+1
+        print order_test
+        if request.is_ajax():
+            all_question2 = Question.objects.filter(test=test_id)
+            lenght_question= len(all_question2)   
+            question_id = request.POST['question_id']
+            answer_user = request.POST['answer']
+            if order_test <= lenght_question:
+            #     array_user_choose=request.POST['answer_user']
+            #     array_user_choose+=answer_user
+            #     print array_user_choose
+                array_user_choose=request.POST['answer_user']
+                array_user_choose+=answer_user          
+                # order_test+=1    
+                nextquestion = Question.objects.get(test=test_id, order_test=order_test)
+                load = nextquestion.__dict__
+                del load['_state']
+                del load['right_answer']
+                load['lenght']=lenght_question
+                if load['image_ques'] != "":
+                    load['image_ques'] = nextquestion.image_ques.url
+                topic_list = json.dumps({'load':load,'array_user_choose':array_user_choose})
+                return HttpResponse(topic_list)
+            else:
+                load = {}
+                load['lenght']=lenght_question
+                load['order_test']=order_test
+                array_user_choose=request.POST['answer_user']
+                array_user_choose+=answer_user 
+                topic_list = json.dumps({
+                    'load':load,'array_user_choose':array_user_choose
+                    })
+                return HttpResponse(topic_list)      
     return HttpResponse("aaa")
 
 def result(request,class_id,lesson_id,test_id):
     chosen_class  = get_object_or_404 (Class,pk=class_id)
     chosen_lesson = get_object_or_404 (Lesson,pk=lesson_id)
     chosen_test = get_object_or_404 (Test,pk=test_id)
-
+    print request.POST
     answer_user=request.POST['answer_user'] 
 
     print " ket qua cua ng tra loi"
@@ -134,8 +125,6 @@ def result(request,class_id,lesson_id,test_id):
     list_right_answer = Question.objects.filter(test=test_id).values_list('right_answer', flat=True)
     all_question = Question.objects.filter(test=test_id)
 
-    # print array_user_choose
-    # print answer_user
     a=test_id
     print "aaaa"
     print a
@@ -161,7 +150,7 @@ def result(request,class_id,lesson_id,test_id):
     except Score.DoesNotExist:
         print " k ton tai"  
         score_user  = Score()
-        score_user.useru=User.objects.get(username=userusing)
+        score_user.user=User.objects.get(username=userusing)
         score_user.test=Test.objects.get(id=test_id)
         score_user.score=score
         score_user.save()
@@ -176,7 +165,7 @@ def result(request,class_id,lesson_id,test_id):
         'answer_user':answer_user
         })
 
-
+@login_required
 def join(request):    
     all_class1 = Class.objects.all()
     # chosen_class=get_object_or_404(Class,pk=pk)
@@ -184,14 +173,14 @@ def join(request):
     all_class=all_class1.exclude(students_in_class=userusing)
     # chosen_class.students_in_class.add(user_using)
     return render(request, "study/join.html", {'all_class':all_class})
-
+@login_required
 def joinclass(request,pk):
     join_class = get_object_or_404(Class,pk=pk)
     all_lesson = Lesson.objects.filter(Class=pk)
     user_using = request.user
 
     joined = True
-
+    print all_lesson
     if request.method == 'POST':
         join_class.students_in_class.add(user_using)
         joined = False

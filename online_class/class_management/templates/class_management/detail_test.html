@@ -6,48 +6,66 @@
     {{ block.super }}
     <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <style>
-        ul li {
-            display: inline;
-        }
-    </style>
 {% endblock %}
 {% block body %}
-    <div id="detail_test">
-        <img src="{% static 'class_management/images/Add-Text-icon.png' %}" title="Add Question" width="58" height="58" id="add_text">
-        <div id="add_test_form">
-            <form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;">
+    <div id="detail_test" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">DELETE TEST</button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">DELETE TEST</h4>
+                  </div>
+                  <div class="modal-body">
+                    Everything relating to This Test will be deleted too!<br/>Are you sure you want to delete This Test?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a class="btn btn-danger" href="{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %}" role="button">Delete Test</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <button class="btn btn-primary" id="add_text" >ADD QUESTION</button>
+        
+        <a href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}" role="button" class="btn btn-info pull-right">BACK</a>
+       
+        <div id="add_test_form" class="pull-right">
+            <form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;" role="form">
 	           {% csrf_token %} 
                 <input type="hidden" id="id" value=""/>
-                <img id="image_ques" src="/media/test/img-icon.png" alt="Preview" width="100" height="100"/>
+                <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
+                <div id="img_error" class="text-danger"></div>
 	           {% for field in form %}
-    	           <div class="fieldWrapper">
+    	           <div class="form-group">
                         {{ field.errors }} 
                         {{ field.label_tag }} {{ field }}
     	           </div>
 	           {% endfor %} 
-                <input type="button" value="Add Question"  id="add_question"  onclick="addquestion()"/>
-                <input type="button" value="Edit Question"  id="update_question" onclick="updatequestion()"/>
-                <input type="button" value="Cancel" id="done_text"/>
+                <input type="button" value="Add Question"  id="add_question"  onclick="addquestion()" class="btn btn-primary"/>
+                <input type="button" value="Edit Question"  id="update_question" onclick="updatequestion()" class="btn btn-success"/>
+                <input type="button" value="Cancel" id="done_text" class="btn btn-warning" />
             </form>
-            <a href = "{% url 'classes:deletetest' chosen_class.pk chosen_lesson.pk chosen_test.pk %} " id="del_test"><img src="{% static 'class_management/images/Delete-Class-icon.png' %}" title="Delete Exercise" width="58" height="58" ></a>
-            <a href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}">Done</a>
+
+            
+
+            
         </div>
-        <div id="testlist">
-            <h2 style="text-align: center;"> EXERCISE </h2>
+        <div id="testlist" style="width: 48%; margin-left: 320px;">
+            <h2 style="text-align: center;color: rgb(190, 24, 97);">{{ chosen_test.test_name }} EXERCISE </h2>
             {% if question_list|length == 0 %}
-                <div class="nonhaving">You Aren't Having Any Question in This Exercise!</div>
+                <div class="alert alert-info nonhaving" role="alert">
+                    You Aren't Having Any Question in This Exercise!</div>
             {% else %}
                 {% for question in question_list %}
-                    <div id="{{ question.order_test }}">
+                    <div id="{{ question.order_test }}" class="row">
+                        <div class="col-md-3">
                         <div>
     			             <span class="id_test">{{ question.order_test }}</span><span>. </span> <span class="id_question_test">{{ question.question }}</span>
                         </div>
-                        {% if question.image_ques and question.image_ques != "False" %} 
-                            <img src="{{ question.image_ques.url }}" height=150 width=150/>
-                        {% else %}
-                            <img src="#" height=0 width=0/>
-                        {% endif %}
+                        
                         <ol style='list-style-type: upper-alpha'>
                             <li class="id_answerA_test">{{ question.answerA }}</li>
                             <li class="id_answerB_test">{{ question.answerB }}</li>
@@ -57,71 +75,78 @@
                         <div>
         			     Right Answer: <span class="id_right_answer_test">{{ question.right_answer }}</span>
                         </div>
-                        <div class="option">
-                            <img src="{% static 'class_management/images/Edit-Text-icon.png' %}" title="Edit Question" width="58" height="58" id="edit_text">
-                            <img src="{% static 'class_management/images/Delete-Text-icon.png' %}" title="Delete Question" width="58" height="58" id="del_text">
+                    </div>
+                    <div class="col-md-5">
+                        {% if question.image_ques and question.image_ques != "False" %} 
+                            <img src="{{ question.image_ques.url }}" height=150 width=150/>
+                        {% else %}
+                            <img src="#" height=0 width=0/>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="option bs-callout">
+                            <button class="btn btn-success edit_text" style="margin-bottom: 10px;" onclick="upevent($(this));">Edit Question</button>
+                            <button class="btn btn-danger del_text" >Delete Question</button>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             {% endif %}
         </div>
     </div>
 {% endblock %}
 {% block script %}
+<script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
-    $("#id_image_ques").hide();
-    $('label[for="id_image_ques"]').hide();
-    $('#add_ques').hide();
+    $(window).scroll(function () { 
+       if ($(window).scrollTop()>300){
+            $("#add_test_form").addClass("fixed_class");
+        }
+        else {
+            $("#add_test_form").removeClass("fixed_class");
+        }
+});
+    $( "input[name='right_answer']" ).parent().parent().parent().addClass( "list-inline" );
+    $("#id_image_ques").parent().hide();
+    $("#image_ques").click(function(){
+        $("#id_image_ques").click();
+    });
+    $('#add_test_form').hide();
 
     $('#add_text').click(function(){
+        $(".image_ques").attr('src', '/media/test/img-icon.png');
+            $("#id_question").val("");
+            $("#id_answerA").val("");
+            $("#id_answerB").val("");
+            $("#id_answerC").val("");
+            $("#id_answerD").val("");
+            reset_form_element( $("#id_image_ques") );
+            $("input[name=right_answer]").prop('checked', false);
         $("#testlist").animate({
-            'margin-left': '499px'
+            'margin-left': '20px',
         }, "slow");
-        $('#add_ques').show('slow');
+        $('#add_test_form').show('slow');
         $('#add_question').show('slow');
         $('#update_question').hide();
-
     });
 
-    
-    $("#edit_text").click(function() {
-        $("#testlist").animate({
-            'margin-left': '499px'
-        }, "slow");
-        $('#add_ques').show('slow');
-        $('#add_question').hide();
-        $('#update_question').show('slow');
-            var item = $(this).parent().parent();
-            $('#id_question').html(item.find(".id_question_test").html());
-            $("#id").val(item.find(".id_test").html());
-            if (item.children('img').attr('src') != "#") $('#image_test').attr('src', item.children('img').attr('src'));
-            else $('#image_test').attr('src', "/media/test/img-icon.png");
-            $('#id_question').html(item.find(".id_question_test").html());
-            $('#id_answerA').html(item.find(".id_answerA_test").html());
-            $('#id_answerB').html(item.find(".id_answerB_test").html());
-            $('#id_answerC').html(item.find(".id_answerC_test").html());
-            $('#id_answerD').html(item.find(".id_answerD_test").html());
-            $("input[name=right_answer][value=" + item.find(".id_right_answer_test").html() + "]").prop('checked', true);
-        });
-
      $('#done_text').click(function(){
-        $("#add_ques").hide();
+        $("#add_test_form").hide();
          $("#testlist").animate({
-            'margin-left': '0px'
+            'margin-left': '320px'
         }, "slow");
      });
         $(".option").hide();
         $("#testlist").children().hover(function(){
-            $(this).css("background-color", "#E8E8E8 ");
+            $(this).css("background-color", "rgb(239, 254, 255)");
             $(this).find(".option").show();
         }, function(){
             $(this).css('background-color', '');
             $(this).find(".option").hide();
         });
-        $('#del_text').click(function() {
-            console.log($(this).parent().parent());
+        $('.del_text').click(function() {
                    if (confirm("Are You Sure You Want to Detele This Question?")) {
-                    var id_question = $(this).parent().parent().attr('id');
+                    var id_question = $(".row").has($(this)).attr('id');
                     $.ajax({
                         type: "POST",
                         url: "{% url 'classes:deletequestion' chosen_test.pk %}",
@@ -151,6 +176,25 @@
                     }
                     return false;
         });
+    var upevent = function(button){
+        $("#testlist").animate({
+            'margin-left': '20px'
+        }, "slow");
+        $('#add_test_form').show('slow');
+        $('#add_question').hide();
+        $('#update_question').show('slow');
+            var item = button.parent().parent().parent();
+            $('#id_question').html(item.find(".id_question_test").html());
+            $("#id").val(item.find(".id_test").html());
+            if (item.find('img').attr('src') != "#") $('.image_ques').attr('src', item.find('img').attr('src'));
+            else $('.image_ques').attr('src', "/media/test/img-icon.png");
+            $('#id_question').val(item.find(".id_question_test").html());
+            $('#id_answerA').val(item.find(".id_answerA_test").html());
+            $('#id_answerB').val(item.find(".id_answerB_test").html());
+            $('#id_answerC').val(item.find(".id_answerC_test").html());
+            $('#id_answerD').val(item.find(".id_answerD_test").html());
+            $("input[name=right_answer][value=" + item.find(".id_right_answer_test").html() + "]").prop('checked', true);
+    }
 
     var updatequestion = function() {
         var data = new FormData($('form').get(0));
@@ -163,7 +207,8 @@
             processData: false,
             contentType: false,
             success: function(question_dict) {
-                var mom = $("#" + question_dict['id']);
+                console.log(question_dict);
+                var mom = $("#" + question_dict['order_test']);
                 mom.find(".id_question_test").html(question_dict['question']);
                 mom.find(".id_answerA_test").html(question_dict['answerA']);
                 mom.find(".id_answerB_test").html(question_dict['answerB']);
@@ -171,11 +216,11 @@
                 mom.find(".id_answerD_test").html(question_dict['answerD']);
                 mom.find(".id_right_answer_test").html(question_dict['right_answer']);
                 if (question_dict['image_ques']) {
-                    mom.children('img').attr('src', question_dict['image_ques']).attr('height', '150').attr('width', '150');
+                    mom.find('img').attr('src', question_dict['image_ques']).attr('height', '150').attr('width', '150');
                 } else {
-
-                    mom.children('img').attr('src', "#").attr('height', '0').attr('width', '0');
+                    mom.find('img').attr('src', "#").attr('height', '0').attr('width', '0');
                 }
+                reset_form_element( $("#id_image_ques") );
             },
             error: function(errors_dict) {
                 var errors = JSON.parse(errors_dict.responseText);
@@ -201,12 +246,11 @@
             contentType: false,
             success: function(question_dict) {
                 $(document).find(".nonhaving").html("");
-                var html = "<div id="+question_dict['order_test']+"><div>" + "<span class='id_test'>" + question_dict['order_test'] + "</span><span>. </span><span class='id_question_test'>" + question_dict['question'] + "</div>";
-                if (question_dict['image_ques']) {
-                    html += "<img src = '" + question_dict['image_ques'] + "' height=150 width=150 />";
-                } else {
-                    html += "<img src = '#' height=0 width=0 />";
-                }
+                var html = "<div id="+question_dict['order_test']+" class='row'>"
+                        +"<div class='col-md-3'><div>" + "<span class='id_test'>" + question_dict['order_test'] + "</span>"
+                        +"<span>. </span><span class='id_question_test'>" 
+                        + question_dict['question'] + "</div>";
+               
                 html += "<ol style='list-style-type: upper-alpha'>" 
                             + "<li class='id_answerA_test'>"+question_dict['answerA']
                             + "</li>" 
@@ -219,34 +263,57 @@
                         +"</ol>" 
                         + "<div> Right Answer: <span class='id_right_answer_test'>" 
                             + question_dict['right_answer']+"</span>"
-                        +"</div></div>";
+                        +"</div></div>"
+                        +"<div class='col-md-5'>";
+                if (question_dict['image_ques']) {
+                    html += "<img src = '" + question_dict['image_ques'] + "' height=150 width=150 />";
+                } else {
+                    html += "<img src = '#' height=0 width=0 />";
+                }
+                html += "</div><div class='col-md-4'>"
+                      +  "<div class='option bs-callout'>"
+                       +     "<button class='btn btn-success edit_text'"
+                       +"style='margin-bottom: 10px;' onclick='upevent($(this));'>Edit Question</button>"
+                       +" <button class='btn btn-danger del_text' >"
+                       +"Delete Question</button> </div>     </div>   </div>";
             $("#testlist").append(html);
-            $("#image_ques").attr('src', '/media/test/img-icon.png');
+            $(".option").hide();
+            $("#testlist").children().hover(function(){
+            $(this).css("background-color", "rgb(239, 254, 255)");
+            $(this).find(".option").show();
+        }, function(){
+            $(this).css('background-color', '');
+            $(this).find(".option").hide();
+        });
+            $(".image_ques").attr('src', '/media/test/img-icon.png');
             $("#id_question").val("");
             $("#id_answerA").val("");
             $("#id_answerB").val("");
             $("#id_answerC").val("");
             $("#id_answerD").val("");
+            reset_form_element( $("#id_image_ques") );
             $("input[name=right_answer]").prop('checked', false);
 
             },
             error: function(errors_dict) {
                 var errors = JSON.parse(errors_dict.responseText);
-                $('.errorlist').remove();
-                for (error in errors) {
-                    var id = '#id_' + error;
-                    console.log(id);
-                    $(id).parent().append(errors[error]);
-                }
+                      $('.errorlist').remove();
+
+                        for (error in errors) {
+                            var id = '#id_' + error;
+                            if (error=="right_answer") {
+                                $("input[name=right_answer]").parent().parent().parent().parent().append("<div class='text-danger'>"+errors[error])+"</div>";
+                            }
+                            else{
+                            $(id).parent().append("<div class='text-danger'>"+errors[error])+"</div>";
+                        }
+                        }
+                        $("#img_error").text($("#id_image_ques").parent().find("li").text());
+
+                        $('.errorlist').addClass("list-unstyled");
             }
         });
         return false;
     };
-            $("#del_test").click(function(){
-                if (confirm("Everything relating to This Exercise will be deleted too\nAre you sure you want to delete This Exercise? ")){
-                    return true;
-                }
-                return false;
-            });
         </script>
     {% endblock %}
