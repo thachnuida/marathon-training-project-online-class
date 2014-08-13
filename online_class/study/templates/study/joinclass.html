@@ -5,10 +5,10 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
 <div id="joinclass">

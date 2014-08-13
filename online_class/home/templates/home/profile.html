@@ -1,13 +1,16 @@
-{% extends "home/home.html" %}
+{% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-{% block body %}
-<head>
-  <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
-  <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+{% block title %} Online Class {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-</head>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+{% endblock %}
+{% block body %}
 {% for profile in profiles %}
   sinh nhat:<label>{{profile.birthday}}</label><br>
   dia chi :  <label>{{profile.address}}</label><br>

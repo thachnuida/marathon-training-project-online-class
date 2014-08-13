@@ -5,10 +5,10 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
 <div id="result">
@@ -17,8 +17,8 @@
   <a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}">Do test again</a><br>
   <a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}">Back to study list</a><br>
   <div id="win">
-    <h3>Background yelow is Rigth Answer</h3>
-    <h3>Font large is Your Answer</h3>
+    <h2>Background yelow is Rigth Answer</h2>
+    <h2>Font-size large is Your Answer</h2>
     {% for test in all_question %}
     <div id="{{ test.order_test }}">
     <p><b>{{ test.order_test }}</b></p>

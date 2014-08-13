@@ -7,14 +7,16 @@ body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 body {
-  position: fixed;
-  width: 100%;
-  height: 660px;
-  background-image: url(/static/images/background.00_png_srz);
-  background-color: rgb(215, 215, 215);
-  background-size: cover;
-  background-position: 50% 0%;
-  background-repeat: no-repeat;
+  background-image: url(http://w3layouts.com/demos/transparent_uikit/web/images/bg.jpg);
+  background-position-x: initial;
+  background-position-y: initial;
+  background-size: 100% 100%;
+  background-repeat-x: initial;
+  background-repeat-y: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
 }
 footer {
   padding: 30px 0;

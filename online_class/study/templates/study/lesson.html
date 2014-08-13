@@ -2,30 +2,28 @@
 {% load url from future %}
 {% load staticfiles %}
 {% block title %} Online Class {% endblock %}
-{% block link %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-    <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-{% endblock %}
 {% block body %}
 <div id="lesson">
   <div class="content-lesson">
-  <h3>{{ chosen_class}}</h3>
-  <h3>{{ chosen_lesson}}</h3>
+  <h3 class="lesson-header-class">{{ chosen_class}}</h3>
+  <h3 class="lesson-header-lesson">{{ chosen_lesson}}</h3>
   {% for les in all_lesson %}
   <h5>{{les.description|safe}}</h5>
-
   <iframe width="560" height="315" src="{{les.video_link}}" frameborder="0" allowfullscreen></iframe><br>
   {% endfor %}
     <div class="test">
-    {% for test in chosen_test%}
-    
+    {% for test in chosen_test%}  
     <a href="{% url 'study:test' chosen_class.pk chosen_lesson.id test.id %}">{{test.test_name}}</a>
     {% endfor %}
     </div>
   </div>
 </div>  
   {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+{% endblock %}

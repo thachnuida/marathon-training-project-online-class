@@ -5,10 +5,10 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
 <div id="test"> 
@@ -60,6 +60,9 @@ if($("input:radio[name=answer]").is(":checked")){
       $(".span3").html(topic_list.load['answerC']);
       $(".span4").html(topic_list.load['answerD']);
       }
+      if (order==lenght){
+        $(".button2").val( "Finish" );
+      }
       if (order==lenght+1){
         $(".answer_user").val(topic_list.array_user_choose);
         $(".order").val(topic_list.load['order_test']);
@@ -74,7 +77,7 @@ if($("input:radio[name=answer]").is(":checked")){
   return false;
 }
 else{
-  alert("Please chosse one answer !!!");
+  alert("Please choose one answer !!!");
 }
 
 };

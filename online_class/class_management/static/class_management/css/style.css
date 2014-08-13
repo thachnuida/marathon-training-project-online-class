@@ -40,6 +40,31 @@ margin-top: 20px;
 #ones_classes a,#detail_class a, #detail_lesson a {
     text-decoration: none;
 }
+#ones_classes h2{
+    margin-left: 24px;
+    font-size: 30px;
+}
+#ones_classes .contentclass a{
+    display: block;
+    background: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+    padding: 20px;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 30px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+     -webkit-transition: all 0.3s ease-in-out; 
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+     transition: all 0.3s ease-in-out; 
+}
+#ones_classes .contentclass a:hover{
+    background: rgba(255, 255, 255, 0.15);
+}
 
 #ones_classes .title,#student_detail .title, #create_test #testlist .title, #create_lesson .title, #detail_lesson .title, #detail_class .title, #create_class .title, #studentclass .title, #student_process .title{
     text-align: center;
@@ -58,6 +83,9 @@ margin-top: 20px;
     float: left;
     border-radius: 5px;
     overflow: hidden;
+}
+#home h2{
+    color: white;
 }
 #ones_classes .class_in_list {
     height: 180px;
@@ -87,11 +115,11 @@ margin-top: 20px;
 }
 
 #ones_classes .create_date_class {
-   margin-left: 54px;
-    color: blue;
+    display: block;
+    color: white;
     font-weight: bold;
     margin-top: 11px;
-    margin-bottom: 37px;
+    font-size: 19px;
 }
 #ones_classes .quantity {
     color: blue;
@@ -100,9 +128,27 @@ margin-top: 20px;
 }
 
 #ones_classes .class_name {
-    font-size: 22px;
-    margin-left: 57px;
-    color: red;
+
+background: #B47859;
+border-bottom: 1px solid #976043;
+-webkit-border-radius: 10px 10px 0 0;
+-webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+}
+#ones_classes .contentclass {
+
+   position: relative;
+    text-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.18);
+    -webkit-border-radius: 0px 0px 10px 10px;
+}
+#ones_classes .class_name h3{
+    font-weight: 600;
+    padding: 20px 20px;
+    color: #ffffff;
+    font-size: 1.9em;
+    text-transform: uppercase;
+    text-align: center;
 }
 #create_class #add_class_form{
 margin: 0px auto;

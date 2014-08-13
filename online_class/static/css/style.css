@@ -1,3 +1,4 @@
+
 #body{
     text-align: center;
     background-color: #f1f1f1;
@@ -26,7 +27,7 @@
     padding-left: 85px;
     padding-top: 20px;
     display: block;
-    background-color: rgba(255, 255, 255, 0.890196)!important;
+    background-color: rgba(255, 255, 255, 0.690196)!important;
     /*margin-top: 80px;*/
 }
 #topmost li{
@@ -43,7 +44,7 @@
     width: 100px;
     float: left; 
     padding: 10px;
-    border: 2px solid green;
+    border: 2px solid #5981AC;
 }
 .plus_info{
     text-align: center;
@@ -65,9 +66,8 @@
 }
 .welcome{
     height: 50px;
-    opacity: 0.8;
     display: block;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.40392);
 }
 .header1{
     line-height: 20px;
@@ -79,36 +79,59 @@
 }
 .form-login{
     /*opacity: 0.8;*/
+    margin-right:108px;
+    background-color: rgba(255, 255, 255, 0.180392);
     margin-top: 20px;
     display: block;
-    background-color: rgba(255, 255, 255, 0.741176);
     margin-bottom: 20px;
-    height: 277px;
 }
-.form-login input{
-    border: 1px solid rgb(107, 163, 167);
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial;
-    padding: 5px;
-    width:70%;
-    margin: 0px 0px 5px;
-    margin-left: 10%;
+.form-login .input{
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    padding: 12px 15px;
     display: block;
+    width: 88%;
+    background: rgba(255, 255, 255, 0.42);
+    outline: none;
+    color: #ffffff;
+    font-size: 1.35em;
+    border: none;
+    margin-left: 20px;
+    -webkit-appearance: none;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.form-login span{
+    display: block;
+    color: #ffffff;
+    font-size: 1em;
+    text-transform: capitalize;
+    font-weight: 400;
+    margin-left: 30px;
+    margin-bottom: 10px;
+
+}
+.form-login .header-login{
+    background: #688B78;
+    border-bottom: 1px solid #688B78;
+    border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    -o-border-radius: 10px 10px 0 0;
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .button{
     border-radius: 0px;
-    background-color: rgb(39, 131, 137);
+    background-color: #688B78;
     border: 1px solid rgb(73, 73, 73);
     border-image-source: initial;
     border-image-slice: initial;
     border-image-width: initial;
     border-image-outset: initial;
     border-image-repeat: initial;
-    font: normal normal normal 14px/1.4em 'noticia text', serif;
+    font: normal normal normal 17px/1.4em 'noticia text', serif;
     color: rgb(255, 255, 255);
     white-space: nowrap;
     display: inline-block;
@@ -119,6 +142,7 @@
 .hello{
     font-size: 30px !important;
     margin-top: 20px !important;
+    color: white;
 }
 
 #navigation{
@@ -131,61 +155,34 @@
 }
 
 #footer{
-    /*height: 245px;
-    opacity: 0.6;
-    
-    display: block;
-    background-color: rgba(255, 255, 255, 0.741176);
-    background-color: rgb(172, 216, 226);
-    margin-bottom: 20px;*/
     height: 245px;
-    background-color: rgb(172, 216, 226);
-    opacity: 0.6;
-    border-color: #1f1a14;
+    background-color: #53555e;
     border-style: solid none none;
-    border-width: 1px;
     margin-top: 20px;
+    border-top:1px solid white;
 }
 #footer h4{
-    color: #626262;
+    color: white;
     font: bold 28px/24px Arial, Helvetica, sans-serif;
     margin: 0;
     text-transform: uppercase;
     margin-left: 2px;
     margin-top: 30px;
-    border-right: 2px solid black;
+    border-bottom: 2px solid white;
 }
 #footer p{
-    color: black;
+    color: white;
     font: bold 22px/24px Arial, Helvetica, sans-serif;
     margin: 0;
     margin-left: 2px;
     margin-top: 15px;
-    border-right: 2px solid black;
-}
-h2{
-    font: normal normal normal 25px/1.2em impact, impact-w01-2010, impact-w02-2010, impact-w10-2010, sans-serif;
-    color: rgb(86, 108, 113);
-    line-height: 1.2em;
+    border-right: 2px solid white;
 }
 #top9class{
-    display: block;
+    /*display: block;
     background-color: rgba(255, 255, 255, 0.890196)!important;
-    margin-top: 7%;
+    margin-top: 7%;*/
 }
-#popularclass{
- 
-}
-.h3_popular{
-    /*margin-top: 20px;*/
-}
-.logo{
-    background-color: rgba(8, 8, 8, 0.921569)!important;
-    margin-left: 145px;
-    width:960px;
-    /*height: 150px;*/
-}
-
 .baner2{
     display: block;
 }
@@ -257,6 +254,7 @@ h2{
     background-color: rgba(255, 255, 255, 0.890196)!important;
     width: 821px;
     float: left;
+    margin-left: 162px;
 }
 
 #studylist .header{
@@ -271,49 +269,84 @@ h2{
     letter-spacing: 1px;
     display: block;
     float: left;
+    margin-left: 40%;
 }
 #studylist .content{
     width: 821px;
     float: left;
+    padding-bottom: 9%;
 }
-/*#studylist .studylist-content img{
-    height: 125px;
-    width: 125px;
-    margin-left: 10px;
-    margin-top: 10px;
 
-}*/
 #studylist .classes {
     background-color: rgba(255, 255, 255, 0.741176);
     margin-left: 9%;
     margin-top: 6%;
-/*    height:10px;
-    width: 20px;*/
+    margin-right: 9%;
     float: left;
     display: block;
+}
+#studylist .classes .classes-header{
+    display: block;
+    background: #5981AC;
+    border-bottom: 1px solid #5981AC;
+    border-radius: 20px 20px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    -o-border-radius: 10px 10px 0 0;
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+}
+#studylist .classes .classes-header a{
+    font-weight: 600;
+    padding: 10px 10px;
+    color: #ffffff;
+    font-size: 1.8em;
+    text-transform: uppercase;
+    text-align: center;
+    display: block
+}
+#studylist .classes .teacher {
+    margin-left: 2%;
+    font-size: 25px;
+    margin-top: 20px;
+    display: block;
+}
+#studylist .classes .date {
+    margin-left: 60%;
+    font-size: 20px;
+    margin-top: 20px;
+    display: block;
+}
+#studylist .classes img{
+    margin-left: 37%;
+    display: block;
+    margin-top: 6%;
+    border: 2px solid #5981AC;
 }
 #studyclass{
     display: block;
     width: 720px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
+    margin-left: 162px;
 }
 #studyclass h3{
-    padding-top: 20px;
-    padding-left: 200px;
+    padding-top: 10%;
+    font-size:35px;
 }
 #studyclass ul{
     list-style-type: none;
+    margin-top: 20px;
 }
 #studyclass ul li{
     color: #8B008B;
     font: 25px/1 Helvetica, Verdana, sans-serif;
-    margin-top: 2%;
+    margin-top: 7%;
 }
 #studyclass button{
     border-radius: 0px;
     background-color: rgb(39, 131, 137);
     border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 14px/1.4em 'noticia text', serif;
+    font: normal normal normal 17px/1.4em 'noticia text', serif;
     color: rgb(255, 255, 255);
     white-space: nowrap;
     display: inline-block;
@@ -323,17 +356,22 @@ h2{
 }
 #lesson{
     display: block;
-    width: 720px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
     padding-bottom: 30px;
     float:left;
 }
 #lesson .content-lesson{
-    margin: 30px 30px 30px 30px;
+    margin: 30px 50px 30px 50px;
 }
-#lesson h3{
-    padding-top: 20px;
-    padding-left: 200px;
+#lesson .lesson-header-class{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: block;
+    margin-left: 35%;
+    font-size: 35px;
+}
+#lesson .lesson-header-lesson{
+    font-size:26px;
 }
 #lesson h5{
     padding-top: 20px;
@@ -362,6 +400,7 @@ h2{
 #test{
     display: block;
     float: left;
+    margin-left: 215px;
     width: 720px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
@@ -396,12 +435,12 @@ h2{
     display: block;
     float: left;
     width: 720px;
+    margin-left: 215px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
 }
-#result h2,h3{
-    padding-top: 20px;
-    padding-left: 200px;
+#result h2{
+  text-align: center;
 }
 
 #result button{
@@ -412,12 +451,13 @@ h2{
     color: rgb(255, 255, 255);
     margin-top: 20px;
     padding-bottom: 10%;
-    margin-left:28%;
+    margin-left:30%;
+    margin-bottom: 20px;
 }
 #result a{
     font-weight:bold;
-    margin-left: 202px;
     font-size:20px;
+    margin-left: 20px;
 }
 #result p{
     padding-top: 10px;
@@ -441,27 +481,42 @@ h2{
     margin-left:62%;
 }
 #one_class img{
-    border: 2px solid green;
+    border: 2px solid #B47859;;
+    display: block;
+    margin-left:50px;
 }
 .popular{
-    padding-left: 76px;
+    background: #5981AC;
+    border-bottom: 1px solid #5981AC;
+    margin-top: 83px;
+    border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    -o-border-radius: 10px 10px 0 0;
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+}
+.popular h4{
+    font-weight: 600;
+    padding: 20px 20px;
+    color: #ffffff;
+    font-size: 1.9em;
+    text-transform: uppercase;
+    text-align: center;
     display: block;
-    background-color: rgba(255, 255, 255, 0.890196)!important;
-    margin-top: 80px;
 }
 .icon{
     color: black;
+    display: inline-block;
     font: bold 22px/24px Arial, Helvetica, sans-serif;
-    margin-left: 2px;
-    margin-top: 15px;
-    padding-top: 10px;
-    padding-bottom: 20px;
-}
-.ever{
-    margin-left: 121px;
-    font-size: 26px;
+    margin-left: 6px;
+    margin-top: 27px;
 }
 .loginto{
-    margin-left: 177px;
-    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 10px;
+    color: #ffffff;
+    font-size: 1.8em;
+    text-transform: uppercase;
+    text-align: center;
 }

@@ -5,10 +5,10 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
   <div id="studylist">
@@ -18,15 +18,17 @@
     <div class="content">
       {% for class in all_class %}
           <div class="classes">
+          <div class="classes-header">
+            <a href="{% url 'study:studyclass' class.id %}">Class name: {{ class.class_name }}</a><br>
+          </div>
+          <p class="teacher">Teacher name: {{ class.teacher }}</p>
             {% if class.image_class and class.image_class != "False" %}
               <img src="{{ class.image_class.url }}" height=150 width=150/><br>
             {% else %}
              <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
             {% endif %}
-            <a href="{% url 'study:studyclass' class.id %}">Class name: {{ class.class_name }}</a><br>
-            <p>Teacher name: {{ class.teacher }}</p>
-            <p>Description: {{ class.description }}</p>
-            <p> {{ class.create_date }}</p>
+            <p>Description: {{ class.description|safe }}</p>
+            <p class="date"> {{ class.create_date }}</p>
             </div>
       {% endfor %}
       </div>
