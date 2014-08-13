@@ -33,8 +33,21 @@
                    <div class="header-login">
                      <p class="loginto"> WELCOME </p>  
                     </div>
-                    <a class="hello" href="{% url 'home:profile'%}">HELLO {{ user.username }}!</a><br>
-                    <a class="hello" href="{% url 'home:logout'%}">LOG OUT</a>
+                    <div class="header-content">
+                      <img src="/static/images/pic2.jpg"/>
+                    </div>
+                    <div class="header-user">
+                      <div class="user-list">
+                        <div class="header-image-profile">
+                        {% block image %}
+                        {% endblock %} 
+                        </div>
+                        <div class="header-text">
+                          <h4><a class="hello" href="{% url 'home:profile'%}">Hello {{ user.username }}!</a></h4>
+                          <h4><a class="hello" href="{% url 'home:logout'%}">Log out</a></h4>
+                        </div>
+                      </div> 
+                    </div>                    
                   {% else %}
                    <div class="header-login">
                      <p class="loginto"> LOGIN </p>  

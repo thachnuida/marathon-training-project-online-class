@@ -2,6 +2,85 @@
 {% load url from future %}
 {% load staticfiles %}
 {% block title %} Online Class {% endblock %}
+
+{% block body %}
+<div class="profile">
+  <div class="profile-content"> 
+    <h3>Profile</h3>
+    {% for profile in profiles %}
+      {% if profile.user_image and profile.user_image != "False" %}
+        <img src="{{ profile.user_image.url }}" height=100 width=100 id="image_class"/>
+      {% else %}
+        <img src="{% static 'home/images/images.jpg' %}" height=100 width=100 id="image_class"/>
+      {% endif %}
+    {% endfor %}  
+      <br>
+    <table id="profile-table">
+      <tbody>
+      {% for profile in profiles2 %}
+      <tr>
+          <th>First name</th>
+          <td>{{profile.first_name}}</td>
+      </tr>
+      <tr>    
+          <th>Last name</th>
+          <td>{{profile.last_name}}</td>
+      </tr>
+      <tr>    
+          <th>Email</th>
+          <td>{{profile.email}}</td>
+      </tr>
+      {% endfor %}
+
+      {% for profile in profiles %}
+      <tr>
+        <th>Birthday</th>
+        <td>{{profile.birthday}}</td>
+      </tr>
+      <tr>  
+        <th>Address</th>
+        <td>{{profile.address}}</td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td>{{profile.phone}}</td>
+      </tr>
+      <tr>
+        <th>Gender</th>
+        {% if profile.gender == 'M' %}
+          <td>Male</td>
+        {% else %}
+          <td>Female</td>
+        {% endif %}
+      </tr>
+      </tbody>
+    </table>
+    {% endfor %}
+    <button class="Edit"> Edit profile</button>
+  </div>  
+  <div id="edit_form_fix" style=" display: none;">
+    <div class="profile-content-form"> 
+      <h3> Edit Profile</h3>
+      <form id="edit_form" method ="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ upuserform.as_p }}
+            {{ upform.as_p }}
+      <button class="Edit_profile_button" type="submit" name="submit"/>Edit</button>
+      <button class="Cancel">Cancel</button>    
+      </form>
+    </div>
+  </div>  
+</div>
+{% endblock %}   
+
+  {% block image %}
+    {% if currentuser.user_image and currentuser.user_image != "False" %}
+    <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
+    {% else %}
+    <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
+    {% endif %}
+  {% endblock %}
+   
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
@@ -9,36 +88,36 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
-{% endblock %}
-{% block body %}
-{% for profile in profiles %}
-  sinh nhat:<label>{{profile.birthday}}</label><br>
-  dia chi :  <label>{{profile.address}}</label><br>
-  sdt: <label>{{profile.phone}}</label><br>
-  gioi tinh: <label>{{profile.gender}}</label><br>
-  {% if profile.user_image and profile.user_image != "False" %}
-    <img src="{{ profile.user_image.url }}" height=100 width=100 id="image_class"/>
-  {% else %}
-    <img src="{% static 'home/images/images.jpg' %}" height=100 width=100 id="image_class"/>
-  {% endif %}
-{% endfor %}
 
-{% for profile in profiles2 %}
-  ho:<label>{{profile.first_name}}</label><br>
-  ten:<label>{{profile.last_name}}</label><br>
-  email:<label>{{profile.email}}</label><br>
-{% endfor %}
-<button class="Edit222"> Edit profile</button>
-<div id="edit_form" style=" display: none;">
-  <p>aaaa</p>
-</div>
-{% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>  
+    <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}"></script>  
+    <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css"/>  
+    <link href="{% static 'css/datepicker.css'%}" rel="stylesheet" type="text/css"/>  
 
-<script>
-$(document).ready(function(){
-  $(".Edit222").click(function(){
-    // $("#edit_form").show( "slow" );
-    console.log("aaa");
-  });
-});
+    <script>
+    $(document).ready(function(){
+        $(".Edit").click(function(){
+         $(".profile-content").empty();
+          $("#edit_form_fix").css("display","block");
+        });
+      $(".Cancel").click(function(){
+        $(".profile-content").show();
+        $("#edit_form_fix").css("display","none");
+      });
+      $(".Edit_profile_button").click(function(){
+        $("#edit_form_fix").submit();
+        window.location.reload()
+      });   
+      $(function() {
+        $( "#id_birthday" ).datepicker({
+            dateFormat: 'yy-mm-dd',
+            yearRange: "-40:+0",
+            inline: true,  
+            changeYear: true,
+            showOtherMonths: true,  
+            dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        });
+      });  
+    });
 </script>
+{% endblock %}

@@ -15,7 +15,7 @@ from django.utils import simplejson
 from study.models import *
 import socket
 # Create your views here.
-
+@login_required(login_url='/home/')
 def study(request):
     userusing = request.user
     # join_class = get_object_or_404(Class,pk=pk)

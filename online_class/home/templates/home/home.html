@@ -72,6 +72,14 @@
     </div><!-- end id home div -->
     {% endblock %}
 
+    {% block image %}
+        {% if currentuser.user_image and currentuser.user_image != "False" %}
+        <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
+       {% else %}
+        <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
+       {% endif %}
+    {% endblock %} 
+
     {% block script %}
     <script>
         $('.mycarousel').jcarousel();
@@ -100,13 +108,10 @@
     {% endblock %}
 {% block link %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
     <!-- Test new slider-->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.css"/>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"></script>
 {% endblock %}

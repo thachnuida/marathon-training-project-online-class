@@ -8,7 +8,7 @@ class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password again...'}), max_length=50, error_messages={'required': 'Please re-enter your new password for confirmation.'})
     class Meta:
         model=User
-        fields=('username','password','confirm_password','email','first_name','last_name',)
+        fields=('username','password','confirm_password','email','first_name','last_name')
         widgets = {
             'username': forms.TextInput(attrs=({'placeholder': 'Choose a new username...'})),
             'email': forms.TextInput(attrs=({'placeholder': 'Email address...'})),
@@ -45,3 +45,14 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model=UserProfile
         exclude=['user']    
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model=UserProfile
+        exclude=['user'] 
+        fields=('birthday','address','phone','gender','user_image')
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('email','first_name','last_name')

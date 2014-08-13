@@ -49,7 +49,7 @@ if($("input:radio[name=answer]").is(":checked")){
       $(".order").val(topic_list.load['order_test']);
       $(".question_id").val(topic_list.load['id']);
       $(".answer_user").val(topic_list.array_user_choose);
-      $(".numbertest").html(topic_list.load['order_test']);
+      $(".numbertest").html(topic_list.load['order_test']+".");
       $(".question").html(topic_list.load['question']);
       $(".1").prop("checked", false)
       $(".2").prop("checked", false)
@@ -85,3 +85,11 @@ else{
 </script>
 
 {%endblock%}
+
+{% block image %}
+  {% if currentuser.user_image and currentuser.user_image != "False" %}
+  <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
+  {% else %}
+  <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
+  {% endif %}
+{% endblock %}

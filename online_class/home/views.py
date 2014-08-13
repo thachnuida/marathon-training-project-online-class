@@ -63,15 +63,22 @@ def login(request):
 
 def home(request):
     all_class = Class.objects.all()
+    true=True
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        if user:
+        if user:  
             if user.is_active:
                 auth_login(request, user)
                 currentuser = UserProfile.objects.get(user=request.user.id)
-                all_class=all_class.exclude(students_in_class=request.user)
+                # all_class=all_class.exclude(students_in_class=request.user)
+                # user=request.user
+                # print user
+                # all_user_class= 
+                # for users in all_user_class:
+                #     print users
+
                 recently_class = Class.objects.exclude(students_in_class=request.user).order_by("create_date")[:12]
                 top_student_class = Class.objects.exclude(students_in_class=request.user).annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
                 return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
@@ -80,26 +87,43 @@ def home(request):
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
         return render(request, "home/home.html", {'error': error })
+    
+
     if request.user.is_anonymous():
         recently_class = Class.objects.order_by("create_date")[:12]
         top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
         return render(request, "home/home.html", {'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
     else :
         recently_class = Class.objects.exclude(students_in_class=request.user).order_by("create_date")[:12]
-        all_class=all_class.exclude(students_in_class=request.user)
+        # all_class=all_class.exclude(students_in_class=request.user)
         currentuser = UserProfile.objects.get(user=request.user.id)
         top_student_class = Class.objects.exclude(students_in_class=request.user).annotate(num_students=Count('students_in_class')).order_by("-num_students")[:5]
         return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
 
 def profile(request):
     user_using=request.user
-    print user_using
-
+    currentuser = UserProfile.objects.get(user=request.user.id)
     profiles = UserProfile.objects.filter(user=user_using)
     profiles2  =User.objects.filter(pk=user_using.id)
-    # all_question1  = chosen_test.question_set.all()
-    print profiles2
+    user = User.objects.get(pk=request.user.id)
+    if request.method == 'POST':
+        upform = EditProfileForm(request.POST, instance=user.get_profile())
+        upuserform= EditUserForm(request.POST,instance=user_using)
+        if upform.is_valid() and upuserform.is_valid():
+            user = upuserform.save()
+            up = upform.save(commit=False)
+            up.user = request.user
+            # profile.user_image=profile_form.cleaned_data['user_image'],
+            if 'user_image' in request.FILES:
+                up.user_image = request.FILES['user_image']
+            up.save()    
+    else:
+        upform = EditProfileForm(instance=user.get_profile())
+        upuserform= EditUserForm(instance=user_using)
     return render(request,'home/profile.html',{
         'profiles':profiles,
-        'profiles2':profiles2
+        'profiles2':profiles2,
+        'upuserform':upuserform,
+        'upform':upform,
+        'currentuser':currentuser
         })
