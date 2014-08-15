@@ -136,7 +136,7 @@ def result(request,class_id,lesson_id,test_id):
     # [x==y for x, y in zip(a, one_right_answer)]
     for x, y in zip(answer_user, list_right_answer):
         if x == y:
-            score+=10
+            score+=1
             print "score"
             print score
 

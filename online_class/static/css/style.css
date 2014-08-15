@@ -666,3 +666,7 @@ display: none;
     float: left;
     margin-left: 4%;
 }
+.error-message{
+    color: red;
+    font-size: 20px;
+}
