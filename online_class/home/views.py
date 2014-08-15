@@ -90,7 +90,19 @@ def home(request):
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
-        return render(request, "home/home.html", {'error': error })
+            recently_class = Class.objects.order_by("create_date")[:12]
+            paginator = Paginator(all_class, 8) # Show 8 contacts per page
+            page = request.GET.get('page')
+            try:
+                all_class = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                all_class = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                all_class = paginator.page(paginator.num_pages)
+            top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
+        return render(request, "home/home.html", {'error': error, 'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})	
     if request.user.is_anonymous():
         recently_class = Class.objects.order_by("create_date")[:12]
         paginator = Paginator(all_class, 8) # Show 8 contacts per page
