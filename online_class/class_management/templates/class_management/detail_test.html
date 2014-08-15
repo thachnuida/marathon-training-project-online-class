@@ -6,9 +6,12 @@
     {{ block.super }}
     <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}
 {% block body %}
-    <div id="detail_test" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);">
+    <div id="detail_test" class="bg" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);">
+         <a href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}" role="button" class="btn btn-info">BACK</a>
         <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">DELETE TEST</button>
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -30,18 +33,18 @@
             </div>
         <button class="btn btn-primary" id="add_text" >ADD QUESTION</button>
         
-        <a href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}" role="button" class="btn btn-info pull-right">BACK</a>
+       
        
         <div id="add_test_form" class="pull-right">
             <form enctype="multipart/form-data" method="post" action="" id="add_ques" onsubmit="return false;" role="form">
 	           {% csrf_token %} 
                 <input type="hidden" id="id" value=""/>
                 <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
-                <div id="img_error" class="text-danger"></div>
+                <div id="img_error" class="text-danger error_test_form"></div>
 	           {% for field in form %}
-    	           <div class="form-group">
-                        {{ field.errors }} 
+    	           <div class="form-group" style="position: relative;">
                         {{ field.label_tag }} {{ field }}
+                        <div class="text-danger error_test_form"></div>
     	           </div>
 	           {% endfor %} 
                 <input type="button" value="Add Question"  id="add_question"  onclick="addquestion()" class="btn btn-primary"/>
@@ -53,14 +56,14 @@
 
             
         </div>
-        <div id="testlist" style="width: 48%; margin-left: 320px;">
+        <div id="testlist" style="width: 52%; margin-left: 320px;">
             <h2 style="text-align: center;color: rgb(190, 24, 97);">{{ chosen_test.test_name }} EXERCISE </h2>
             {% if question_list|length == 0 %}
                 <div class="alert alert-info nonhaving" role="alert">
                     You Aren't Having Any Question in This Exercise!</div>
             {% else %}
                 {% for question in question_list %}
-                    <div id="{{ question.order_test }}" class="row">
+                    <div id="{{ question.order_test }}" class="row question">
                         <div class="col-md-3">
                         <div>
     			             <span class="id_test">{{ question.order_test }}</span><span>. </span> <span class="id_question_test">{{ question.question }}</span>
@@ -94,13 +97,21 @@
             {% endif %}
         </div>
     </div>
+    <div id="del_dialog" title="Delete Question">
+<p>Are You Sure You Want to Detele This Question?</p>
+    </div>
 {% endblock %}
 {% block script %}
 <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
+    $(".dropdown").addClass("active");
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>300){
+       if ($(window).scrollTop()>390 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
+         $("#add_test_form").css("top", '');
+        $("#add_test_form").addClass("fixed_class");
+        } else if(($("#footer").height()) >= ($(document).height() - $(window).scrollTop() - $(window).height())){
             $("#add_test_form").addClass("fixed_class");
+            $("#add_test_form").css("top",($("#footer").height() - ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
         }
         else {
             $("#add_test_form").removeClass("fixed_class");
@@ -114,6 +125,7 @@
     $('#add_test_form').hide();
 
     $('#add_text').click(function(){
+        $('.error_test_form').hide();
         $(".image_ques").attr('src', '/media/test/img-icon.png');
             $("#id_question").val("");
             $("#id_answerA").val("");
@@ -144,9 +156,21 @@
             $(this).css('background-color', '');
             $(this).find(".option").hide();
         });
-        $('.del_text').click(function() {
-                   if (confirm("Are You Sure You Want to Detele This Question?")) {
-                    var id_question = $(".row").has($(this)).attr('id');
+    $( "#del_dialog" ).dialog({
+         resizable: false,
+         modal: true,
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      },
+      buttons: {
+        "Delete Question": function() {
+         var id_question = $(".row").has($(this).data('del_button')).attr('id');
                     $.ajax({
                         type: "POST",
                         url: "{% url 'classes:deletequestion' chosen_test.pk %}",
@@ -155,8 +179,6 @@
                             csrfmiddlewaretoken : '{{ csrf_token }}',
                             id : id_question },
                         success: function(question_dict) {
-                          console.log("question"+id_question);
-                           
                             var siblings = $('#'+id_question).nextAll();
                             var len = siblings.length
                             for(var i = 0; i< len; i++){
@@ -165,18 +187,22 @@
                                 console.log("id_sibling"+id_sibling);
                                 $(sibling).attr('id', id_sibling - 1);
                                 $(sibling).find('.id_test').html(id_sibling -1);
-
                             }
                             $("#"+id_question).remove();
                         },
-                        error: function(errors_dict) {
-                            alert("error");
-                        }
                     });
-                    }
-                    return false;
-        });
+            $( this ).dialog( "close" );
+    },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+        $('.del_text').click(function() {
+           $( "#del_dialog" ).data("del_button",$(this)).dialog("open" );
+                   });
     var upevent = function(button){
+        $('.error_test_form').hide();
         $("#testlist").animate({
             'margin-left': '20px'
         }, "slow");
@@ -207,7 +233,6 @@
             processData: false,
             contentType: false,
             success: function(question_dict) {
-                console.log(question_dict);
                 var mom = $("#" + question_dict['order_test']);
                 mom.find(".id_question_test").html(question_dict['question']);
                 mom.find(".id_answerA_test").html(question_dict['answerA']);
@@ -221,16 +246,29 @@
                     mom.find('img').attr('src', "#").attr('height', '0').attr('width', '0');
                 }
                 reset_form_element( $("#id_image_ques") );
+                $('.error_test_form').hide();
             },
             error: function(errors_dict) {
                 var errors = JSON.parse(errors_dict.responseText);
-                $('.errorlist').remove();
-                for (error in errors) {
-                    var id = '#id_' + error;
-                    console.log(id);
-                    $(id).parent().append(errors[error]);
+                     $('.error_test_form').hide();
+                        for (error in errors) {
+                            var id = '#id_' + error;
+
+                            if (error=="right_answer") {
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").html(errors[error]);
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").show();
+
+                            }else if(error == "image_ques"){
+                                $("#img_error").html(errors[error]);
+                                $("#img_error").show();
+                                }
+                            else{
+                            $(id).parent().find(".error_test_form").html(errors[error]);
+                            $(id).parent().find(".error_test_form").show();
+                                }
+                        }
+                        $('.errorlist').addClass("list-unstyled");
                 }
-            }
         });
         return false;
     };
@@ -245,8 +283,8 @@
             processData: false,
             contentType: false,
             success: function(question_dict) {
-                $(document).find(".nonhaving").html("");
-                var html = "<div id="+question_dict['order_test']+" class='row'>"
+                $(".nonhaving").remove();
+                var html = "<div id="+question_dict['order_test']+" class='row question'>"
                         +"<div class='col-md-3'><div>" + "<span class='id_test'>" + question_dict['order_test'] + "</span>"
                         +"<span>. </span><span class='id_question_test'>" 
                         + question_dict['question'] + "</div>";
@@ -293,27 +331,31 @@
             $("#id_answerD").val("");
             reset_form_element( $("#id_image_ques") );
             $("input[name=right_answer]").prop('checked', false);
-
+            $('.error_test_form').hide();
             },
             error: function(errors_dict) {
                 var errors = JSON.parse(errors_dict.responseText);
-                      $('.errorlist').remove();
-
+                     $('.error_test_form').hide();
                         for (error in errors) {
                             var id = '#id_' + error;
-                            if (error=="right_answer") {
-                                $("input[name=right_answer]").parent().parent().parent().parent().append("<div class='text-danger'>"+errors[error])+"</div>";
-                            }
-                            else{
-                            $(id).parent().append("<div class='text-danger'>"+errors[error])+"</div>";
-                        }
-                        }
-                        $("#img_error").text($("#id_image_ques").parent().find("li").text());
 
+                            if (error=="right_answer") {
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").html(errors[error]);
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").show();
+
+                            }else if(error == "image_ques"){
+                                $("#img_error").html(errors[error]);
+                                $("#img_error").show();
+                                }
+                            else{
+                            $(id).parent().find(".error_test_form").html(errors[error]);
+                            $(id).parent().find(".error_test_form").show();
+                                }
+                        }
                         $('.errorlist').addClass("list-unstyled");
-            }
-        });
-        return false;
+                }
+                });
+            return false;
     };
         </script>
     {% endblock %}

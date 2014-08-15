@@ -40,7 +40,7 @@
 {% block script %}
 <script src="{% static 'class_management/js/js.js' %}"></script>
 <script type="text/javascript">
-
+ $(".dropdown").addClass("active");
 	$("#id_video_link").change(function(){
 			$("#video_link").attr('src', $('#id_video_link').val());
 		});

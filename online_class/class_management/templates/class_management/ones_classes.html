@@ -23,20 +23,40 @@
 					{% endif %}
 					<div class="hover_detail">
 						<div class="class_name">{{ class.class_name }}</div>
+						<div class="create_date_class">Create Date: {{ class.create_date|date:"d/m/Y" }}</div>
 						<div class="btn-group btn-group-sm btgroupclass">
   				<a href="{% url 'classes:detailclass' class.id %}" class="btn btn-success" role="button">Lesson</a>
   				<a href="{% url 'classes:studentclass' class.id %}" class="btn btn-success" role="button">Student</a>
 					</div>
 					<div class="quantity">Number of Class: {{ class.students_in_class.count }}/{{ class.quantity }}</div>
 					<br/>
-						<div class="create_date_class">Create Date: {{ class.create_date|date:"d/m/Y" }}</div>
+						
 					</div>
 				</div>
 			{% endfor %}
+			<br/>
+			<div class="pagination">
+    <span class="step-links">
+        {% if ones_classes.has_previous %}
+            <a href="?page={{ ones_classes.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ ones_classes.number }} of {{ ones_classes.paginator.num_pages }}
+        </span>
+
+        {% if ones_classes.has_next %}
+            <a href="?page={{ ones_classes.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
 		{% endif %}
 	</div>
  {% endblock %}
 {% block script %}
 
 <script src="{% static 'class_management/js/js.js' %}"></script>
+<script type="text/javascript">
+$(".dropdown").addClass("active");
+</script>
 {% endblock %}

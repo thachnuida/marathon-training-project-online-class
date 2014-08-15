@@ -17,7 +17,7 @@ $(document).ready(function(){
     $(this).find('.hover_detail').animate({top:'0px'},"slow");
   }, function(){
       $(this).find('.hover_detail').stop();
-      $(this).find('.hover_detail').animate({top:'140px'},"slow");
+      $(this).find('.hover_detail').animate({top:'125px'},"slow");
   });
 });
 function readURL(input, image_input) {

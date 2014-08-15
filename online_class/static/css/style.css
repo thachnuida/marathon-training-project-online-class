@@ -3,6 +3,9 @@
     text-align: center;
     background-color: #f1f1f1;
 }
+#mycarousel li img{
+    margin-left: 0px;
+}
 #banner{
     height: 250px;
     width: 85%;
@@ -27,8 +30,7 @@
     padding-left: 85px;
     padding-top: 20px;
     display: block;
-    background-color: rgba(255, 255, 255, 0.690196)!important;
-    /*margin-top: 80px;*/
+    border: 1px solid #ccc;
 }
 #topmost li{
     display: inline-block;
@@ -45,6 +47,7 @@
     float: left; 
     padding: 10px;
     border: 2px solid #5981AC;
+    margin-left: 0px;
 }
 .plus_info{
     text-align: center;
@@ -52,6 +55,24 @@
     color: #FFFFFF;
     border-bottom-left-radius: 55px;
     border-bottom-right-radius: 55px;
+    width: 200px;
+}
+
+.navbar-custom {
+    background-color:#229922;
+    color:#ffffff;
+    border-radius:0;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color:#fff;
+}
+.navbar-custom .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color:transparent;
+}
+.navbar-custom .navbar-brand {
+    color:#eeeeee;
 }
 
 #body-childer{
@@ -65,9 +86,11 @@
     background-repeat: no-repeat;
 }
 .welcome{
-    height: 50px;
+    height: 43px;
     display: block;
     background-color: rgba(255, 255, 255, 0.40392);
+    border-bottom: 1px solid #E7C7C7;
+    margin-bottom: 5px;
 }
 .header1{
     line-height: 20px;
@@ -75,15 +98,24 @@
     margin-top: 15px;
     width: auto;
     display: inline-block;
-    color:black;
+    color: rgb(99, 58, 58);
+    font-weight: 800;
+    font-size: 18px;
 }
 .form-login{
-    /*opacity: 0.8;*/
-    margin-right:108px;
+    overflow: hidden;
     background-color: rgba(255, 255, 255, 0.180392);
-    margin-top: 20px;
+    margin-top: 5px;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    border: 1px solid #688B78;
+    border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    -o-border-radius: 10px 10px 0 0;
+    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
 .form-login .input{
     font-weight: 400;
@@ -91,35 +123,18 @@
     padding: 12px 15px;
     display: block;
     width: 88%;
-    background: rgba(255, 255, 255, 0.42);
     outline: none;
-    color: #ffffff;
+    color: black;
     font-size: 1.35em;
-    border: none;
+    border: rgb(36, 97, 150);
     margin-left: 20px;
-    -webkit-appearance: none;
     border-radius: 10px;
     -webkit-border-radius: 10px;
-}
-.form-login span{
-    display: block;
-    color: #ffffff;
-    font-size: 1em;
-    text-transform: capitalize;
-    font-weight: 400;
-    margin-left: 30px;
-    margin-bottom: 10px;
-
 }
 .form-login .header-login{
     background: #688B78;
     border-bottom: 1px solid #688B78;
-    border-radius: 10px 10px 0 0;
-    -webkit-border-radius: 10px 10px 0 0;
-    -moz-border-radius: 10px 10px 0 0;
-    -o-border-radius: 10px 10px 0 0;
-    box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
-    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
+    
 }
 
 .button{
@@ -140,14 +155,37 @@
     margin-left: 10%;
 }
 .hello{
-    font-size: 30px !important;
-    margin-top: 20px !important;
-    color: white;
+    font-size: 30px;
+    margin-top: 20px;
+    color: rgb(119, 35, 35);
+}
+.font-x{
+    font-size: 25px;
+}
+.menu_bar{
+    margin-top: 5px;
+padding-bottom: 10px;
+height: 219px;
+background: #5981AC;
+}
+.menu_bar img{
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    margin-right: 5px;
 }
 
 #navigation{
-    background-color: rgba(8, 8, 8, 0.921569)!important;
-   
+   background-color: #5981AC;
+    overflow: hidden;
+    border: 0px;
+}
+#navigation a{
+    color: white;
+    font-weight: bold;
+}
+#navigation a:hover{
+    color: black;
 }
 
 #navigation-ul li{
@@ -155,15 +193,16 @@
 }
 
 #footer{
-    height: 245px;
     background-color: #53555e;
     border-style: solid none none;
-    margin-top: 20px;
-    border-top:1px solid white;
+    border-top: 1px solid white;
+    font-size: 4px;
+    overflow: hidden;
+    padding-bottom: 10px;
 }
 #footer h4{
-    color: white;
-    font: bold 28px/24px Arial, Helvetica, sans-serif;
+   color: white;
+    font: bold 20px Arial, Helvetica, sans-serif;
     margin: 0;
     text-transform: uppercase;
     margin-left: 2px;
@@ -172,17 +211,15 @@
 }
 #footer p{
     color: white;
-    font: bold 22px/24px Arial, Helvetica, sans-serif;
+    font: bold 13px Arial, Helvetica, sans-serif;
     margin: 0;
     margin-left: 2px;
     margin-top: 15px;
-    border-right: 2px solid white;
 }
 #top9class{
-    /*display: block;
-    background-color: rgba(255, 255, 255, 0.890196)!important;
-    margin-top: 7%;*/
+    margin-left: -15px;
 }
+
 .baner2{
     display: block;
 }
@@ -480,15 +517,14 @@
     padding-bottom: 10%;
     margin-left:62%;
 }
-#one_class img{
-    border: 2px solid #B47859;;
+#classlist_home img{
     display: block;
-    margin-left:50px;
+    margin-left:65px;
 }
+
 .popular{
     background: #5981AC;
     border-bottom: 1px solid #5981AC;
-    margin-top: 83px;
     border-radius: 10px 10px 0 0;
     -webkit-border-radius: 10px 10px 0 0;
     -moz-border-radius: 10px 10px 0 0;
@@ -496,27 +532,51 @@
     box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
     -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
+.error_test_form{
+    color: white;
+position: absolute;
+background: #DF504E;
+padding: 6px;
+padding-bottom: 0px;
+border-radius: 15px;
+top: 10%;
+left: -37%;
+display: none;
+}
 .popular h4{
-    font-weight: 600;
-    padding: 20px 20px;
     color: #ffffff;
-    font-size: 1.9em;
+    font-size: 1.6em;
     text-transform: uppercase;
     text-align: center;
     display: block;
+    padding-top: 9px;
+    padding-left: 30px;
 }
 .icon{
-    color: black;
+    color: white;
     display: inline-block;
-    font: bold 22px/24px Arial, Helvetica, sans-serif;
-    margin-left: 6px;
-    margin-top: 27px;
+    font: bold 13px Arial, Helvetica, sans-serif;
+    margin-left: 5px;
+    margin-top: 13px;
+}
+.icon img{
+    margin-right: 15px;
 }
 .loginto{
-    font-weight: 600;
-    padding: 10px 10px;
+    padding-top: 7px;
     color: #ffffff;
-    font-size: 1.8em;
+    font-size: 1.5em;
     text-transform: uppercase;
     text-align: center;
+}
+.header-text{
+    font-family: Vivaldi;
+    margin-left: 15px;
+    display: inline-block;
+}
+.header-image-profile{
+    border-left: 5px solid green;
+    display: inline-block;
+    float: left;
+    margin-left: 15px;
 }

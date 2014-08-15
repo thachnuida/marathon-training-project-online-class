@@ -29,8 +29,8 @@
               </tr>
               {% for student in student_list %}
                   <tr>
-                      {% if student.user_image and student.user_image != "False" %} 
-                          <td><img src="{{ student.user_image.url }}" height=80 width=80/></td>
+                      {% if student.userprofile.user_image and student.userprofile.user_image != "False" %} 
+                          <td><img src="{{ student.userprofile.user_image.url }}" height=80 width=80/></td>
                       {% else %} 
                           <td><img src="{% static 'home/img/account.png' %}" height=80 width=80/></td>
                       {% endif %} 
@@ -47,12 +47,31 @@
                   </tr>
               {% endfor %}
           </table>
+          <div class="pagination">
+    <span class="step-links">
+        {% if student_list.has_previous %}
+            <a href="?page={{ student_list.previous_page_number }}">Previous</a>
         {% endif %}
+
+        <span class="current">
+            Page {{ student_list.number }} of {{ student_list.paginator.num_pages }}
+        </span>
+
+        {% if student_list.has_next %}
+            <a href="?page={{ student_list.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
+        {% endif %}
+
     </div>
+
 {% endblock %}
 {% block script %}
   <script type="text/javascript">
+
     $(document).ready(function(){
+      $(".dropdown").addClass("active");
       var chart = {{chart}};
       var len = chart.length;
       var graph = document.getElementsByClassName("testchart");

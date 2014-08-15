@@ -70,6 +70,21 @@
   						</div>
 					</a>
 					{% endfor %}
+					<div class="pagination">
+    <span class="step-links">
+        {% if lesson_list.has_previous %}
+            <a href="?page={{ lesson_list.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ lesson_list.number }} of {{ lesson_list.paginator.num_pages }}
+        </span>
+
+        {% if lesson_list.has_next %}
+            <a href="?page={{ lesson_list.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
 				{% endif %}
 				</div>
 				</div>
@@ -81,6 +96,7 @@
 {% block script %}
 	<script src="{% static 'class_management/js/js.js' %}"></script>
 	<script>
+	 $(".dropdown").addClass("active");
 		$("#img_error").text($("#id_image_class").parent().find("li").text());
 		$("#id_image_class").parent().hide();
 		$("#image_class").click(function(){

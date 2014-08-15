@@ -15,39 +15,53 @@
     </head>
     <body>
         <div class="welcome">
-          <p class="header1">WELLCOME</p>   
+          <p class="header1">ONLINE CLASS</p>   
         </div>
         <div class="container">
           <div class="row">
-            <div class="col-xs-6">
-              <div class="form-login">
-              {% block banner %}
-               <!--  <image id="banner" src="{% static 'images/banner.jpg' %}"/> -->
-                <!-- <h1>ONLINE CLASS</h1> -->
-              {% endblock %}
-              </div>
+             {% if user.is_authenticated %}
+            <div class="col-xs-7 menu_bar">
+              {% else %}
+              <div class="col-xs-7 menu_bar">
+              {% endif %}
+               <img src="{% static 'images/htk-inc-logo.jpg' %}" height=150 width=150/>
+               <div id="navigation" class="navbar navbar-inverse navbar-static-top" role="navigation">
+              <div id="navigation" class="navbar-collapse collapse navbar-custom">
+                <ul id="navigation-ul" class="nav nav-pills nav-stacked" style="color: white !important;">
+                  <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
+                  <li><a href="#contact">ABOUT</a></li>
+                  {% if user.is_authenticated %}
+                    <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
+                    <li><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">LEARNING PROCESS</a></li>
+                    <li><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">CLASS MANAGEMENT</a></li>
+                  {% endif %}
+                </ul>
+          </div><!--end dropdown -->
             </div>
-            <div class="col-xs-6" >
+          </div>
+            <div class="col-xs-5 login_form" >
               <div class="form-login">
                   {% if user.is_authenticated %}
                    <div class="header-login">
                      <p class="loginto"> WELCOME </p>  
                     </div>
-                    <div class="header-content">
-                      <img src="/static/images/pic2.jpg"/>
-                    </div>
                     <div class="header-user">
                       <div class="user-list">
                         <div class="header-image-profile">
-                        {% block image %}
-                        {% endblock %} 
+                          {% if user.userprofile.user_image and user.userprofile.user_image != "False" %}
+                            <img src="{{ user.userprofile.user_image.url }}" height=150 width=150 id="image_class"/>
+                          {% else %}
+                            <img src="{% static 'home/images/account.png' %}" height=150 width=150 id="image_class"/>
+                          {% endif %}
                         </div>
                         <div class="header-text">
-                          <h4><a class="hello" href="{% url 'home:profile'%}">Hello {{ user.username }}!</a></h4>
-                          <h4><a class="hello" href="{% url 'home:logout'%}">Log out</a></h4>
+                          <h4 class="hello">Hello {{ user.username }}!</h4>
+                          <span style="border-top: 1px solid rgb(102, 102, 102); display: block;"></span>
+                          <div><a class="hello font-x" href="{% url 'home:profile'%}">Edit Profile</a></div>
+                          <div><a class="hello font-x" href="{% url 'home:logout'%}">Log out</a></div>
                         </div>
                       </div> 
-                    </div>                    
+                    </div>
                   {% else %}
                    <div class="header-login">
                      <p class="loginto"> LOGIN </p>  
@@ -62,11 +76,9 @@
                       </li>
                       {% endif %}
                     </ul>
-                    <span>Email</span>  
-                    <input id="id_username" class="input" name="username" type="text" value="{{ username }}" />
+                    <input id="id_username" class="input" name="username" type="text" value="{{ username }}" placeholder="Username"/>
                     <br/>
-                    <span>Password</span>  
-                    <input id="id_password" class="input" name="password" type="password" />
+                    <input id="id_password" class="input" name="password" type="password" placeholder="Password" />
                     <br/>
                     <button class="button" type="submit">LOG IN</button>
                     <a class="button" href="{% url 'home:register' %}" >SIGN UP</a>
@@ -75,35 +87,13 @@
               </div>
           </div>
           </div>
-          <div id="navigation" class="navbar navbar-inverse navbar-static-top" role="navigation">
-              <div id="navigation" class="navbar-collapse collapse">
-                <span class="navbar-brand">Online Class</span>
-                <ul id="navigation-ul" class="nav navbar-nav">
-                  <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
-                  <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
-                  <li><a href="#contact">ABOUT</a></li>
-                  {% if user.is_authenticated %}
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOUR SCOPE<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">Learning Process</a></li>
-                      {% if user.userprofile.role == 'T' %}
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">Class Management</a></li>
-                    {% endif %}
-                    </ul>
-                  </li>
-                    {% endif %}
-                </ul>
-              </div>
-          </div><!--end dropdown -->
+          
           {% block body %}
 
           {% endblock %}
         </div><!-- end contanier -->
 
-      {% block script %}
-      {% endblock %}
+     
       <div class="container">
         <div id="footer">
           <div class= "col-xs-6 col-md-4">
@@ -125,5 +115,7 @@
           </div>
         </div>
       </div>
+       {% block script %}
+      {% endblock %}
     </body>
 </html>

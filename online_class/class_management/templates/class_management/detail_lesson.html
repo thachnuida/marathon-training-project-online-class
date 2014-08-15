@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-	<div id="detail_lesson">
+	<div id="detail_lesson" class="bg">
 		<div id="detail_lesson_form">
 			<h1 class="title">LESSON DETAIL</h1>
 			<div class="row">
@@ -29,7 +29,7 @@
 	    		</div>  
 				{% endfor %}
 				<div class="pull-right">
-                    <a class="btn btn-default" href="{% url 'classes:deletelesson' chosen_class.pk chosen_lesson.id %}" role="button">Cancel</a>
+                    <a class="btn btn-default" href="{% url 'classes:detailclass' chosen_class.pk %}" role="button">Cancel</a>
                 <button type="submit" class="btn btn-success" name="lesson">Update Lesson</button>
             </div>
 			</form>
@@ -82,6 +82,21 @@
 							<p class="date">Update Date {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
 						</a>
 					{% endfor %}
+					<div class="pagination">
+    <span class="step-links">
+        {% if test_list.has_previous %}
+            <a href="?page={{ test_list.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ test_list.number }} of {{ test_list.paginator.num_pages }}
+        </span>
+
+        {% if test_list.has_next %}
+            <a href="?page={{ test_list.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
 				{% endif %}
 			</div>
 		</div>
@@ -89,7 +104,8 @@
 {% endblock %}
 {% block script %}
 	<script src="{% static 'class_management/js/js.js' %}"></script>
-	<script>
+	<script> 
+	$(".dropdown").addClass("active");
 		$("#id_video_link").change(function(){
 			$("#video_link").attr('src', $('#id_video_link').val());
 		});

@@ -10,9 +10,18 @@
 .bg{
     border: 4px solid #e3e3e3;
     border-radius: 4px;
-    background-color: #FFFFFF;
-    margin-top: -16px;
+    background:-webkit-gradient(linear, left top, right top, color-stop(0%,rgba(237,241,242,1)), color-stop(70%,rgba(232,244,247,1)), color-stop(100%,rgba(119,203,234,1))); /* Chrome,Safari4+ */
     padding: 10px;
+    min-height: 615px;
+    overflow: hidden;
+    margin-left: -15px;
+}
+.pagination{
+    float: right;
+    margin-right: 100px;
+    background: rgb(230, 225, 225);
+    padding: 5px;
+    clear: both;
 }
 .image_class{
     margin-right: 155px;
@@ -44,11 +53,12 @@ margin-top: 20px;
     margin-left: 24px;
     font-size: 30px;
 }
-#ones_classes .contentclass a{
+#home .contentclass a{
     display: block;
     background: rgba(255, 255, 255, 0.42);
-    color: #ffffff;
-    padding: 20px;
+    color: #B61A1A;
+    padding: 10px;
+    border: 1px solid #ccc;
     text-transform: uppercase;
     font-size: 1.5em;
     font-weight: 600;
@@ -61,6 +71,27 @@ margin-top: 20px;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
      transition: all 0.3s ease-in-out; 
+}
+#ones_classes .contentclass a{
+    display: block;
+    background: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 30px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+     -webkit-transition: all 0.3s ease-in-out; 
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+     transition: all 0.3s ease-in-out; 
+}
+#home .contentclass a:hover{
+    background: rgba(255, 255, 255, 0.15);
 }
 #ones_classes .contentclass a:hover{
     background: rgba(255, 255, 255, 0.15);
@@ -98,64 +129,110 @@ margin-top: 20px;
 }
 
 #home .hover_detail {
-    /*background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);*/
-    /*position: absolute;*/
     top: 140px;
-/*    height: 180px;
-    width: 180px;*/
     border-radius: 5px;
 }
 #ones_classes .hover_detail {
-    /*background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);*/
-    /*position: absolute;*/
-    top: 140px;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 125px;
     height: 180px;
     width: 200px;
     border-radius: 5px;
 }
+#home .create_date_class {
+    display: block;
+    color: rgb(8, 38, 199);
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    margin-top: 5px;
+}
 
 #ones_classes .create_date_class {
     display: block;
-    color: white;
+    color: rgb(8, 38, 199);
     font-weight: bold;
-    margin-top: 11px;
-    font-size: 19px;
+    font-size: 15px;
+    text-align: center;
 }
+
 #ones_classes .quantity {
-    color: blue;
-    margin-left: 15px;
+    display: block;
+    color: rgb(8, 38, 199);
     font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    margin-top: 15px;
+}
+#home .class_name {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    background: #4D5155;;
+    border-bottom: 1px solid #976043;
+    -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 #ones_classes .class_name {
-
-background: #B47859;
+color: white;
+text-align: center;
+font-weight: bold;
+background: #473E3A;
+padding: 5px;
 border-bottom: 1px solid #976043;
--webkit-border-radius: 10px 10px 0 0;
 -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
-#ones_classes .contentclass {
-
+#home .contentclass {
    position: relative;
     text-align: center;
-    padding: 30px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.18);
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px 0 #555;
+    box-shadow: 0 1px 2px 0 #555;
+    border: 1px solid #555;
+}
+#ones_classes .contentclass {
+   position: relative;
+    text-align: center;
+    padding: 15px;
     background: rgba(255, 255, 255, 0.18);
     -webkit-border-radius: 0px 0px 10px 10px;
 }
+#home .class_name h3{
+    font-weight: 600;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 1.9em;
+    text-transform: uppercase;
+    text-align: center;
+}
 #ones_classes .class_name h3{
     font-weight: 600;
-    padding: 20px 20px;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 1.9em;
+    text-transform: uppercase;
+    text-align: center;
+}
+#
+#ones_classes .class_name h3{
+    font-weight: 600;
+    padding: 10px 20px;
     color: #ffffff;
     font-size: 1.9em;
     text-transform: uppercase;
     text-align: center;
 }
 #create_class #add_class_form{
-margin: 0px auto;
- width: 50%;
- border: 5px groove rgb(137, 136, 170);
-    padding: 20px;
+    margin: 0px auto;
+    border: 5px groove rgb(137, 136, 170);
+    padding-top: 30px;
+    padding-right: 25%;
+    padding-left: 25%;
     padding-bottom: 60px;
+    margin-left: -15px;
 }
 #detail_class #add_class_form{
     border: 5px groove rgb(137, 136, 170);
@@ -202,7 +279,7 @@ margin: 0px auto;
 #detail_lesson .test_wrapper{
     background-image: url('/static/class_management/images/Text-Pen-icon.png');
     background-size: 38px 38px;
-    background-position: 109px 3px;
+    background-position: 127px 3px;
     display: inline-block;
     background-repeat: no-repeat;
     padding: 10px;
@@ -214,6 +291,12 @@ margin: 0px auto;
     font-size: 15px;
     text-align: center;
 }
+#detail_test #testlist .question{
+    padding-left: 50px;
+    overflow: hidden;
+    padding-bottom: 12px;
+}
+
 #create_test #testlist .question{
     padding-left: 85px;
     overflow: hidden;
@@ -250,15 +333,16 @@ border-radius: 3px;
     border: 5px groove rgb(137, 136, 170);
     padding: 20px;
     margin-top: 53px;
-    margin-right: -60px;
+    margin-right: 2px;
     position: relative;
     padding-top: 5px;
 }
 .fixed_class{
     margin-top: 0px !important;
     margin-right: 0px !important;
-    right: 95px;
-    top: 18px;
+    right: 89px;
+    top: 0px;
+    position: fixed!important;
 }
 #detail_test #test_list{
     overflow: hidden;
@@ -298,16 +382,16 @@ border-radius: 3px;
     padding: 10px;
     display: inline-block;
     position: absolute;
-    top: 340px;
+    top: 360px;
     right: 165px;
 }
 
 #studentclass #bonus #goodscore, #student_process #bonus #goodscore{
     background: #00A8F0;
-display: inline-block;
-width: 15px;
-height: 15px;
-margin-right: 10px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }
 #studentclass #bonus #mediumscore, #student_process #bonus #mediumscore{
     background: #C0D800;
@@ -441,10 +525,6 @@ margin-right: 10px;
     margin-right: 5px;
 }
 
-#test_history #history{
-    width: 918px;
-    float: right;
-}
 
 #test_history #sort{
     border-top: 1px solid black;
@@ -487,14 +567,15 @@ margin-right: 10px;
     border: 1px solid black;
     padding-left: 10px;
     padding-right: 10px;
-    background: #459345;
-    color: #FFFFFF;
+    background: -webkit-gradient(linear, left top, right top, color-stop(17%,rgba(107,186,112,1)), color-stop(33%,rgba(150,224,130,1)), color-stop(60%,rgba(150,224,130,1)), color-stop(88%,rgba(150,224,130,1)), color-stop(100%,rgba(107,186,112,1))); /* Chrome,Safari4+ */
+    color: #754B1E;
     font-weight: bold;
 }
 #student_detail #infor table#infor_table td:nth-child(2){
     border: 1px solid black;
     padding-left: 50px;
     padding-right: 50px;
+    color: rgb(37, 22, 146);
 }
 #student_detail #infor table#class_list_table{
     margin: 0px auto;
@@ -504,10 +585,11 @@ margin-right: 10px;
     padding-right: 100px;
     background: gray;
     color: #FFFFFF;
+    font-family: Vivaldi;
 }
 #student_detail #infor table#class_list_table td{
     text-align: center;
-    line-height: 50px;
+    line-height: 110px;
 }
 #student_detail caption{
     margin: 10px auto;

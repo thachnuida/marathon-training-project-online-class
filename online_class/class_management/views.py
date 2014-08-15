@@ -14,12 +14,24 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseBadRequest
 from django.db.models import Count
 from study.models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
 def classlist(request):
     teacher = request.user
-    ones_classes = Class.objects.filter(teacher = teacher)
+    tam = Class.objects.filter(teacher = teacher)
+    paginator = Paginator(tam, 25) # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        ones_classes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        ones_classes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        ones_classes = paginator.page(paginator.num_pages)
+
     return render(request, "class_management/ones_classes.html", {'ones_classes':ones_classes})
 
 def create_class(request):
@@ -41,6 +53,16 @@ def create_class(request):
 def detail_class(request, pk):
     Chose_class = get_object_or_404(Class, pk=pk)
     lesson_list = Chose_class.lesson_set.all()
+    paginator = Paginator(lesson_list, 6) # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        lesson_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lesson_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lesson_list = paginator.page(paginator.num_pages)
     if Chose_class.image_class:
         form = CreateClass(class_details=Chose_class.__dict__, image_url=Chose_class.image_class.url)
     else:
@@ -79,6 +101,16 @@ def detail_lesson(request, class_id, pk):
     chosen_lesson = get_object_or_404(Lesson, pk=pk)
     chosen_class = get_object_or_404(Class, pk=class_id)
     test_list = chosen_lesson.test_set.all()
+    paginator = Paginator(test_list, 24) # Show 25 contacts per page
+    page = request.GET.get('page')
+    try:
+        test_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        test_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        test_list = paginator.page(paginator.num_pages)
     form = CreateLesson(chosen_lesson=chosen_lesson.__dict__)
     formtest = CreateTest()
     if request.method == 'POST':
@@ -98,6 +130,17 @@ def detail_lesson(request, class_id, pk):
 def student_class(request, pk):
     chosen_class = get_object_or_404(Class, pk=pk)
     student_list = chosen_class.students_in_class.all()
+    paginator = Paginator(student_list, 25) # Show 25 per page
+    page = request.GET.get('page')
+    try:
+        student_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        student_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        student_list = paginator.page(paginator.num_pages)
+
     chart = []
     for student in student_list:
         chart.append(calpercent(chosen_class, student))
@@ -106,6 +149,17 @@ def student_class(request, pk):
 def student_process(request, user_id):
     user = User.objects.get(pk=user_id)
     class_list = Class.objects.filter(students_in_class=user_id)
+    paginator = Paginator(class_list, 10) # Show 25 per page
+    page = request.GET.get('page')
+    try:
+        class_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        class_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        class_list = paginator.page(paginator.num_pages)
+
     chart = []
     for class_item in class_list:
         chart.append(calpercent(class_item, user))
@@ -282,4 +336,14 @@ def test_history(request, user_id, class_id):
 def student_detail(request, user_id):
     user = get_object_or_404(User,pk=user_id)
     class_list = Class.objects.filter(students_in_class=user_id)
+    paginator = Paginator(class_list, 10) # Show 10 per page
+    page = request.GET.get('page')
+    try:
+        class_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        class_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        class_list = paginator.page(paginator.num_pages)
     return render(request, "class_management/student_detail.html", {'user':user, 'class_list':class_list})

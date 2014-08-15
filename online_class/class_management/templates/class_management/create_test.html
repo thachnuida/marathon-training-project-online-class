@@ -8,16 +8,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-    <div id="create_test" class="well" style="overflow:hidden;">
+    <div id="create_test" class="bg" style="overflow:hidden;">
         <div id="create_test_form" class="pull-right">
             <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
-            <div id="img_error" class="text-danger"></div>
+            <div id="img_error" class="text-danger error_test_form"></div>
             <form enctype="multipart/form-data"  method="post" action="" id="add_ques" onsubmit="return false;" role="form">
 	           {% csrf_token %}
                 <input type="hidden" value={{ test.pk  }}/>
 	           {% for field in form %}
-                    <div class="form-group">
+                    <div class="form-group" style="position: relative">
                     {{ field.label_tag }} {{ field }}
+                    <div class="text-danger error_test_form"></div>
                     </div>  
 	           {% endfor %}
                 
@@ -56,9 +57,14 @@
 {% block script %}
     <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
+     $(".dropdown").addClass("active");
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>380){
+       if ($(window).scrollTop()>390 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
+         $("#create_test_form").css("top", '');
+        $("#create_test_form").addClass("fixed_class");
+        } else if(($("#footer").height()) >= ($(document).height() - $(window).scrollTop() - $(window).height())){
             $("#create_test_form").addClass("fixed_class");
+            $("#create_test_form").css("top",($("#footer").height() - ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
         }
         else {
             $("#create_test_form").removeClass("fixed_class");
@@ -101,25 +107,28 @@
             $("#id_answerC").val("");
             $("#id_answerD").val("");
             reset_form_element( $("#id_image_ques") );
-            $('.errorlist').remove();
-            $("#img_error").text("");
             $("input[name=right_answer]").prop('checked', false);
+            $('.error_test_form').hide();
        			},
        			error: function(errors_dict){
                     var errors = JSON.parse(errors_dict.responseText);
-                      $('.errorlist').remove();
-
+                      $('.error_test_form').hide();
                         for (error in errors) {
                             var id = '#id_' + error;
-                            if (error=="right_answer") {
-                                $("input[name=right_answer]").parent().parent().parent().parent().append("<div class='text-danger'>"+errors[error])+"</div>";
-                            }
-                            else{
-                            $(id).parent().append("<div class='text-danger'>"+errors[error])+"</div>";
-                        }
-                        }
-                        $("#img_error").text($("#id_image_ques").parent().find("li").text());
 
+                            if (error=="right_answer") {
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").html(errors[error]);
+                                $("input[name=right_answer]").parent().parent().parent().parent().find(".error_test_form").show();
+
+                            }else if(error == "image_ques"){
+                                $("#img_error").html(errors[error]);
+                                $("#img_error").show();
+                                }
+                            else{
+                            $(id).parent().find(".error_test_form").html(errors[error]);
+                            $(id).parent().find(".error_test_form").show();
+                                }
+                        }
                         $('.errorlist').addClass("list-unstyled");
     			}
         		});
