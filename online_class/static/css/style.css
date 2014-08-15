@@ -30,7 +30,8 @@
     padding-left: 85px;
     padding-top: 20px;
     display: block;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
+    border-top: 0px;
 }
 #topmost li{
     display: inline-block;
@@ -109,7 +110,7 @@
     display: block;
     margin-bottom: 5px;
     padding-bottom: 10px;
-    border: 1px solid #688B78;
+    border: 1px solid #2d6ca2;
     border-radius: 10px 10px 0 0;
     -webkit-border-radius: 10px 10px 0 0;
     -moz-border-radius: 10px 10px 0 0;
@@ -132,8 +133,8 @@
     -webkit-border-radius: 10px;
 }
 .form-login .header-login{
-    background: #688B78;
-    border-bottom: 1px solid #688B78;
+    background: #2d6ca2;
+    border-bottom: 1px solid #2d6ca2;
     
 }
 
@@ -164,9 +165,12 @@
 }
 .menu_bar{
     margin-top: 5px;
-padding-bottom: 10px;
-height: 219px;
-background: #5981AC;
+    padding-bottom: 10px;
+    height: 210px;
+    background: #2d6ca2;
+}
+.menu_bar1{
+    height: 245px;
 }
 .menu_bar img{
     margin-left: 10px;
@@ -176,7 +180,7 @@ background: #5981AC;
 }
 
 #navigation{
-   background-color: #5981AC;
+   background-color: #2d6ca2;
     overflow: hidden;
     border: 0px;
 }
@@ -199,6 +203,7 @@ background: #5981AC;
     font-size: 4px;
     overflow: hidden;
     padding-bottom: 10px;
+    margin-left: -15px;
 }
 #footer h4{
    color: white;
@@ -315,12 +320,9 @@ background: #5981AC;
 }
 
 #studylist .classes {
-    background-color: rgba(255, 255, 255, 0.741176);
-    margin-left: 9%;
-    margin-top: 6%;
-    margin-right: 9%;
-    float: left;
-    display: block;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
 #studylist .classes .classes-header{
     display: block;
@@ -342,17 +344,22 @@ background: #5981AC;
     text-align: center;
     display: block
 }
+#studylist .classes .class_name{
+    font-size: 25px;
+    margin-top: 20px;
+    display: block;
+    color: rgb(145, 27, 27);
+    font-weight: bold;
+}
 #studylist .classes .teacher {
-    margin-left: 2%;
     font-size: 25px;
     margin-top: 20px;
     display: block;
 }
 #studylist .classes .date {
-    margin-left: 60%;
-    font-size: 20px;
-    margin-top: 20px;
+    margin-top: 15px;
     display: block;
+    color: blue;
 }
 #studylist .classes img{
     margin-left: 37%;
@@ -523,9 +530,9 @@ background: #5981AC;
 }
 
 .popular{
-    background: #5981AC;
-    border-bottom: 1px solid #5981AC;
     border-radius: 10px 10px 0 0;
+    margin-top: 15px;
+    border: 2px solid#ccc;
     -webkit-border-radius: 10px 10px 0 0;
     -moz-border-radius: 10px 10px 0 0;
     -o-border-radius: 10px 10px 0 0;
@@ -544,13 +551,14 @@ left: -37%;
 display: none;
 }
 .popular h4{
-    color: #ffffff;
+    color: #061955;
     font-size: 1.6em;
     text-transform: uppercase;
     text-align: center;
     display: block;
     padding-top: 9px;
     padding-left: 30px;
+    font-weight: 700;
 }
 .icon{
     color: white;
@@ -669,4 +677,30 @@ display: none;
 .error-message{
     color: red;
     font-size: 20px;
+}
+
+#about .title{
+line-height: 1.2em;
+margin-bottom: 60px;
+text-align: center;
+}
+#about .subject{
+font-size: 30px;
+font-weight: 600;
+text-align: center;
+}
+#about hr.header-after {
+width: 940px;
+margin-bottom: 35px;
+}
+#about .content{
+    font-size: 18px;
+text-align: center;
+line-height: 32px;
+font-family: "sofiapro-light",Arial,sans-serif;
+max-width: 37em;
+margin: 10px auto;
+}
+#about .row{
+    margin-bottom: 50px;
 }

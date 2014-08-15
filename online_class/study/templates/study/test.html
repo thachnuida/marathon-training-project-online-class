@@ -30,8 +30,11 @@
   </form>
   </div>
 </div> 
+{% endblock %}
+{% block script %}
 <script>
-
+$("#navigation-ul li").removeClass("active");
+        $("#joinli").addClass("active");
 var next = function(){
 if($("input:radio[name=answer]").is(":checked")){
   var data = new FormData($('form').get(0));

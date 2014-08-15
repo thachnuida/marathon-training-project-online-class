@@ -13,24 +13,38 @@
 {% block body %}
   <div id="studylist">
     <div class="header">
-      <h2>LIST CLASS</h2>
+      <h2>YOUR JOINED CLASSES</h2>
     </div>
     <div class="content">
       {% for class in all_class %}
           <div class="classes">
-          <div class="classes-header">
-            <a href="{% url 'study:studyclass' class.id %}">Class name: {{ class.class_name }}</a><br>
-          </div>
-          <p class="teacher">Teacher name: {{ class.teacher }}</p>
+            <div class="row">
+          <div class="image_class col-md-5">
             {% if class.image_class and class.image_class != "False" %}
               <img src="{{ class.image_class.url }}" height=150 width=150/><br>
             {% else %}
              <img src="{% static 'class_management/images/classroom.jpg' %}" height=150 width=150/>
             {% endif %}
-            <p>Description: {{ class.description|safe }}</p>
-            <p class="date"> {{ class.create_date }}</p>
+          </div>
+          <div class="col-md-6">
+            <div class="class_name">{{ class.class_name }}</div>
+            <div class="teacher">Teacher: {{ class.teacher }}</div>
+            <div class="teacher">Description: </div>
+            <div>{{ class.description|safe }}</div>
+            <div class="date">Created Date: {{ class.create_date }}</div>
             </div>
+            <div class="col-md-1">
+              <a href="{% url 'study:studyclass' class.id %}" role="button" class="btn btn-success">Resume Learn</a>
+            </div>
+          </div>
+        </div>
       {% endfor %}
       </div>
     </div>
   {% endblock %}
+{% block script %}
+<script type="text/javascript">
+$("#navigation-ul li").removeClass("active");
+        $("#joinli").addClass("active");
+        </script>
+{% endblock %}

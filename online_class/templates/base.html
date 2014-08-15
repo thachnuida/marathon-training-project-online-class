@@ -22,18 +22,18 @@
              {% if user.is_authenticated %}
             <div class="col-xs-7 menu_bar">
               {% else %}
-              <div class="col-xs-7 menu_bar">
+              <div class="col-xs-7 menu_bar menu_bar1">
               {% endif %}
                <img src="{% static 'images/htk-inc-logo.jpg' %}" height=150 width=150/>
                <div id="navigation" class="navbar navbar-inverse navbar-static-top" role="navigation">
               <div id="navigation" class="navbar-collapse collapse navbar-custom">
                 <ul id="navigation-ul" class="nav nav-pills nav-stacked" style="color: white !important;">
-                  <li class="active"><a href="{% url 'home:home' %}">HOME</a></li>
-                  <li><a href="#contact">ABOUT</a></li>
+                  <li id="homeli"><a href="{% url 'home:home' %}">HOME</a></li>
+                  <li id="aboutli"><a href="{% url 'home:about' %}">ABOUT</a></li>
                   {% if user.is_authenticated %}
-                    <li><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
-                    <li><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">LEARNING PROCESS</a></li>
-                    <li><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">CLASS MANAGEMENT</a></li>
+                    <li id="joinli"><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
+                    <li id="learnli"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">LEARNING PROCESS</a></li>
+                    <li id="managerli"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">CLASS MANAGEMENT</a></li>
                   {% endif %}
                 </ul>
           </div><!--end dropdown -->
@@ -80,8 +80,10 @@
                     <br/>
                     <input id="id_password" class="input" name="password" type="password" placeholder="Password" />
                     <br/>
-                    <button class="button" type="submit">LOG IN</button>
-                    <a class="button" href="{% url 'home:register' %}" >SIGN UP</a>
+                    <div class="pull-right" style="margin-right: 15px;">
+                    <button class="btn btn-primary" role="button" type="submit" style="margin-right: 20px;">LOG IN</button>
+                    <a class="btn btn-primary" role="button" href="{% url 'home:register' %}" style="margin-right: 20px;">SIGN UP</a>
+                  </div>
                 </form>  
                   {% endif %}
               </div>

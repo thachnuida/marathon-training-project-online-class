@@ -53,21 +53,23 @@
                 </div>
             {% endfor %}
             </div><!-- end id ones-classes div -->
+            {%  if all_class.paginator.num_pages > 1 %}
             <div class="pagination">
-    <span class="step-links">
-        {% if all_class.has_previous %}
-            <a href="?page={{ all_class.previous_page_number }}">previous</a>
-        {% endif %}
+                <span class="step-links">
+                    {% if all_class.has_previous %}
+                        <a href="?page={{ all_class.previous_page_number }}">previous</a>
+                    {% endif %}
 
-        <span class="current">
-            Page {{ all_class.number }} of {{ all_class.paginator.num_pages }}
-        </span>
+                    <span class="current">
+                        Page {{ all_class.number }} of {{ all_class.paginator.num_pages }}
+                    </span>
 
-        {% if all_class.has_next %}
-            <a href="?page={{ all_class.next_page_number }}">next</a>
-        {% endif %}
-    </span>
-</div>
+                    {% if all_class.has_next %}
+                        <a href="?page={{ all_class.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
         </div>
         <!--end class col-md-8 -->
 

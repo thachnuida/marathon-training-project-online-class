@@ -31,9 +31,13 @@
     {% endfor %}
   </div>
 </div>
+{% endblock %}
+{% block script %}
 <script>
 
 $(document).ready(function(){
+$("#navigation-ul li").removeClass("active");
+        $("#joinli").addClass("active");
   $(".result").click(function(){
       $("#win").slideToggle();
       $(this).text(function(i, text){

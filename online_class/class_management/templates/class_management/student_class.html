@@ -47,21 +47,23 @@
                   </tr>
               {% endfor %}
           </table>
+          {%  if student_list.paginator.num_pages > 1 %}
           <div class="pagination">
-    <span class="step-links">
-        {% if student_list.has_previous %}
-            <a href="?page={{ student_list.previous_page_number }}">Previous</a>
-        {% endif %}
+            <span class="step-links">
+                {% if student_list.has_previous %}
+                    <a href="?page={{ student_list.previous_page_number }}">Previous</a>
+                {% endif %}
 
-        <span class="current">
-            Page {{ student_list.number }} of {{ student_list.paginator.num_pages }}
-        </span>
+                <span class="current">
+                    Page {{ student_list.number }} of {{ student_list.paginator.num_pages }}
+                </span>
 
-        {% if student_list.has_next %}
-            <a href="?page={{ student_list.next_page_number }}">Next</a>
+                {% if student_list.has_next %}
+                    <a href="?page={{ student_list.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
         {% endif %}
-    </span>
-</div>
         {% endif %}
 
     </div>
@@ -71,6 +73,8 @@
   <script type="text/javascript">
 
     $(document).ready(function(){
+      $("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
       $(".dropdown").addClass("active");
       var chart = {{chart}};
       var len = chart.length;

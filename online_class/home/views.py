@@ -149,3 +149,5 @@ def profile(request):
         'upform':upform,
         'currentuser':currentuser
         })
+def about(request):
+    return render(request, 'home/about.html');

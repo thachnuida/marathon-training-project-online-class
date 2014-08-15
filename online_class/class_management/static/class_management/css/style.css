@@ -325,7 +325,7 @@ border-radius: 3px;
     border: 1px solid rgb(137, 136, 170);
     padding: 20px;
     padding-top: 30px;
-    margin-top: 53px;
+    margin-top: 40px;
     float: left;
 }
 
@@ -355,13 +355,12 @@ border-radius: 3px;
 
 .mycarousel{
     position: relative;
-    border: 4px solid black;
+    border: 2px solid #ccc;
+    border-top: 0px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0 0 2px #999;
+    border-radius: 0px 0px 10px 10px;
     -moz-box-shadow: 0 0 5px white;
-    box-shadow: 0 0 2px #999;
     overflow: hidden;
 }
 .mycarousel ul{
@@ -382,7 +381,7 @@ border-radius: 3px;
     padding: 10px;
     display: inline-block;
     position: absolute;
-    top: 360px;
+    top: 350px;
     right: 165px;
 }
 
@@ -438,13 +437,17 @@ margin-right: 10px;
     color: white;
     border: 1px solid #832935;
 }
+#test_history{
+    overflow: hidden;
+    margin-left: 0px;
+margin-right: 15px;
+}
 
 #test_history .fill-green{
     background: #7fffd4;
     color: red;
 }
 #test_history .substrate {
-    float: left;
     position: relative;
     margin-bottom: 30px;
     padding: 15px 10px;
@@ -453,6 +456,8 @@ margin-right: 10px;
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     float: left;
+    min-width: 882px;
+    min-height: 485px;
 }
 #test_history .left-blue {
     border-left: 10px solid #2d7fb9;
@@ -508,6 +513,7 @@ margin-right: 10px;
     font-weight: 600;
     font-size: 30px;
     line-height: 45px;
+    width: 881px;
 }
 
 #test_history .substrate h2 {

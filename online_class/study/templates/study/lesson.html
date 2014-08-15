@@ -27,4 +27,9 @@
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
-
+{% block script %}
+<script type="text/javascript">
+$("#navigation-ul li").removeClass("active");
+        $("#joinli").addClass("active");
+        </script>
+{% endblock %}

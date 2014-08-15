@@ -8,7 +8,7 @@
 {% endblock %}
 {% block body %}
 <div class="row">
-	<div id="test_history" class="bg" style="overflow:hidden;" >
+	<div id="test_history" class="bg" >
 		<div id="student" >
 			{% if user.userprofile.user_image %}
 				<img src="{{ user.userprofile.user_image.url }}"/>
@@ -46,6 +46,23 @@
 							</ul>
 						</div>
 						{% endfor %}
+						{% if test_list.paginator.num_pages > 1 %}
+							<div class="pagination">
+						    <span class="step-links">
+						        {% if test_list.has_previous %}
+						            <a href="?page={{ test_list.previous_page_number }}">Previous</a>
+						        {% endif %}
+
+						        <span class="current">
+						            Page {{ test_list.number }} of {{ test_list.paginator.num_pages }}
+						        </span>
+
+						        {% if test_list.has_next %}
+						            <a href="?page={{ test_list.next_page_number }}">Next</a>
+						        {% endif %}
+						    </span>
+						</div>
+						{% endif %}
 					</div>
 				{% endif %}
 			</div>
@@ -56,6 +73,8 @@
 {% block script %}
 	<script type="text/javascript">
 	$(document).ready(function(){
+		$("#navigation-ul li").removeClass("active");
+        $("#learnli").addClass("active");
 		$(".dropdown").addClass("active");
 	$("#sort_option").children().click(function(){
 		$("#sort_option").children().css('background', '');

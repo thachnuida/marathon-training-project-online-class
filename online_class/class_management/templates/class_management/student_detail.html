@@ -80,25 +80,29 @@
                   </tr>
               {% endfor %}
             </table>
+            {%  if class_list.paginator.num_pages > 1 %}
                 <div class="pagination">
-    <span class="step-links">
-        {% if class_list.has_previous %}
-            <a href="?page={{ class_list.previous_page_number }}">Previous</a>
-        {% endif %}
+                    <span class="step-links">
+                        {% if class_list.has_previous %}
+                            <a href="?page={{ class_list.previous_page_number }}">Previous</a>
+                        {% endif %}
 
-        <span class="current">
-            Page {{ class_list.number }} of {{ class_list.paginator.num_pages }}
-        </span>
+                        <span class="current">
+                            Page {{ class_list.number }} of {{ class_list.paginator.num_pages }}
+                        </span>
 
-        {% if class_list.has_next %}
-            <a href="?page={{ class_list.next_page_number }}">Next</a>
-        {% endif %}
-    </span>
-</div>
+                        {% if class_list.has_next %}
+                            <a href="?page={{ class_list.next_page_number }}">Next</a>
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
     </div>
 {% endblock %}
 {% block script %}
 <script>
+$("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
 $(".dropdown").addClass("active");
 </script>
 {% endblock %}

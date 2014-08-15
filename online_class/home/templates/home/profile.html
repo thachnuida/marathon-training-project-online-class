@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
-{% block title %} Online Class {% endblock %}
+{% block title %} Details {% endblock %}
+{% block link %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
 
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>  
+    <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}"></script>  
+ 
+    <link href="{% static 'css/datepicker.css'%}" rel="stylesheet" type="text/css"/>  
+{% endblock %}
 {% block body %}
 <div class="profile">
   <div class="profile-content"> 
@@ -11,7 +23,7 @@
       {% if profile.user_image and profile.user_image != "False" %}
         <img src="{{ profile.user_image.url }}" height=100 width=100 id="image_class"/>
       {% else %}
-        <img src="{% static 'home/images/images.jpg' %}" height=100 width=100 id="image_class"/>
+        <img src="{% static 'home/images/account.png' %}" height=100 width=100 id="image_class"/>
       {% endif %}
     {% endfor %}  
       <br>
@@ -73,27 +85,7 @@
 </div>
 {% endblock %}   
 
-  {% block image %}
-    {% if currentuser.user_image and currentuser.user_image != "False" %}
-    <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
-    {% else %}
-    <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
-    {% endif %}
-  {% endblock %}
-   
-{% block link %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-    <script src="{% static 'class_management/js/js.js' %}"></script>
-
-    <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>  
-    <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}"></script>  
-    <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css"/>  
-    <link href="{% static 'css/datepicker.css'%}" rel="stylesheet" type="text/css"/>  
-
+{% block script %}
     <script>
     $(document).ready(function(){
         $(".Edit").click(function(){

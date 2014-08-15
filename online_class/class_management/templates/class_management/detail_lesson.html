@@ -105,6 +105,8 @@
 {% block script %}
 	<script src="{% static 'class_management/js/js.js' %}"></script>
 	<script> 
+	$("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
 	$(".dropdown").addClass("active");
 		$("#id_video_link").change(function(){
 			$("#video_link").attr('src', $('#id_video_link').val());

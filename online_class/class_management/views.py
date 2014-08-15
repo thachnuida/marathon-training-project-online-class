@@ -315,6 +315,16 @@ def test_history(request, user_id, class_id):
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('score')
             if request.POST['option'] == 'Time':
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test_date')
+            paginator = Paginator(test_list, 30) # Show 30 per page
+            page = request.GET.get('page')
+            try:
+                test_list = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                test_list = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                test_list = paginator.page(paginator.num_pages)
             html = ""
             for test in test_list:
                 df = DateFormat(test.test_date)
@@ -331,6 +341,16 @@ def test_history(request, user_id, class_id):
                 html = html + "</div>"
             return HttpResponse(html)
     test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))
+    paginator = Paginator(test_list, 30) # Show 30 per page
+    page = request.GET.get('page')
+    try:
+        test_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        test_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        test_list = paginator.page(paginator.num_pages)
     return render(request, "class_management/test_history.html", {'user': user,'test_list':test_list, 'chosen_class':chosen_class})
 
 def student_detail(request, user_id):

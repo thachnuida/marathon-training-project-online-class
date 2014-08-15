@@ -104,14 +104,16 @@
 {% block script %}
 <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
+    $("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
     $(".dropdown").addClass("active");
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>390 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
+       if ($(window).scrollTop()>340 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
          $("#add_test_form").css("top", '');
         $("#add_test_form").addClass("fixed_class");
         } else if(($("#footer").height()) >= ($(document).height() - $(window).scrollTop() - $(window).height())){
             $("#add_test_form").addClass("fixed_class");
-            $("#add_test_form").css("top",($("#footer").height() - ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
+            $("#add_test_form").css("top",($("#footer").height() + 15- ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
         }
         else {
             $("#add_test_form").removeClass("fixed_class");

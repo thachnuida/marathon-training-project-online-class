@@ -35,6 +35,7 @@
 				</div>
 			{% endfor %}
 			<br/>
+			{%  if ones_classes.paginator.num_pages > 1 %}
 			<div class="pagination">
     <span class="step-links">
         {% if ones_classes.has_previous %}
@@ -50,6 +51,7 @@
         {% endif %}
     </span>
 </div>
+{% endif %}
 		{% endif %}
 	</div>
  {% endblock %}
@@ -57,6 +59,8 @@
 
 <script src="{% static 'class_management/js/js.js' %}"></script>
 <script type="text/javascript">
+$("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
 $(".dropdown").addClass("active");
 </script>
 {% endblock %}

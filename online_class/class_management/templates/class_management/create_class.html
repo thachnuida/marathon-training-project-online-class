@@ -35,6 +35,8 @@
 {% block script %}
 <script src="{% static 'class_management/js/js.js' %}"></script>
 <script>
+    $("#navigation-ul li").removeClass("active");
+        $("#managerli").addClass("active");
  $(".dropdown").addClass("active");
 $("#img_error").text($("#id_image_class").parent().find("li").text());
 $("#id_image_class").parent().hide();
