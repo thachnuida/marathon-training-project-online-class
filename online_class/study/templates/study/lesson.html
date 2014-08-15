@@ -28,10 +28,3 @@
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 
-{% block image %}
-  {% if currentuser.user_image and currentuser.user_image != "False" %}
-  <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
-  {% else %}
-  <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
-  {% endif %}
-{% endblock %}

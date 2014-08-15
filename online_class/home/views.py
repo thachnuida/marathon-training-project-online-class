@@ -73,7 +73,7 @@ def home(request):
             if user.is_active:
                 auth_login(request, user)
                 currentuser = UserProfile.objects.get(user=request.user.id)
-                all_class=all_class.exclude(students_in_class=request.user)
+                # all_class=all_class.exclude(students_in_class=request.user)
                 paginator = Paginator(all_class, 8) # Show 8 contacts per page
                 page = request.GET.get('page')
                 try:

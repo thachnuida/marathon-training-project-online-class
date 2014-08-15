@@ -13,7 +13,7 @@
 {% block body %}
 <div id="result">
   <h2>Score of You: "{{score}}"</h2>
-  <button class="result"> Show right answer</button><br>
+  <button class="result">Show right answer</button><br>
   <a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}">Do test again</a><br>
   <a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}">Back to study list</a><br>
   <div id="win">
@@ -36,6 +36,9 @@
 $(document).ready(function(){
   $(".result").click(function(){
       $("#win").slideToggle();
+      $(this).text(function(i, text){
+          return text === "Show right answer" ? "Hide right answer" : "Show right answer";
+      });
   });
   var x=0;
   var b = [];
@@ -73,10 +76,3 @@ $(document).ready(function(){
 
 {% endblock %}
 
-{% block image %}
-  {% if currentuser.user_image and currentuser.user_image != "False" %}
-  <img src="{{ currentuser.user_image.url }}" height=150 width=150 id="image_class"/>
-  {% else %}
-  <img src="{% static 'home/images/images.jpg' %}" height=150 width=150 id="image_class"/>
-  {% endif %}
-{% endblock %}
