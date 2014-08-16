@@ -8,7 +8,7 @@ class CreateClass(forms.Form):
     class_name = forms.CharField(max_length=100)
     quantity = forms.IntegerField()
     image_class = forms.ImageField(required=False)
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
+    description = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         class_details = kwargs.pop('class_details', None)
@@ -24,7 +24,7 @@ class CreateClass(forms.Form):
 class CreateLesson(forms.Form):
     lesson_name = forms.CharField(max_length=100)
     video_link = forms.CharField()
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
+    description = forms.CharField(max_length=100,widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5", }))
 
     def __init__(self, *args, **kwargs):
         chosen_lesson = kwargs.pop('chosen_lesson', None)

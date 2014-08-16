@@ -9,4 +9,6 @@ class Score(models.Model):
     user = models.ForeignKey(User)
     test = models.ForeignKey(Test)
     test_date = models.DateTimeField(auto_now_add=True)
+    def get_max_score(user, test):
+    	return Score.objects.filter(test=test, user=user).aggregate(Max('score'))['score__max']
 

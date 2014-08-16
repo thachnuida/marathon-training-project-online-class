@@ -14,7 +14,9 @@ from django.template import RequestContext
 from django.utils import simplejson
 from study.models import *
 import socket
+from django.db.models import Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 
 @login_required(login_url='/home/')
@@ -23,7 +25,7 @@ def study(request):
     user=User.objects.filter(username="student1")
     class1=Class.objects.filter(students_in_class=user)
     all_class = Class.objects.filter(students_in_class=userusing)
-    paginator = Paginator(all_class, 3) # Show 6 contacts per page
+    paginator = Paginator(all_class, 10) # Show 10 contacts per page
     page = request.GET.get('page')
     try:
         all_class = paginator.page(page)
@@ -33,13 +35,23 @@ def study(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         all_class = paginator.page(paginator.num_pages)
-
     return render(request, "study/study.html", {'all_class':all_class})
 
 @login_required(login_url='/home/')
 def studyclass(request,pk):
     join_class = get_object_or_404(Class,pk=pk)
     all_lesson = Lesson.objects.filter(Class=pk)
+    paginator = Paginator(all_lesson, 6) # Show 6 contacts per page
+    page = request.GET.get('page')
+    try:
+        all_lesson = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        all_lesson = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        all_lesson = paginator.page(paginator.num_pages)
+
     userusing = request.user
     joined = True
     if request.method == 'POST':
@@ -55,14 +67,19 @@ def studyclass(request,pk):
 def lesson(request,class_id,pke):
     chosen_class = get_object_or_404(Class, pk=class_id)
     chosen_lesson = get_object_or_404(Lesson, pk=pke)
-    chosen_test = chosen_lesson.test_set.all()
-
-    all_lesson = Lesson.objects.filter(pk=pke)
+    all_test = chosen_lesson.test_set.all()
+    paginator = Paginator(all_test, 16) # Show 10 contacts per page
+    page = request.GET.get('page')
+    try:
+        all_test = paginator.page(page)
+    except PageNotAnInteger:
+        all_test = paginator.page(1)
+    except EmptyPage:
+        all_test = paginator.page(paginator.num_pages)
     return render(request,"study/lesson.html",{
         'chosen_class':chosen_class,
         'chosen_lesson':chosen_lesson,
-        'all_lesson':all_lesson,
-        'chosen_test':chosen_test
+        'all_test':all_test,
         })
 
 @login_required(login_url='/home/')
@@ -124,24 +141,19 @@ def result(request,class_id,lesson_id,test_id):
     chosen_lesson = get_object_or_404 (Lesson,pk=lesson_id)
     chosen_test = get_object_or_404 (Test,pk=test_id)
     answer_user=request.POST['answer_user'] 
-    list_right_answer = Question.objects.filter(test=test_id).values_list('right_answer', flat=True)
+    list_right_answer = Question.objects.filter(test=test_id).order_by('order_test').values_list('right_answer', flat=True)
     all_question = Question.objects.filter(test=test_id)
     score=0
+    print answer_user
     for x, y in zip(answer_user, list_right_answer):
         if x == y:
             score+=1
-
     userusing = request.user
-    try:
-        score_user = Score.objects.get(id=test_id)
-        score_user.score=score
-        score_user.save(update_fields=['score'])
-    except Score.DoesNotExist:
-        score_user  = Score()
-        score_user.user=User.objects.get(username=userusing)
-        score_user.test=Test.objects.get(id=test_id)
-        score_user.score=score
-        score_user.save()
+    score_user  = Score()
+    score_user.user=User.objects.get(username=userusing)
+    score_user.test=Test.objects.get(id=test_id)
+    score_user.score=score
+    score_user.save()
 
     return render(request,"study/result.html",{
         'score':score,
@@ -156,7 +168,6 @@ def result(request,class_id,lesson_id,test_id):
 @login_required(login_url='/home/')
 def join(request):    
     all_class1 = Class.objects.all()
-    # chosen_class=get_object_or_404(Class,pk=pk)
     userusing = request.user
     all_class=all_class1.exclude(students_in_class=userusing)
 

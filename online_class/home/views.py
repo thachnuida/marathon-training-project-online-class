@@ -23,7 +23,6 @@ def register(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            # profile.user_image=profile_form.cleaned_data['user_image'],
             if 'user_image' in request.FILES:
                 profile.user_image = request.FILES['user_image']
             profile.save()
@@ -49,8 +48,7 @@ def login(request):
         if user:
             if user.is_active:
                 auth_login(request, user)
-                currentuser = UserProfile.objects.get(user=request.user.id)
-                return render(request, "home/home.html", {'currentuser':currentuser})
+                return render(request, "home/home.html")
             else:
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
@@ -59,11 +57,20 @@ def login(request):
     if request.user.is_anonymous():
         return render(request, "home/home.html")
     else :
-        currentuser = UserProfile.objects.get(user=request.user.id)
-        return render(request, "home/home.html", {'currentuser':currentuser})
+        return render(request, "home/home.html")
 
 def home(request):
     all_class = Class.objects.all()
+    paginator = Paginator(all_class, 8) # Show 8 contacts per page
+    page = request.GET.get('page')
+    try:
+        all_class = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        all_class = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        all_class = paginator.page(paginator.num_pages)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -71,72 +78,25 @@ def home(request):
         if user:
             if user.is_active:
                 auth_login(request, user)
-                currentuser = UserProfile.objects.get(user=request.user.id)
-                # all_class=all_class.exclude(students_in_class=request.user)
-                paginator = Paginator(all_class, 8) # Show 8 contacts per page
-                page = request.GET.get('page')
-                try:
-                    all_class = paginator.page(page)
-                except PageNotAnInteger:
-                    # If page is not an integer, deliver first page.
-                    all_class = paginator.page(1)
-                except EmptyPage:
-                    # If page is out of range (e.g. 9999), deliver last page of results.
-                    all_class = paginator.page(paginator.num_pages)
-                recently_class = Class.objects.all().order_by("create_date")[:12]
-                top_student_class = Class.objects.all().annotate(num_students=Count('students_in_class')).order_by("-num_students")[:14]
-                return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
+                recently_class = Class.objects.order_by("create_date")[:12]
+                top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:14]
+                return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
             else:
                 error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
         else:
             error = '''Username and password didn't matched, if you forgot your password?'''
-            recently_class = Class.objects.order_by("create_date")[:12]
-            paginator = Paginator(all_class, 8) # Show 8 contacts per page
-            page = request.GET.get('page')
-            try:
-                all_class = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                all_class = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                all_class = paginator.page(paginator.num_pages)
-            top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
-        return render(request, "home/home.html", {'error': error, 'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})	
+        return render(request, "home/home.html", {'error': error })
     if request.user.is_anonymous():
         recently_class = Class.objects.order_by("create_date")[:12]
-        paginator = Paginator(all_class, 8) # Show 8 contacts per page
-        page = request.GET.get('page')
-        try:
-            all_class = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            all_class = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            all_class = paginator.page(paginator.num_pages)
         top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
         return render(request, "home/home.html", {'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
     else :
-        recently_class = Class.objects.all().order_by("create_date")[:12]
-        # all_class=all_class.exclude(students_in_class=request.user)
-        currentuser = UserProfile.objects.get(user=request.user.id)
-        paginator = Paginator(all_class, 8) # Show 8 contacts per page
-        page = request.GET.get('page')
-        try:
-            all_class = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            all_class = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            all_class = paginator.page(paginator.num_pages)
-        top_student_class = Class.objects.all().annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
-        return render(request, "home/home.html", {'currentuser':currentuser, 'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
+        recently_class = Class.objects.order_by("create_date")[:12]
+        top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
+        return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
  
 def profile(request):
     user_using=request.user
-    currentuser = UserProfile.objects.get(user=request.user.id)
     profiles = UserProfile.objects.filter(user=user_using)
     profiles2  =User.objects.filter(pk=user_using.id)
     user = User.objects.get(pk=request.user.id)
@@ -159,8 +119,11 @@ def profile(request):
         'profiles2':profiles2,
         'upuserform':upuserform,
         'upform':upform,
-        'currentuser':currentuser
         })
 def about(request):
     return render(request, 'home/about.html');
-
+    
+def search(request):
+    if request.method == 'GET':
+        print request.GET['search']
+    return render(request, 'home/home.html');

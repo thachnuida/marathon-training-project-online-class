@@ -7,21 +7,52 @@
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
-  <div id="studyclass">
+  <div id="studyclass" class="bg">
     {% if joined %}
-    <h3>{{ join_class }}</h3>
+    <div class="text-center">
+
+    <h3 style="color: #352354">
+{% if join_class.image_class and join_class.image_class != False %}
+        <img src="{{ join_class.image_class.url }}" height="150" width="150" style="margin-right: 50px"/>
+    {% else %}
+        <img src="{% static 'class_management/images/classroom.jpg' %}" height="150" width="150"  style="margin-right: 50px"/>
+    {% endif %}
+        {{ join_class }}</h3>
+    <div class="des">{{ join_class.description|safe }}</div>
+</div>
     <ul>
     {% for lesson in all_lesson %}
-      <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}">{{ lesson.lesson_name }}</a></li>
+      <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}"><img src="{% static 'images/circle-icon.png' %}" style="margin-right: 15px;"/>{{ lesson.lesson_name }}</a><br/>
+    <div class="create_date">{{ lesson.create_date|date:"H:i d/m/Y" }}</div>
+    <div style="margin-left: 50px;word-break: break-all;">{{ lesson.description|safe }}</div>
+        </li>
       {% endfor %}  
     </ul>
+    {% if all_lesson.paginator.num_pages > 1 %}
+                            <div class="pagination">
+                            <span class="step-links">
+                                {% if all_lesson.has_previous %}
+                                    <a href="?page={{ all_lesson.previous_page_number }}">Previous</a>
+                                {% endif %}
+
+                                <span class="current">
+                                    Page {{ all_lesson.number }} of {{ all_lesson.paginator.num_pages }}
+                                </span>
+
+                                {% if all_lesson.has_next %}
+                                    <a href="?page={{ all_lesson.next_page_number }}">Next</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% endif %}
     <form enctype="multipart/form-data"  method="post" action="" id="add_ques">
     {% csrf_token %}
-      <button type="submit"> Leave class </button>
+      <button type="submit" class="btn btn-success btn-lg"> Leave class </button>
     </form>
     {% else %}
     <h3>You leave class!! See you again</h3>

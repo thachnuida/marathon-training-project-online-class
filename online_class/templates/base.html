@@ -31,9 +31,7 @@
                   <li id="homeli"><a href="{% url 'home:home' %}">HOME</a></li>
                   <li id="aboutli"><a href="{% url 'home:about' %}">ABOUT</a></li>
                   {% if user.is_authenticated %}
-                    <li id="notjoinli"><a href="{% url 'study:join' %}">NEED JOIN CLASSES</a></li>
                     <li id="joinli"><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
-
                     <li id="learnli"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">LEARNING PROCESS</a></li>
                     <li id="managerli"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">CLASS MANAGEMENT</a></li>
                   {% endif %}

@@ -46,8 +46,10 @@
 							</ul>
 						</div>
 						{% endfor %}
-						{% if test_list.paginator.num_pages > 1 %}
-							<div class="pagination">
+						
+					</div>
+					{% if test_list.paginator.num_pages > 1 %}
+						<div class="pagination">
 						    <span class="step-links">
 						        {% if test_list.has_previous %}
 						            <a href="?page={{ test_list.previous_page_number }}">Previous</a>
@@ -63,7 +65,6 @@
 						    </span>
 						</div>
 						{% endif %}
-					</div>
 				{% endif %}
 			</div>
 		</div>

@@ -5,30 +5,39 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
-<div id="test"> 
-  <h2>THE WORLD IS BIG</h2>
+<div id="test" class="bg" style="position: relative;"> 
+  <h2>{{ chosen_test.test_name }}</h2>
   <div id="div1">
   <form enctype="multipart/form-data"  class="dynamic-form" method="POST" id="question" action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
     {% csrf_token %}
     <input class="question_id" type="hidden" name="question_id" value = "{{ one_question.id  }}"/>
     <input class="order" type="hidden" name="number" value ="{{ one_question.order_test}}"/>
     <input class="answer_user" type="hidden" name="answer_user"/>
-    <span class="numbertest">{{one_question.order_test}}.</span>
-    <p class="question"> Question: {{ one_question.question}}</p>
-
-    <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
-    <input class="2" type="radio" name="answer" value="B" /><span class="span2">{{ one_question.answerB }}</span><br>
-    <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
-    <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
-    <input class="button2" type="button" value="Next" onclick="next()"/>
-  </form>
+    <div class="title_question">Question<span class="numbertest">{{one_question.order_test}}</span> of {{ chosen_test.question_set.count }}</div>
+    <div class="row">
+    <div class="col-md-5 col-md-offset-1">
+      <div class="question_m">The Question</span>: <span class="question">{{ one_question.question}}</span></div>
+    
+      <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
+      <input class="2" type="radio" name="answer" value="B" /><span class="span2">{{ one_question.answerB }}</span><br>
+      <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
+      <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
+    </div>
+  <div class="col-md-5 col-md-offset-1">
+  {% if one_question.image_ques.url and one_question.image_ques != False %}
+    <img src="{{ one_question.image_ques.url }}" height="170" width="170"class="pull-right image_ques_test" style="margin-right: 250px;"/>
+    {% else %}
+    <img src="#" height="0" width="0"class="pull-right image_ques_test" style="margin-right: 250px;"/>
+    {% endif %}
   </div>
+</div>
+  <input class="button3 btn btn-success btn-lg" type="button" value="Back" onclick="back()"/>
+    <input class="button2 btn btn-success btn-lg" type="button" value="Next" onclick="next()"/>
+  </form>
+</div>
 </div> 
 {% endblock %}
 {% block script %}
@@ -49,10 +58,16 @@ if($("input:radio[name=answer]").is(":checked")){
       order  = topic_list.load['order_test']
       lenght = topic_list.load['lenght'];
       if (order<=lenght){
+      if(topic_list.load['image_ques'] == ""){
+        $(".image_ques_test").height(0).width(0);
+      }
+      else {
+        $(".image_ques_test").height(170).width(170).attr('src',topic_list.load['image_ques']);
+      }
       $(".order").val(topic_list.load['order_test']);
       $(".question_id").val(topic_list.load['id']);
       $(".answer_user").val(topic_list.array_user_choose);
-      $(".numbertest").html(topic_list.load['order_test']+".");
+      $(".numbertest").html(topic_list.load['order_test']);
       $(".question").html(topic_list.load['question']);
       $(".1").prop("checked", false)
       $(".2").prop("checked", false)
@@ -65,9 +80,6 @@ if($("input:radio[name=answer]").is(":checked")){
       }
       if (order==lenght){
         $(".button2").val( "Finish" );
-      }
-      if (order>1){
-        
       }
       if (order==lenght+1){
         $(".answer_user").val(topic_list.array_user_choose);

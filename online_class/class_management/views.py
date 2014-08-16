@@ -303,19 +303,24 @@ def delete_question(request, test_id):
 
 from django.utils.dateformat import DateFormat
 from django.utils.formats import get_format
+option = 'Default'
 def test_history(request, user_id, class_id):
+    global option
     user = get_object_or_404(User, pk=user_id)
     chosen_class = Class.objects.get(pk=class_id)
     if request.method == 'POST':
         if request.is_ajax():
             response = []
             if request.POST['option'] == 'Lesson':
+                option='Lesson'
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test__lesson')
             if request.POST['option'] == 'Score':
+                option="Score"
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('score')
             if request.POST['option'] == 'Time':
+                option="Time"
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test_date')
-            paginator = Paginator(test_list, 30) # Show 30 per page
+            paginator = Paginator(test_list, 12) # Show 30 per page
             page = request.GET.get('page')
             try:
                 test_list = paginator.page(page)
@@ -340,8 +345,15 @@ def test_history(request, user_id, class_id):
                 html = html + "</ul>"
                 html = html + "</div>"
             return HttpResponse(html)
-    test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))
-    paginator = Paginator(test_list, 30) # Show 30 per page
+    if option == 'Default':
+        test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))
+    if option == 'Time':
+        test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test_date')
+    if option == 'Lesson':
+        test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test__lesson')
+    if option == 'Score':
+        test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('score')
+    paginator = Paginator(test_list, 12) # Show 30 per page
     page = request.GET.get('page')
     try:
         test_list = paginator.page(page)

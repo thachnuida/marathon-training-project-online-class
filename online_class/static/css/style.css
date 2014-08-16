@@ -3,6 +3,9 @@
     text-align: center;
     background-color: #f1f1f1;
 }
+a:hover{
+    text-decoration: none;
+}
 #mycarousel li img{
     margin-left: 0px;
 }
@@ -137,8 +140,22 @@
     border-bottom: 1px solid #2d6ca2;
 }
 
-.form-login .header-login p{
-    margin: 0 0 10px;
+.button{
+    border-radius: 0px;
+    background-color: #688B78;
+    border: 1px solid rgb(73, 73, 73);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    font: normal normal normal 17px/1.4em 'noticia text', serif;
+    color: rgb(255, 255, 255);
+    white-space: nowrap;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 10%;
+    margin-left: 10%;
 }
 
 .hello{
@@ -151,15 +168,16 @@
 }
 .menu_bar{
     margin-top: 5px;
+    padding-bottom: 10px;
+    height: 210px;
     background: #2d6ca2;
-    height: 261px;
 }
 .menu_bar1{
-    height: 241px;
+    height: 245px;
 }
 .menu_bar img{
     margin-left: 10px;
-    margin-top: 50px;
+    margin-top: 10px;
     float: left;
     margin-right: 5px;
 }
@@ -259,17 +277,11 @@
 }
 
 #studylist{
-    background-color: rgba(255, 255, 255, 0.890196)!important;
-    width: 821px;
-    float: left;
-    margin-left: 162px;
 }
 
 #studylist .header{
-    height: 65px;
-    width: 821px;
-    float: left;
-    display: block;
+height: 65px;
+display: block;
 }
 #studylist .header h2{
     color: #2f2203 ;
@@ -280,8 +292,8 @@
     margin-left: 40%;
 }
 #studylist .content{
-    width: 821px;
-    float: left;
+    width: 75%;
+    margin: 0 auto;
     padding-bottom: 9%;
 }
 
@@ -335,99 +347,118 @@
 }
 #studyclass{
     display: block;
-    width: 720px;
+    margin: 0px auto;
     background-color: rgba(255, 255, 255, 0.890196)!important;
-    margin-left: 162px;
+    margin-left: -15px;
 }
 #studyclass h3{
-    padding-top: 10%;
     font-size:35px;
+}
+#studyclass .des{
+    font-size: 20px;
+    color: rgb(11, 11, 153);
 }
 #studyclass ul{
     list-style-type: none;
     margin-top: 20px;
 }
 #studyclass ul li{
-    color: #8B008B;
+    width: 75%;
+    margin: 0px auto;
+    color: #473E47;
     font: 25px/1 Helvetica, Verdana, sans-serif;
-    margin-top: 7%;
+    margin-top: 1px;
+    border-bottom: 3px solid #ccc;
+    padding: 20px;
+    margin-bottom: 8px;
 }
 #studyclass button{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-    border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 17px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    white-space: nowrap;
-    display: inline-block;
-    margin-top: 20px;
-    padding-bottom: 10%;
-    margin-left:65%;
+    float: right;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+#studyclass .create_date{
+  font-size: 14px;
+    color: blue;
+    float: right;
+    margin-bottom: 10px;
+}
+#lesson .des{
+    font-size: 15px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+#lesson .create_date{
+    font-size: 14px;
+    color: blue;
+    margin-bottom: 10px;
+    margin-left: 15px;
 }
 #lesson{
     display: block;
     background-color: rgba(255, 255, 255, 0.890196)!important;
     padding-bottom: 30px;
-    float:left;
 }
 #lesson .content-lesson{
     margin: 30px 50px 30px 50px;
 }
+#lesson .one_test{
+
+}
 #lesson .lesson-header-class{
-    padding-top: 2%;
-    padding-bottom: 2%;
     display: block;
-    margin-left: 35%;
-    font-size: 35px;
+    font-size: 30px;
+    text-align: center;
 }
 #lesson .lesson-header-lesson{
     font-size:26px;
+    color: rgb(148, 7, 7);
 }
-#lesson h5{
-    padding-top: 20px;
-    padding-left: 200px;
-}
+
 #lesson .test{
     display: block;
-    float: left;
-    width: 680px;
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
 }
 #lesson .test a{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-    border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 20px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    white-space: nowrap;
-    padding: 2%;
     margin-left: 20px;
-    padding-bottom: 6%;
     float: left;
 }
 
 #test{
-    display: block;
-    float: left;
-    margin-left: 215px;
-    width: 720px;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.890196)!important;
+}
+#test .numbertest{
+    margin-left: 5px;
+}
+#test .question_m{
+    margin-left: 23px;
+    font-weight: bold; 
+    margin-bottom: 15px;
+}
+#test .title_question{
+    color: rgb(19, 19, 121);
+    font-size: 25px;
+    font-family: Vivaldi;
+    margin: 15px;
+    border-bottom: 2px double rgb(30, 121, 34);
 }
 #test h2{
-    padding-top: 20px;
-    padding-left: 200px;
+    text-align: center;
+    color: rgb(228, 25, 25);
 }
 #test .button2{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-    border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 30px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    margin-top: 20px;
-    padding-bottom: 10%;
-    margin-left:65%;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 25%;
+}
+#test .button3{
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    left: 15%;
 }
 #test p{
     padding-top: 10px;
@@ -439,27 +470,16 @@
     margin-left: 50px;
 }
 #test span{
-    margin-left: 20px;
-}
-#result{
-    display: block;
-    float: left;
-    width: 720px;
-    margin-left: 215px;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.890196)!important;
-}
-#result h2{
-  text-align: center;
+    margin-left: 10px;
 }
 
-#result a{
-    font-weight:bold;
-    font-size:20px;
-    margin-left: 20px;
+#result h2{
+  text-align: center;
+  color: rgb(18, 18, 104);
+  margin-bottom: 60px;
 }
+
 #result p{
-    padding-top: 10px;
     padding-left: 30px;
 }
 #joinclass{
@@ -469,7 +489,16 @@
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
 }
-
+#joinclass button{
+    border-radius: 0px;
+    background-color: rgb(39, 131, 137);
+    border: 1px solid rgb(73, 73, 73);
+    font: normal normal normal 30px/1.4em 'noticia text', serif;
+    color: rgb(255, 255, 255);
+    margin-top: 20px;
+    padding-bottom: 10%;
+    margin-left:62%;
+}
 #classlist_home img{
     display: block;
     margin-left:65px;
@@ -525,17 +554,15 @@ display: none;
 }
 .header-text{
     font-family: Vivaldi;
-    margin-left: 26px;
-    margin-top: 10px;
+    margin-left: 15px;
     display: inline-block;
 }
 .header-image-profile{
-    margin-top: 30px;
+    border-left: 5px solid green;
     display: inline-block;
     float: left;
-    margin-left: 34px;
-    padding-bottom: 20px;
-    }
+    margin-left: 15px;
+}
 .profile{
     display: block;
     float: left;

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load url from future %}
 {% load staticfiles %}
+{% load test_score %}
 {% block title %} Online Class {% endblock %}
 {% block link %}
     {{ block.super }}
@@ -11,23 +12,54 @@
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
-<div id="result">
-  <h2>Score of You: "{{score}}"</h2>
-  <button class="result">Show right answer</button><br>
-  <a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}">Do test again</a><br>
-  <a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}">Back to study list</a><br>
-  <div id="win">
-    <h2>Background yelow is Rigth Answer</h2>
-    <h2>Font-size large is Your Answer</h2>
-    {% for test in all_question %}
-    <div id="{{ test.order_test }}">
-    <p><b>{{ test.order_test }}</b></p>
-    <p><b>Question: {{ test.question }}</b></p>
-    <p class="A">{{ test.answerA }}</p>
-    <p class="B">{{ test.answerB }}</p>
-    <p class="C">{{ test.answerC }}</p>
-    <p class="D">{{ test.answerD }}</p>
+<div id="result" class="bg" style="min-height: 368px !important;">
+  <h2>YOUR RESULT</h2>
+  <table id="result_table">
+    <tr>
+      <th>Total Question</th>
+      <th>Full Score</th>
+      <th>Passing Rate</th>
+      <th>Your Score</th>
+    <tr>
+    <tr>
+      <td>{{ chosen_test.question_set.count }}</td>
+      <td>{{ chosen_test.question_set.count }}</td>
+      <td>{{score|divide:chosen_test.question_set.count}}%</td>
+      <td>{{score}}</td>
+    </tr>
+  </table>
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-3 col-md-offset-2">
+      <a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}" role="button" class="btn btn-success">Back Lesson</a>
     </div>
+    <div class="col-md-3" style="margin-left: 50px;">
+     <a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}" role="button" class="btn btn-danger">Do Again</a>
+    </div>
+    <div class="col-md-2">
+      <button class="result btn btn-primary btn_show">Show Answer</button>
+    </div>
+  </div>
+  <div id="win">
+    <h2 style="margin-top: 100px;">EXERCISE'S ANSWER</h2>
+    {% for question in all_question %}
+    <div class="row" style="margin-left: 15%;margin-bottom: 25px;">
+    <div id="{{ question.order_test }}">
+      <div class="col-md-5 col-md-offset-1">
+    <p style="font-size: 18px;"><b>{{ question.order_test }}. Question: {{ question.question }}</b></p>
+    <div class="ans_option">
+    <p class="A"><img src="#" height="20" width="20" style="margin-right: 15px;"/>A. {{ question.answerA }}</p>
+    <p class="B"><img src="#" height="20" width="20" style="margin-right: 15px;"/>B. {{ question.answerB }}</p>
+    <p class="C"><img src="#" height="20" width="20" style="margin-right: 15px;"/>C. {{ question.answerC }}</p>
+    <p class="D"><img src="#" height="20" width="20" style="margin-right: 15px;"/>D. {{ question.answerD }}</p>
+  </div>
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+      {% if question.image_ques.url and question.image_ques.url != False %}
+      <img src="{{ question.image_ques.url }}" heigth="150" width="150"/>
+      {% endif %}
+    </div>
+  </div>
+</div>
     {% endfor %}
   </div>
 </div>
@@ -36,41 +68,37 @@
 <script>
 
 $(document).ready(function(){
-$("#navigation-ul li").removeClass("active");
-        $("#joinli").addClass("active");
+  $("#navigation-ul li").removeClass("active");
+  $("#joinli").addClass("active");
   $(".result").click(function(){
-      $("#win").slideToggle();
-      $(this).text(function(i, text){
-          return text === "Show right answer" ? "Hide right answer" : "Show right answer";
+    $("#win").slideToggle();
+    $(this).text(function(i, text){
+      return text === "Show right answer" ? "Hide right answer" : "Show right answer";
       });
   });
-  var x=0;
+  $(".ans_option img").css('visibility','hidden');
+  
+  $(".btn_show").click(function(){
+    $('html, body').animate({scrollTop: 600}, 700);
+    var x=0;
   var b = [];
   var a= "{{ list_right_answer }}";
   for (var x=7;x<a.length;x+=7){
-    if (a[x]==" "){ 
-    }
-    else{
-      b.push(a[x]);
-    }
+    if (a[x]==" "){ }
+    else{  b.push(a[x]); }
   }
+ 
   var c = "{{ answer_user }}";
   for (var j= 1;j<=(b.length);j++){
-  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
-  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
-  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
-  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
-  $("#"+j+" ."+b[j-1]).css("background-color","yellow");
+    if (b[j-1] === c[j-1]){
+      $("#"+j+" ."+b[j-1]).css("background-color","rgb(66, 167, 66)");
+    }else{
+      $("#"+j+" ."+c[j-1]).css("background-color","rgb(252, 76, 76)");
+      $("#"+j+" ."+b[j-1] +" img").attr("src","{% static 'images/true.jpg' %}").css('visibility','');
+    }
   }
-  for (var j= 1;j<=(b.length);j++){
-  $("#"+j+" ."+c.charAt(j-1)).css("font-size","150%");
-  $("#"+j+" ."+c.charAt(j-1)).css("font-size","150%");
-  $("#"+j+" ."+c.charAt(j-1)).css("font-size","150%");
-  $("#"+j+" ."+c.charAt(j-1)).css("font-size","150%");
-  $("#"+j+" ."+c.charAt(j-1)).css("font-size","150%");
-  }
+  });
 });
-
 </script>
 <style>
 #win {

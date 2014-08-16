@@ -70,6 +70,7 @@
   						</div>
 					</a>
 					{% endfor %}
+					{% if lesson_list.paginator.num_pages > 1 %}
 					<div class="pagination">
 					    <span class="step-links">
 					        {% if lesson_list.has_previous %}
@@ -85,6 +86,7 @@
 					        {% endif %}
 					    </span>
 					</div>
+					{% endif %}
 				{% endif %}
 				</div>
 				</div>

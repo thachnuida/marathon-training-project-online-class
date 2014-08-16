@@ -82,6 +82,7 @@
 							<p class="date">Update Date {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
 						</a>
 					{% endfor %}
+					{% if test_list.paginator.num_pages > 1 %}
 					<div class="pagination">
     <span class="step-links">
         {% if test_list.has_previous %}
@@ -97,6 +98,7 @@
         {% endif %}
     </span>
 </div>
+{% endif %}
 				{% endif %}
 			</div>
 		</div>

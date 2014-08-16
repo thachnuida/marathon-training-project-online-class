@@ -30,12 +30,21 @@
                 <a href="#" class="jcarousel-control-prev" data-jcarouselcontrol="true">‹</a>
                 <a href="#" class="jcarousel-control-next" data-jcarouselcontrol="true">›</a>
                 </div>
-    
+          
         <div class="col-md-8" id="top9class">
+
             <div id="classlist_home" class="hover_detail">
                 <div class="popular">
                 <h4>CLASS LIST</h4>
             </div>
+            <div class="col-md-12">
+             <form class="navbar-form navbar-left" role="search" action="{% url 'home:search'%}">
+        <div class="form-group">
+          <input type="text" style="width:600px" class="form-control" placeholder="Search By classname, teacher name" name="search">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+  </div>
                 {% for class in all_class %}
                 <div class="col-md-6 one_class">
                     <div class="class">
