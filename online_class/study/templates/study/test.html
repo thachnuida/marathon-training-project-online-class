@@ -19,7 +19,7 @@
     <input class="question_id" type="hidden" name="question_id" value = "{{ one_question.id  }}"/>
     <input class="order" type="hidden" name="number" value ="{{ one_question.order_test}}"/>
     <input class="answer_user" type="hidden" name="answer_user"/>
-    <p class="numbertest">{{one_question.order_test}}.</p>
+    <span class="numbertest">{{one_question.order_test}}.</span>
     <p class="question"> Question: {{ one_question.question}}</p>
 
     <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
@@ -65,6 +65,9 @@ if($("input:radio[name=answer]").is(":checked")){
       }
       if (order==lenght){
         $(".button2").val( "Finish" );
+      }
+      if (order>1){
+        
       }
       if (order==lenght+1){
         $(".answer_user").val(topic_list.array_user_choose);

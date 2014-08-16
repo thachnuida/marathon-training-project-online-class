@@ -11,28 +11,40 @@
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
-<div id="joinclass">
-  {% if joined %}
-    <h3>{{ join_class }}</h3>
-  {% for lesson in all_lesson %}
-  <ul>
-    <li>{{ lesson.lesson_name }}</li>
-  </ul>
-  {% endfor %} 
-  <form enctype="multipart/form-data" method="post" action="" id="add_ques">
-  {% csrf_token %}
-    <button type="submit"> Join </button>
-  </form>
-  {% else %}
-  <h3>Congratulation!! You joined class!! </h3>
-  <a href="{% url 'study:study' %}">Back to list class </a>
-  {% endif %}
-</div>
+{% if check %}
+  <script type="text/javascript">
+  $(function(){
+      window.location.href = "{% url 'study:studyclass' join_class.id %}"
+  });
+</script>
+{% else %}
+  <div id="joinclass">
+    {% if joined %}
+      <h3>{{ join_class }}</h3>
+    {% for lesson in all_lesson %}
+    <ul>
+      <li>{{ lesson.lesson_name }}</li>
+    </ul>
+    {% endfor %} 
+    <form enctype="multipart/form-data" method="post" action="" id="add_ques">
+    {% csrf_token %}
+      <button type="submit"> Join </button>
+    </form>
+    {% else %}
+    <h3>Congratulation!! You joined class!! </h3>
+    <a href="{% url 'study:studyclass' join_class.id %}" >Start learn class</a>
+    {% endif %}
+  </div>
+{% endif %}  
 {% endblock %}
+
 {% block script %}
 <script type="text/javascript">
-$("#navigation-ul li").removeClass("active");
-        $("#joinli").addClass("active");
+$(document).ready(function(){
+    $("#navigation-ul li").removeClass("active");
+    $("#joinli").addClass("active");
+    $("#study_class").trigger('click');
+    });
         </script>
 {% endblock %}
 

@@ -135,26 +135,12 @@
 .form-login .header-login{
     background: #2d6ca2;
     border-bottom: 1px solid #2d6ca2;
-    
 }
 
-.button{
-    border-radius: 0px;
-    background-color: #688B78;
-    border: 1px solid rgb(73, 73, 73);
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial;
-    font: normal normal normal 17px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    white-space: nowrap;
-    display: inline-block;
-    position: relative;
-    padding-bottom: 10%;
-    margin-left: 10%;
+.form-login .header-login p{
+    margin: 0 0 10px;
 }
+
 .hello{
     font-size: 30px;
     margin-top: 20px;
@@ -165,16 +151,15 @@
 }
 .menu_bar{
     margin-top: 5px;
-    padding-bottom: 10px;
-    height: 210px;
     background: #2d6ca2;
+    height: 261px;
 }
 .menu_bar1{
-    height: 245px;
+    height: 241px;
 }
 .menu_bar img{
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 50px;
     float: left;
     margin-right: 5px;
 }
@@ -257,25 +242,6 @@
     margin-left: 5%;
     font: normal normal normal 23px/1.4em 'times new roman', times, serif;
     color: rgb(0, 0, 0);
-}
-.form-register2 button{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-   
-    border: 1px solid rgb(73, 73, 73);
-    border-image-source: initial;
-    border-image-slice: initial;
-    border-image-width: initial;
-    border-image-outset: initial;
-    border-image-repeat: initial;
-    font: normal normal normal 14px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    white-space: nowrap;
-    display: inline-block;
-    position: relative;
-    padding: 2%;
-    margin-left: 45%;
-    padding-bottom: 6%;
 }
 
 .form-register input{
@@ -487,17 +453,6 @@
   text-align: center;
 }
 
-#result button{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-    border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 30px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    margin-top: 20px;
-    padding-bottom: 10%;
-    margin-left:30%;
-    margin-bottom: 20px;
-}
 #result a{
     font-weight:bold;
     font-size:20px;
@@ -514,16 +469,7 @@
     margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.890196)!important;
 }
-#joinclass button{
-    border-radius: 0px;
-    background-color: rgb(39, 131, 137);
-    border: 1px solid rgb(73, 73, 73);
-    font: normal normal normal 30px/1.4em 'noticia text', serif;
-    color: rgb(255, 255, 255);
-    margin-top: 20px;
-    padding-bottom: 10%;
-    margin-left:62%;
-}
+
 #classlist_home img{
     display: block;
     margin-left:65px;
@@ -579,15 +525,17 @@ display: none;
 }
 .header-text{
     font-family: Vivaldi;
-    margin-left: 15px;
+    margin-left: 26px;
+    margin-top: 10px;
     display: inline-block;
 }
 .header-image-profile{
-    border-left: 5px solid green;
+    margin-top: 30px;
     display: inline-block;
     float: left;
-    margin-left: 15px;
-}
+    margin-left: 34px;
+    padding-bottom: 20px;
+    }
 .profile{
     display: block;
     float: left;
