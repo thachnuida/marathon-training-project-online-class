@@ -14,6 +14,10 @@
   <div id="edit_form_fix">
     <div class="profile-content-form"> 
       <h3 class="title" style="margin-bottom: 55px;"> Profile Details Of {{user.username }}</h3>
+      {% if success %}
+        <div class="alert alert-success nonhaving" role="alert">
+                    You Updated Profile Successful! </div>
+      {% endif %}
       <div class="row" style="width: 75%;">
       <div class="col-md-3">
             {% if user.userprofile.user_image %}

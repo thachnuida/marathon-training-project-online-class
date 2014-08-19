@@ -29,9 +29,14 @@
         <h3>{{ join_class }}</h3>
     <div class="des">{{ join_class.description|safe }}</div>
 </div>
+
     <ul>
     {% for lesson in all_lesson %}
-      <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}"><img src="{% static 'images/circle-icon.png' %}" style="margin-right: 15px;"/>{{ lesson.lesson_name }}</a><br/>
+      {% if joined %}
+      <li><a href="{% url 'study:lesson' join_class.pk lesson.id %}"><img src="{% static 'images/circle-icon.png' %}" style="margin-right: 15px;" />{{ lesson.lesson_name }}</a><br/>
+      {% else %}
+      <li><p onclick="$('#join_dialog').dialog('open');" style="color: #428bca; cursor: pointer;"><img src="{% static 'images/circle-icon.png' %}" style="margin-right: 15px;" />{{ lesson.lesson_name }}</p><br/>
+      {% endif %}
     <div class="create_date">{{ lesson.create_date|date:"H:i d/m/Y" }}</div>
     <div style="margin-left: 50px;word-break: break-all;">{{ lesson.description|safe }}</div>
         </li>
@@ -71,6 +76,9 @@
           <p class="text-center">You have to LOGIN Website To JOIN This CLASS.</p>
         </div>
     {% endif %}
+    <div id="join_dialog" title="Not Join">
+          <p class="text-center">To Learn This Lesson, you Must Join This Class.</p>
+        </div>
   </div>  
 {% endblock body %}
 {% block script %}
@@ -83,6 +91,16 @@ $("#navigation-ul li").removeClass("active");
           buttons: {
             Ok: function() {
               $( this ).dialog( "close" );
+            }
+          }
+        });
+        $( "#join_dialog" ).dialog({
+          autoOpen: false,
+          modal: true,
+          buttons: {
+            Ok: function() {
+              $( this ).dialog( "close" );
+              return false;
             }
           }
         });

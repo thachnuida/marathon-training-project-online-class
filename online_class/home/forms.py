@@ -4,8 +4,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password...'}), min_length=8, max_length=50, error_messages={'required': 'Please enter your new password.'})
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password again...'}), max_length=50, error_messages={'required': 'Please re-enter your new password for confirmation.'})
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password...', 'title':'Ensure this value has at least 8 characters'}), min_length=8, max_length=50, error_messages={'required': 'Please enter your new password.'})
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password again...', 'title':'Ensure this value has at least 8 characters'}), max_length=50, error_messages={'required': 'Please re-enter your new password for confirmation.'})
     class Meta:
         model=User
         fields=('username','password','confirm_password','email','first_name','last_name')
@@ -37,8 +37,8 @@ class EditProfileForm(forms.ModelForm):
         fields=('birthday','address','phone','gender','user_image')
 
 class EditUserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password...'}), required=False, min_length=8, max_length=50, error_messages={'required': 'Please enter your new password.'})
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password again...'}), required=False, max_length=50, error_messages={'required': 'Please re-enter your new password for confirmation.'})
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password...', 'title':'Ensure this value has at least 8 characters'}), required=False, min_length=8, max_length=50, error_messages={'required': 'Please enter your new password.'})
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Your new password again...', 'title':'Ensure this value has at least 8 characters'}), required=False, max_length=50, error_messages={'required': 'Please re-enter your new password for confirmation.'})
     class Meta:
         model=User
         fields=('username','password','confirm_password','email','first_name','last_name')

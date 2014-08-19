@@ -73,7 +73,7 @@ $(document).ready(function(){
   $(".result").click(function(){
     $("#win").slideToggle();
     $(this).text(function(i, text){
-      return text === "Show right answer" ? "Hide right answer" : "Show right answer";
+      return text === "Show Answer" ? "Hide Answer" : "Show Answer";
       });
   });
   $(".ans_option img").css('visibility','hidden');
@@ -87,8 +87,13 @@ $(document).ready(function(){
     if (a[x]==" "){ }
     else{  b.push(a[x]); }
   }
- 
-  var c = "{{ answer_user }}";
+
+  var c = []
+  var d = "{{ answer_user }}";
+  for (var x=7;x<d.length;x+=7){
+    if (a[x]==" "){ }
+    else{  c.push(d[x]); }
+  }
   for (var j= 1;j<=(b.length);j++){
     if (b[j-1] === c[j-1]){
       $("#"+j+" ."+b[j-1]).css("background-color","rgb(66, 167, 66)");

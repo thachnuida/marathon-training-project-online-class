@@ -33,7 +33,9 @@
                   {% if user.is_authenticated %}
                     <li id="joinli"><a href="{% url 'study:study' %}">JOINED CLASSES</a></li>
                     <li id="learnli"><a role="menuitem" tabindex="-1" href="{% url 'classes:studentprocess' user.id %}">LEARNING PROCESS</a></li>
+                    {% if user.userprofile.role == 'T' %}
                     <li id="managerli"><a role="menuitem" tabindex="-1" href="{% url 'classes:classlist' %}">CLASS MANAGEMENT</a></li>
+                    {% endif %}
                   {% endif %}
                 </ul>
           </div><!--end dropdown -->

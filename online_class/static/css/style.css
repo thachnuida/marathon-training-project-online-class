@@ -500,7 +500,7 @@ display: block;
 }
 #classlist_home img{
     display: block;
-    margin-left:65px;
+    margin: 0 auto;
 }
 
 .popular{

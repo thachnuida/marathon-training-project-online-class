@@ -10,6 +10,9 @@
 {% block body %}
 <div id="test" class="bg" style="position: relative;"> 
   <h2>{{ chosen_test.test_name }}</h2>
+  {% if none_question %}
+    <div class="alert alert-danger text-center" role="alert">Ooh! This Test Haven't Update Any Question.<br/> Please Come Back Later!</div>
+  {% else %}
   <div id="div1">
   <form enctype="multipart/form-data"  class="dynamic-form" method="POST" id="question" action="{% url 'study:result' chosen_class.pk chosen_lesson.pk chosen_test.pk %}">
     {% csrf_token %}
@@ -34,16 +37,18 @@
     {% endif %}
   </div>
 </div>
-  <input class="button3 btn btn-success btn-lg" type="button" value="Back" onclick="back()"/>
-    <input class="button2 btn btn-success btn-lg" type="button" value="Next" onclick="next()"/>
+  <input class="btnback button3 btn btn-success btn-lg" type="button" value="Back" onclick="back()"/>
+  <input class="button2 btn btn-success btn-lg" type="button" value="Next" onclick="next()"/>
   </form>
 </div>
+{% endif %}
 </div> 
 {% endblock %}
 {% block script %}
 <script>
-$("#navigation-ul li").removeClass("active");
-        $("#joinli").addClass("active");
+  $("#navigation-ul li").removeClass("active");
+  $("#joinli").addClass("active");
+  $(".btnback").hide();
 var next = function(){
 if($("input:radio[name=answer]").is(":checked")){
   var data = new FormData($('form').get(0));
@@ -55,6 +60,7 @@ if($("input:radio[name=answer]").is(":checked")){
     processData: false,
     contentType: false,
     success: function(topic_list) {
+      $(".btnback").show();
       order  = topic_list.load['order_test']
       lenght = topic_list.load['lenght'];
       if (order<=lenght){
@@ -69,10 +75,24 @@ if($("input:radio[name=answer]").is(":checked")){
       $(".answer_user").val(topic_list.array_user_choose);
       $(".numbertest").html(topic_list.load['order_test']);
       $(".question").html(topic_list.load['question']);
-      $(".1").prop("checked", false)
-      $(".2").prop("checked", false)
-      $(".3").prop("checked", false)
-      $(".4").prop("checked", false)
+      if (topic_list.load['next_answer'] == ''){
+      $(".1").prop("checked", false);
+      $(".2").prop("checked", false);
+      $(".3").prop("checked", false);
+      $(".4").prop("checked", false);
+      }
+      else if (topic_list.load['next_answer'] == 'A'){
+        $(".1").prop("checked", true);
+      }
+      else if (topic_list.load['next_answer'] == 'B'){
+        $(".2").prop("checked", true);
+      }
+      else if (topic_list.load['next_answer'] == 'C'){
+        $(".3").prop("checked", true);
+      }
+      else if (topic_list.load['next_answer'] == 'D'){
+        $(".4").prop("checked", true);
+      }
       $(".span1").html(topic_list.load['answerA']);
       $(".span2").html(topic_list.load['answerB']);
       $(".span3").html(topic_list.load['answerC']);
@@ -82,22 +102,56 @@ if($("input:radio[name=answer]").is(":checked")){
         $(".button2").val( "Finish" );
       }
       if (order==lenght+1){
-        $(".answer_user").val(topic_list.array_user_choose);
-        $(".order").val(topic_list.load['order_test']);
-        $(".button2").trigger( "click" );
+       $("#question").submit();
       }
-      if(order==lenght+2){
-        $(".button2").attr('type','submit');
-        $(".button2").trigger( "click" );
-      }    
     }
   });
-  return false;
 }
 else{
   alert("Please choose one answer !!!");
 }
+};
 
+var back = function(){
+  var data = new FormData($('form').get(0));
+  $.ajax({
+    type: "POST",
+    url: "{% url 'study:questionback' chosen_test.pk %}",
+    data: data,
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    success: function(topic_list) {
+      order  = topic_list.load['order_test']
+      lenght = topic_list.load['lenght'];
+      if(topic_list.load['image_ques'] == ""){
+        $(".image_ques_test").height(0).width(0);
+      }
+      else {
+        $(".image_ques_test").height(170).width(170).attr('src',topic_list.load['image_ques']);
+      }
+      $(".order").val(topic_list.load['order_test']);
+      $(".question_id").val(topic_list.load['id']);
+      $(".answer_user").val(topic_list.array_user_choose);
+      $(".numbertest").html(topic_list.load['order_test']);
+      $(".question").html(topic_list.load['question']);
+      if (topic_list.load['previous_answer'] == 'A'){
+      $(".1").prop("checked", true); }
+      if (topic_list.load['previous_answer'] == 'B'){
+      $(".2").prop("checked", true); }
+      if (topic_list.load['previous_answer'] == 'C'){
+      $(".3").prop("checked", true); }
+      if (topic_list.load['previous_answer'] == 'D'){
+      $(".4").prop("checked", true); }
+      $(".span1").html(topic_list.load['answerA']);
+      $(".span2").html(topic_list.load['answerB']);
+      $(".span3").html(topic_list.load['answerC']);
+      $(".span4").html(topic_list.load['answerD']);
+      if (order == 1){
+         $(".btnback").hide();
+      }
+      }
+  });
 };
 </script>
 {%endblock%}

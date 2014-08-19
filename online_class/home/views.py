@@ -61,10 +61,18 @@ def home(request):
             print "ajax"
             search_word = request.POST['search_word']
             all_class = Class.objects.filter(Q(class_name__icontains=search_word) | Q(teacher__username__icontains=search_word))
+            teacher = []
+            for each_class in all_class:
+                teacher.append(each_class.teacher)
+            print teacher
             all_class = serializers.serialize('json', all_class )
             all_class = simplejson.loads( all_class )
-            all_class = simplejson.dumps( {'all_class':all_class} )
-            return HttpResponse( all_class, mimetype='application/json' )
+
+            teacher = serializers.serialize('json', teacher )
+            teacher = simplejson.loads( teacher )
+
+            data = simplejson.dumps( {'all_class':all_class, 'teacher':teacher} )
+            return HttpResponse( data, mimetype='application/json' )
         if "login" in request.POST:
             username = request.POST['username']
             password = request.POST['password']
@@ -87,6 +95,7 @@ def home(request):
  
 def profile(request):
     user = request.user
+    success = False
     if request.method == 'POST':
         upform = EditProfileForm(request.POST, instance=user.get_profile())
         upuserform= EditUserForm(request.POST,instance=user)
@@ -100,7 +109,8 @@ def profile(request):
                 user.save()
             if 'user_image' in request.FILES:
                 up.user_image = request.FILES['user_image']
-            up.save()    
+            up.save()
+            success = True    
     else:
         upform = EditProfileForm(instance=user.get_profile())
         upuserform= EditUserForm(instance=user)
@@ -108,6 +118,7 @@ def profile(request):
         'user':user,
         'upuserform':upuserform,
         'upform':upform,
+        'success':success
         })
 def about(request):
     return render(request, 'home/about.html');

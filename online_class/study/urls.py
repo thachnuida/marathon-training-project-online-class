@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^(?P<class_id>\d+)/studyclass/(?P<pke>\d+)/lesson/$', views.lesson, name='lesson'),
     url(r'^(?P<class_id>\d+)/studyclass/(?P<lesson_id>\d+)/lesson/(?P<pk>\d+)/test/$', views.test, name='test'),
     url(r'^(?P<class_id>\d+)/studyclass/(?P<lesson_id>\d+)/lesson/(?P<test_id>\d+)/result/$', views.result, name='result'),
-    url(r'^question/(?P<test_id>\d+)/$', views.question, name="question")
+    url(r'^question/(?P<test_id>\d+)/$', views.question, name="question"),
+    url(r'^questionback/(?P<test_id>\d+)/$', views.questionback, name="questionback")
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
