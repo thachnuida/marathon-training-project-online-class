@@ -5,80 +5,51 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-    <script src="{% static 'class_management/js/js.js' %}"></script>
-
     <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>  
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}"></script>  
- 
     <link href="{% static 'css/datepicker.css'%}" rel="stylesheet" type="text/css"/>  
 {% endblock %}
 {% block body %}
-<div class="profile">
-  <div class="profile-content"> 
-    <h3>Profile</h3>
-    {% for profile in profiles %}
-      {% if profile.user_image and profile.user_image != "False" %}
-        <img src="{{ profile.user_image.url }}" height=100 width=100 id="image_class"/>
-      {% else %}
-        <img src="{% static 'home/images/account.png' %}" height=100 width=100 id="image_class"/>
-      {% endif %}
-    {% endfor %}  
-      <br>
-    <table id="profile-table">
-      <tbody>
-      {% for profile in profiles2 %}
-      <tr>
-          <th>First name</th>
-          <td>{{profile.first_name}}</td>
-      </tr>
-      <tr>    
-          <th>Last name</th>
-          <td>{{profile.last_name}}</td>
-      </tr>
-      <tr>    
-          <th>Email</th>
-          <td>{{profile.email}}</td>
-      </tr>
-      {% endfor %}
-
-      {% for profile in profiles %}
-      <tr>
-        <th>Birthday</th>
-        <td>{{profile.birthday}}</td>
-      </tr>
-      <tr>  
-        <th>Address</th>
-        <td>{{profile.address}}</td>
-      </tr>
-      <tr>
-        <th>Phone</th>
-        <td>{{profile.phone}}</td>
-      </tr>
-      <tr>
-        <th>Gender</th>
-        {% if profile.gender == 'M' %}
-          <td>Male</td>
-        {% else %}
-          <td>Female</td>
-        {% endif %}
-      </tr>
-      </tbody>
-    </table>
-    {% endfor %}
-    <button class="Edit"> Edit profile</button>
-  </div>  
-  <div id="edit_form_fix" style=" display: none;">
+<div id="profile" class="bg">
+  <div id="edit_form_fix">
     <div class="profile-content-form"> 
-      <h3> Edit Profile</h3>
-      <form id="edit_form" method ="POST" enctype="multipart/form-data">
+      <h3 class="title" style="margin-bottom: 55px;"> Profile Details Of {{user.username }}</h3>
+      <div class="row" style="width: 75%;">
+      <div class="col-md-3">
+            {% if user.userprofile.user_image %}
+                <img src="{{ user.userprofile.user_image.url }}" class="image_student" height="150" width="150"/>
+            {% else %}
+                <img src="{% static 'home/img/account.png' %}" class="image_student" height="150" width="150" />
+            {% endif %}
+        </div>
+      <form id="edit_form" method ="POST" enctype="multipart/form-data" role="form">
             {% csrf_token %}
-            {{ upuserform.as_p }}
-            {{ upform.as_p }}
-      <button class="Edit_profile_button" type="submit" name="submit"/>Edit</button>
-      <button class="Cancel">Cancel</button>    
+            <div class="col-md-5">
+            {% for field in upuserform %}
+              <div class="form-group">
+                {{ field.label_tag }}<br/>{{ field }}
+                <div class="text-danger">
+                  {{ field.errors }}
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+            <div class="col-md-4">
+            {% for field in upform %}
+              <div class="form-group">
+                {{ field.label_tag }}<br/>{{ field }}
+                <div class="text-danger">
+                  {{ field.errors }}
+                </div>
+            </div>
+            {% endfor %}
+             </div>
+         </div>
+         <div class="pull-right" style="margin-right: 330px;">
+        <button class="btn btn-primary" type="submit" name="submit"/>Edit</button>
+        <a class="btn btn-warning" rold="button" href="{% url 'home:home' %}">Cancel</a>  
+    </div>
       </form>
     </div>
   </div>  
@@ -86,12 +57,11 @@
 {% endblock %}   
 
 {% block script %}
+    <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
     $(document).ready(function(){
-        $(".Edit").click(function(){
-         $(".profile-content").empty();
-          $("#edit_form_fix").css("display","block");
-        });
+        $('input').css('margin-left', '20px');
+        $("label[for='id_user_image']").parent().find('a').hide();
       $(".Cancel").click(function(){
         $(".profile-content").show();
         $("#edit_form_fix").css("display","none");
@@ -100,7 +70,6 @@
         $("#edit_form_fix").submit();
         window.location.reload()
       });   
-      $(function() {
         $( "#id_birthday" ).datepicker({
             dateFormat: 'yy-mm-dd',
             yearRange: "-40:+0",
@@ -109,7 +78,6 @@
             showOtherMonths: true,  
             dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         });
-      });  
     });
 </script>
 {% endblock %}

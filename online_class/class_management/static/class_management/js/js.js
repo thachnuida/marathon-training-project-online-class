@@ -6,6 +6,9 @@ $(document).ready(function(){
   $(".image_ques").click(function(){
     $("#id_image_ques").click();
   });
+      $("#id_user_image").change(function() {
+            readURL($("#id_user_image"), $(".image_student"));
+        });
       $("#id_image_class").change(function() {
             readURL($("#id_image_class"), $(".image_class"));
         });
@@ -21,6 +24,7 @@ $(document).ready(function(){
   });
 });
 function readURL(input, image_input) {
+  console.log("hi");
     if (input.prop('files') && input.prop('files')[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {

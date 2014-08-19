@@ -7,9 +7,7 @@ from study import views
 from study.views import *
 urlpatterns = patterns('',
     url(r'^study/$', views.study, name='study'),
-    url(r'^join/$', views.join, name='join'),
     url(r'^(?P<pk>\d+)/studyclass/$', views.studyclass, name='studyclass'),
-    url(r'^(?P<pk>\d+)/joinclass/$', views.joinclass, name='joinclass'),
     url(r'^(?P<class_id>\d+)/studyclass/(?P<pke>\d+)/lesson/$', views.lesson, name='lesson'),
     url(r'^(?P<class_id>\d+)/studyclass/(?P<lesson_id>\d+)/lesson/(?P<pk>\d+)/test/$', views.test, name='test'),
     url(r'^(?P<class_id>\d+)/studyclass/(?P<lesson_id>\d+)/lesson/(?P<test_id>\d+)/result/$', views.result, name='result'),

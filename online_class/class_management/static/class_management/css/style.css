@@ -36,7 +36,7 @@
   height:100px;
    margin-bottom: 5px;
   }
-  .image_class:hover, .image_ques:hover{
+  .image_class:hover, .image_ques:hover, .image_student:hover{
     cursor: pointer;
   }
  
@@ -98,7 +98,7 @@
     background: rgba(255, 255, 255, 0.15);
 }
 
-#ones_classes .title,#student_detail .title, #create_test #testlist .title, #create_lesson .title, #detail_lesson .title, #detail_class .title, #create_class .title, #studentclass .title, #student_process .title{
+.form-register .title,#profile .title, #ones_classes .title,#student_detail .title, #create_test #testlist .title, #create_lesson .title, #detail_lesson .title, #detail_class .title, #create_class .title, #studentclass .title, #student_process .title{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Roboto Condensed',sans-serif;
@@ -444,7 +444,7 @@ margin-right: 15px;
 }
 
 #test_history .fill-green{
-    background: #7fffd4;
+    background: #FFFFFF;
     color: red;
 }
 #test_history .substrate {
@@ -455,25 +455,31 @@ margin-right: 15px;
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-    float: left;
-    min-width: 882px;
+    width: 100%;
     min-height: 485px;
 }
 #test_history .left-blue {
-    border-left: 10px solid #2d7fb9;
     margin: 0 0 20px -10px;
     padding-left: 25px;
 }
+.table_title{
+    height: 30px;
+line-height: 30px;
+background: #2d6ca2;
+margin-left: 17px;
+color: white;
+font-weight: bold;
+}
 .time-period-left-blue:before {
     position: absolute;
-    top: -3px;
-    left: -28px;
-    width: 25px;
-    height: 25px;
-    border: 6px solid #2d7fb9;
+    top: 18px;
+    left: 6px;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #2d7fb9;
     border-radius: 15px;
     background: #fff;
-    content: ' '
+    content: ' ';
 }
 #result #result_table td{
     text-align: center;
@@ -492,8 +498,8 @@ margin-right: 15px;
     font-size: 17px;
 }
 #test_history .muc {
-    width: 278px;
-    float: left;
+    height: 60px;
+    line-height: 60px;
     border-left: 10px solid #2d7fb9;
     padding-left: 10px;
 }
@@ -554,8 +560,6 @@ margin-right: 15px;
     border: 1px solid black;
     padding: 20px;
     text-align: center;
-    float: left;
-    margin-right: 5px;
 }
 
 
@@ -587,28 +591,30 @@ margin-right: 15px;
     margin-right: 50px;
     margin-left: 150px;
 }
-#student_detail #infor table#infor_table td{
+
+#student_detail #infor table#infor_table td, #profile #infor table#infor_table td{
+
     border: 1px solid black;
 }
 
-#student_detail #infor table {
+#student_detail #infor table, #profile #infor table {
     font-size: 18px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#student_detail #infor table#infor_table td:first-child{
+#student_detail #infor table#infor_table td:first-child, #profile #infor table#infor_table td:first-child {
     border: 1px solid black;
     padding-left: 10px;
     padding-right: 10px;
-    background: -webkit-gradient(linear, left top, right top, color-stop(17%,rgba(107,186,112,1)), color-stop(33%,rgba(150,224,130,1)), color-stop(60%,rgba(150,224,130,1)), color-stop(88%,rgba(150,224,130,1)), color-stop(100%,rgba(107,186,112,1))); /* Chrome,Safari4+ */
-    color: #754B1E;
+    color: #504C47;
     font-weight: bold;
 }
-#student_detail #infor table#infor_table td:nth-child(2){
+#student_detail #infor table#infor_table td:nth-child(2), #profile #infor table#infor_table td:nth-child(2){
     border: 1px solid black;
-    padding-left: 50px;
-    padding-right: 50px;
     color: rgb(37, 22, 146);
+    height: 33px;
+    width: 300px;
+    padding-left: 40px;
 }
 #student_detail #infor table#class_list_table{
     margin: 0px auto;
@@ -629,4 +635,27 @@ margin-right: 15px;
     color: red;
     font-size: 28px;
     font-weight: bold;
+}
+#test_history table{
+    width: 100%;
+}
+#test_history table th:first-child{
+    width: 4%;
+}
+#test_history table th{
+    width: 24%;
+    text-align: center;
+}
+#test_history table td:first-child{
+    width: 4%;
+    background: #2d6ca2;
+}
+#test_history table td{
+    width: 24%;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    border-bottom: 2px solid #2d6ca2;
+    color: #313F06;
+    font-size: 15px;
 }

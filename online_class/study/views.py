@@ -38,32 +38,6 @@ def study(request):
     return render(request, "study/study.html", {'all_class':all_class})
 
 @login_required(login_url='/home/')
-def studyclass(request,pk):
-    join_class = get_object_or_404(Class,pk=pk)
-    all_lesson = Lesson.objects.filter(Class=pk)
-    paginator = Paginator(all_lesson, 6) # Show 6 contacts per page
-    page = request.GET.get('page')
-    try:
-        all_lesson = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        all_lesson = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        all_lesson = paginator.page(paginator.num_pages)
-
-    userusing = request.user
-    joined = True
-    if request.method == 'POST':
-        join_class.students_in_class.remove(userusing)
-        joined = False
-    return render(request, "study/studyclass.html" ,{
-        'all_lesson':all_lesson,
-        'join_class':join_class,
-        'joined':joined
-        })
-
-@login_required(login_url='/home/')
 def lesson(request,class_id,pke):
     chosen_class = get_object_or_404(Class, pk=class_id)
     chosen_lesson = get_object_or_404(Lesson, pk=pke)
@@ -165,50 +139,41 @@ def result(request,class_id,lesson_id,test_id):
         'answer_user':answer_user
         })
 
-@login_required(login_url='/home/')
-def join(request):    
-    all_class1 = Class.objects.all()
-    userusing = request.user
-    all_class=all_class1.exclude(students_in_class=userusing)
 
-    paginator = Paginator(all_class, 5) # Show 6 contacts per page
-    page = request.GET.get('page')
-    try:
-        all_class = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        all_class = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        all_class = paginator.page(paginator.num_pages)
-    # chosen_class.students_in_class.add(user_using)
-    return render(request, "study/join.html", {'all_class':all_class})
-
-@login_required(login_url='/home/')
-def joinclass(request,pk):
+def studyclass(request,pk):
     join_class = get_object_or_404(Class,pk=pk)
     all_lesson = Lesson.objects.filter(Class=pk)
-    user_using = request.user
-    check=False
+    paginator = Paginator(all_lesson, 6) # Show 6 contacts per page
+    page = request.GET.get('page')
+    try:
+        all_lesson = paginator.page(page)
+    except PageNotAnInteger:
+        all_lesson = paginator.page(1)
+    except EmptyPage:
+        all_lesson = paginator.page(paginator.num_pages)
+
+    leave=False
     joined = True
-
-    student_list = join_class.students_in_class.all()
-    print student_list
-    for student in student_list:
-        if student == user_using:
-            check=True
-            break
-        else:
-            print "sai"    
-    
-    if request.method == 'POST':
-        join_class.students_in_class.add(user_using)
+    if request.user.is_anonymous():
         joined = False
+    else:
+        try:
+            Class.objects.get(pk=pk, students_in_class=request.user)
+            joined=True
+        except: 
+            joined = False
+    if request.method == 'POST':
+        if "join" in request.POST:
+            join_class.students_in_class.add(request.user)
+            joined = True
+        if "leave" in request.POST:
+            join_class.students_in_class.remove(request.user)
+            joined = False
+            leave = True
 
-
-    return render(request, "study/joinclass.html", {
+    return render(request, "study/studyclass.html", {
         'join_class':join_class,
         'all_lesson':all_lesson,
         'joined':joined,
-        'check':check
+        'leave':leave
         })    

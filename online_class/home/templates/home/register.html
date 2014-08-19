@@ -2,36 +2,46 @@
 {% load url from future %}
 {% load staticfiles %}
 {% block title %} Online Class {% endblock %}
-{% block body %}
-<div class="form-register">
-    <h1>Register with Online Class</h1>
-    {% if registered %}
-    <h2><strong>Thank for regiter!</strong></h2>
-    <a href="{% url 'home:home' %}"> Return to homepage</a></br>
-    {% else %}
-    <form id="user_form" class="form-register2" method ="POST" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-    <button type="submit" name="submit"/>Register</button>
-    </form>
-    {% endif %}
-</div>    
-
-{% endblock %}
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-    <script src="{% static 'class_management/js/js.js' %}"></script>
-
     <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>  
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.8.18.custom.min.js' %}"></script>  
-    <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css"/>  
     <link href="{% static 'css/datepicker.css'%}" rel="stylesheet" type="text/css"/>  
+{% endblock %}
+{% block body %}
+<div class="form-register bg">
+    <h1 class="title">Register with Online Class</h1>
+    <form id="user_form" class="form-register2" method ="POST" action="" enctype="multipart/form-data" role="form">
+                 {% csrf_token %}
+         {% for field in user_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}<br/>{{ field }}
+                        <div class="text-danger">
+                        {{ field.errors }}
+                        </div>
+                    </div>
+               {% endfor %}
+               {% for field in profile_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}<br/>{{ field }}
+                        <div class="text-danger">
+                        {{ field.errors }}
+                        </div>
+                    </div>
+               {% endfor %}
+                <img src="{% static 'home/img/account.png' %}" class="image_student" height="100" width="100" style="margin-left: 10%;"/>
+                <br/>
+                <br/>
+                <br/>
+    <button type="submit" name="submit" class="btn btn-primary"/>Register</button>
+    </form>
+</div>    
 
+{% endblock %}
+
+{% block script %}
+ <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
     $(document).ready(function(){
     $(function() {

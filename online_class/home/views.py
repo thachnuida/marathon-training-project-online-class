@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from class_management.models import *
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 # Create your views here.
 
 def register(request):
@@ -30,6 +31,7 @@ def register(request):
             user = authenticate(username=request.POST['username'], password=request.POST['password'])
             if user.is_active:
                 auth_login(request, user)
+                return HttpResponseRedirect(reverse('home:home'))
         else:
             print user_form.errors, profile_form.errors
     else:
@@ -39,26 +41,8 @@ def register(request):
             'home/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
-def login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        print user
-        if user:
-            if user.is_active:
-                auth_login(request, user)
-                return render(request, "home/home.html")
-            else:
-                error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
-        else:
-            error = '''Username and password didn't matched, if you forgot your password?'''
-        return render(request, "home/home.html", {'error': error })
-    if request.user.is_anonymous():
-        return render(request, "home/home.html")
-    else :
-        return render(request, "home/home.html")
-
+from django.utils import simplejson
+from django.core import serializers
 def home(request):
     all_class = Class.objects.all()
     paginator = Paginator(all_class, 8) # Show 8 contacts per page
@@ -66,64 +50,65 @@ def home(request):
     try:
         all_class = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         all_class = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         all_class = paginator.page(paginator.num_pages)
+
+    recently_class = Class.objects.order_by("create_date")[:12]
+    top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                auth_login(request, user)
-                recently_class = Class.objects.order_by("create_date")[:12]
-                top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:14]
-                return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
+        if request.is_ajax():
+            print "ajax"
+            search_word = request.POST['search_word']
+            all_class = Class.objects.filter(Q(class_name__icontains=search_word) | Q(teacher__username__icontains=search_word))
+            all_class = serializers.serialize('json', all_class )
+            all_class = simplejson.loads( all_class )
+            all_class = simplejson.dumps( {'all_class':all_class} )
+            return HttpResponse( all_class, mimetype='application/json' )
+        if "login" in request.POST:
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    auth_login(request, user)
+                    recently_class = Class.objects.order_by("create_date")[:12]
+                    top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:14]
+                    return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
+                else:
+                    error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
             else:
-                error = 'Your account has been disabled. We apologize for any inconvenience! If this is a mistake please contact our <a href="mailto:%s">support</a>.' % settings.SUPPORT_EMAIL
-        else:
-            error = '''Username and password didn't matched, if you forgot your password?'''
-        return render(request, "home/home.html", {'error': error })
-    if request.user.is_anonymous():
-        recently_class = Class.objects.order_by("create_date")[:12]
-        top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
-        return render(request, "home/home.html", {'all_class': all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
-    else :
-        recently_class = Class.objects.order_by("create_date")[:12]
-        top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
-        return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class})
+                error = '''Username and password didn't matched, if you forgot your password?'''
+            return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class,'error': error })
+
+    
+
+    return render(request, "home/home.html", {'all_class':all_class, 'recently_class':recently_class, 'top_student_class':top_student_class })
  
 def profile(request):
-    user_using=request.user
-    profiles = UserProfile.objects.filter(user=user_using)
-    profiles2  =User.objects.filter(pk=user_using.id)
-    user = User.objects.get(pk=request.user.id)
+    user = request.user
     if request.method == 'POST':
         upform = EditProfileForm(request.POST, instance=user.get_profile())
-        upuserform= EditUserForm(request.POST,instance=user_using)
+        upuserform= EditUserForm(request.POST,instance=user)
         if upform.is_valid() and upuserform.is_valid():
             user = upuserform.save()
             up = upform.save(commit=False)
             up.user = request.user
-            # profile.user_image=profile_form.cleaned_data['user_image'],
+            if  upuserform.cleaned_data['password'] != "":
+                user = User.objects.get(pk=request.user.pk)
+                user.set_password(upuserform.cleaned_data['password'])
+                user.save()
             if 'user_image' in request.FILES:
                 up.user_image = request.FILES['user_image']
             up.save()    
     else:
         upform = EditProfileForm(instance=user.get_profile())
-        upuserform= EditUserForm(instance=user_using)
+        upuserform= EditUserForm(instance=user)
     return render(request,'home/profile.html',{
-        'profiles':profiles,
-        'profiles2':profiles2,
+        'user':user,
         'upuserform':upuserform,
         'upform':upform,
         })
 def about(request):
     return render(request, 'home/about.html');
     
-def search(request):
-    if request.method == 'GET':
-        print request.GET['search']
-    return render(request, 'home/home.html');

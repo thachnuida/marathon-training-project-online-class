@@ -4,9 +4,10 @@
 {% block title %} Online Class {% endblock %}
 {% block link %}
     {{ block.super }}
+     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
 {% endblock %}
 {% block body %}
-    <div id="about" style="margin-left: -15px;">
+    <div id="about" style="margin-left: -15px;" class="bg">
         <hr class="header-after"/>
        <h1 class="title">Our Mission</h1>
        <hr class="header-after"/>

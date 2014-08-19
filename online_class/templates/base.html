@@ -69,9 +69,9 @@
                 <form class="form-horizontal" role="form" id="login_form" method="post" action="{% url 'home:home' %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ next_url }}"/>
-                    <ul>
+                    <ul class="list-unstyled">
                       {% if error %}
-                      <li class="error-message">
+                      <li class="text-danger" style="font-size: 18px;margin-left: 20px;}">
                           {{ error|safe }}
                       </li>
                       {% endif %}
@@ -81,7 +81,7 @@
                     <input id="id_password" class="input" name="password" type="password" placeholder="Password" />
                     <br/>
                     <div class="pull-right" style="margin-right: 15px;">
-                    <button class="btn btn-primary" role="button" type="submit" style="margin-right: 20px;">LOG IN</button>
+                    <button class="btn btn-primary" role="button" type="submit" style="margin-right: 20px;" name="login">LOG IN</button>
                     <a class="btn btn-primary" role="button" href="{% url 'home:register' %}" style="margin-right: 20px;">SIGN UP</a>
                   </div>
                 </form>  

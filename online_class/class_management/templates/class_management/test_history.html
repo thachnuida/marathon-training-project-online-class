@@ -7,9 +7,9 @@
 	<link href="{% static 'class_management/css/style.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-<div class="row">
-	<div id="test_history" class="bg" >
-		<div id="student" >
+<div id="test_history" class="bg" >
+		<div class="row">
+		<div id="student" class="col-md-3">
 			{% if user.userprofile.user_image %}
 				<img src="{{ user.userprofile.user_image.url }}"/>
 			{% else %}
@@ -33,21 +33,25 @@
 				{% else %}
 				<div class="substrate">
 					<div class="left-blue">
+						<table>
+							<tr class="table_title">
+								<th></th>
+								<th>Your Score</th>
+								<th>Doing Exercise Time</th>
+								<th>Lesson Name</th>
+								<th>Test Name</th>
+							</tr>
 						{% for test in test_list %}
-						<div class="muc">
-							<div class="time-period-left-blue"></div>
-							<h4>
-								Score: {{ test.score }}/{{ test.question_num }}	<span class="time-period-right-blue">{{ test.test_date|date:"H:i d/m/Y" }}</span>
-							</h4>
-							<ul class="main-info-list">
-								<li>Lesson <span>{{ test.test.lesson}}</span></li>
-								<li>Exercise<span>{{ test.test }}</span>
-								</li>
-							</ul>
-						</div>
+						<tr>
+							<td class="time-period-left-blue"></td>
+							<td>Score: {{ test.score }}/{{ test.question_num }}</td>
+							<td>{{ test.test_date|date:"H:i d/m/Y" }}</td>
+							<td>{{ test.test.lesson}}</td>
+							<td>{{ test.test }}</td>
 						{% endfor %}
-						
+						</table>
 					</div>
+
 					{% if test_list.paginator.num_pages > 1 %}
 						<div class="pagination">
 						    <span class="step-links">

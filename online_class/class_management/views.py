@@ -320,7 +320,7 @@ def test_history(request, user_id, class_id):
             if request.POST['option'] == 'Time':
                 option="Time"
                 test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question')).order_by('test_date')
-            paginator = Paginator(test_list, 12) # Show 30 per page
+            paginator = Paginator(test_list, 10) # Show 30 per page
             page = request.GET.get('page')
             try:
                 test_list = paginator.page(page)
@@ -330,20 +330,24 @@ def test_history(request, user_id, class_id):
             except EmptyPage:
                 # If page is out of range (e.g. 9999), deliver last page of results.
                 test_list = paginator.page(paginator.num_pages)
-            html = ""
+            html = "<table>"
+            html = html + '<tr class="table_title">'
+            html = html + '<th></th>'
+            html = html + '<th>Your Score</th>'
+            html = html + '<th>Doing Exercise Time</th>'
+            html = html + '<th>Lesson Name</th>'
+            html = html + '<th>Test Name</th>'
+            html = html + '</tr>'
             for test in test_list:
                 df = DateFormat(test.test_date)
-                html = html + "<div class='muc'>"
-                html = html + "<div class='time-period-left-blue'></div>"
-                html = html + "<h4>"
-                html = html + "Score: "+ str(test.score) +"/"+ str(test.question_num)+"<span class='time-period-right-blue'>"+ str(df.format('H:i d/m/Y'))+"</span>"
-                html = html + "</h4>"
-                html = html + "<ul class='main-info-list'>"
-                html = html + "<li>Lesson <span>"+ str(test.test.lesson)+"</span></li>"
-                html = html + "<li>Exercise<span>"+ str(test.test) +"</span>"
-                html = html + "</li>"
-                html = html + "</ul>"
-                html = html + "</div>"
+                html = html + "<tr>"
+                html = html + "<td class='time-period-left-blue'></td>"
+                html = html + "<td>Score: "+ str(test.score) +"/"+ str(test.question_num)+ "</td>"
+                html = html + "<td>"+ str(df.format('H:i d/m/Y'))+"</td>"
+                html = html + "<td>"+ str(test.test.lesson)+"</td>"
+                html = html + "<td>"+ str(test.test)+"</td>"
+                html = html + "</tr>"
+            html = html +"</table>"
             return HttpResponse(html)
     if option == 'Default':
         test_list = Score.objects.filter(user=user_id, test__lesson__Class=class_id).annotate(question_num=Count('test__question'))

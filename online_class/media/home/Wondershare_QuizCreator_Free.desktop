@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Wondershare QuizCreator Free
+Exec=env WINEPREFIX="/home/thuyen/.wine" wine C:\\\\windows\\\\command\\\\start.exe /Unix /home/thuyen/.wine/dosdevices/c:/users/Public/Desktop/Wondershare\\ QuizCreator\\ Free.lnk
+Type=Application
+StartupNotify=true
+Path=/home/thuyen/.wine/dosdevices/c:/Program Files (x86)/Wondershare/QuizCreator Free
+Icon=04D3_QuizCreator.0
