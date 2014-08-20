@@ -142,7 +142,6 @@ def questionback(request, test_id):
             lenght_question= len(all_question2)   
             question_id = request.POST['question_id']
             if 'answer' in request.POST:
-                print "vao chon"
                 answer_user = request.POST['answer']
                 if len(array_user_choose) >= current_order:
                         array_user_choose[current_order - 1] = answer_user  
@@ -197,6 +196,13 @@ def result(request,class_id,lesson_id,test_id):
 def studyclass(request,pk):
     join_class = get_object_or_404(Class,pk=pk)
     all_lesson = Lesson.objects.filter(Class=pk)
+    all_student= len(join_class.students_in_class.all())
+    quantity=Class.objects.filter(pk=pk).values_list('quantity', flat=True)
+
+    canjoin=True
+    if all_student>=quantity[0]:
+        canjoin=False
+
     paginator = Paginator(all_lesson, 6) # Show 6 contacts per page
     page = request.GET.get('page')
     try:
@@ -229,5 +235,6 @@ def studyclass(request,pk):
         'join_class':join_class,
         'all_lesson':all_lesson,
         'joined':joined,
-        'leave':leave
+        'leave':leave,
+        'canjoin':canjoin
         })    
