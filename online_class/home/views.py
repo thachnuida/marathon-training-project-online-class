@@ -44,7 +44,7 @@ def register(request):
 from django.utils import simplejson
 from django.core import serializers
 def home(request):
-    all_class = Class.objects.all()
+    all_class = Class.objects.filter(enable="T")
     paginator = Paginator(all_class, 8) # Show 8 contacts per page
     page = request.GET.get('page')
     try:
@@ -54,13 +54,12 @@ def home(request):
     except EmptyPage:
         all_class = paginator.page(paginator.num_pages)
 
-    recently_class = Class.objects.order_by("create_date")[:12]
-    top_student_class = Class.objects.annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
+    recently_class = Class.objects.filter(enable="T").order_by("create_date")[:12]
+    top_student_class = Class.objects.filter(enable="T").annotate(num_students=Count('students_in_class')).order_by("-num_students")[:13]
     if request.method == 'POST':
         if request.is_ajax():
-            print "ajax"
             search_word = request.POST['search_word']
-            all_class = Class.objects.filter(Q(class_name__icontains=search_word) | Q(teacher__username__icontains=search_word))
+            all_class = Class.objects.filter(Q(enable="T"), Q(class_name__icontains=search_word) | Q(teacher__username__icontains=search_word))
             teacher = []
             for each_class in all_class:
                 teacher.append(each_class.teacher)

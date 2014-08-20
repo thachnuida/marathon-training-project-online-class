@@ -22,8 +22,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='/home/')
 def study(request):
     userusing = request.user
-    user=User.objects.filter(username="student1")
-    class1=Class.objects.filter(students_in_class=user)
     all_class = Class.objects.filter(students_in_class=userusing)
     paginator = Paginator(all_class, 10) # Show 10 contacts per page
     page = request.GET.get('page')
@@ -192,6 +190,21 @@ def result(request,class_id,lesson_id,test_id):
         'answer_user':array_user_choose
         })
 
+def leave_class(request, class_id):
+    join_class = Class.objects.get(pk=class_id)
+    join_class.students_in_class.remove(request.user)
+    all_class = Class.objects.filter(students_in_class=request.user)
+    paginator = Paginator(all_class, 10) # Show 10 contacts per page
+    page = request.GET.get('page')
+    try:
+        all_class = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        all_class = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        all_class = paginator.page(paginator.num_pages)
+    return render(request, "study/study.html", {'all_class':all_class})
 
 def studyclass(request,pk):
     join_class = get_object_or_404(Class,pk=pk)

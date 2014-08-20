@@ -17,6 +17,12 @@
     margin-left: -15px;
     box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
 }
+.block_class{
+    background: url('/static/class_management/images/block.png');
+    background-position: top left;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+}
 .pagination{
     float: right;
     margin-right: 100px;

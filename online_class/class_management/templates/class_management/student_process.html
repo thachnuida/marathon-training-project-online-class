@@ -29,11 +29,19 @@
               </tr>
               {% for Class in class_list %}
                   <tr class="info">
+                    {% if Class.enable == 'T' %}
                       {% if Class.image_class and Class.image_class != "False" %} 
                           <td><img src="{{ Class.image_class.url }}" height=80 width=80/></td>
                           {% else %} 
                           <td><img src="{% static 'class_management/images/classroom.jpg' %}" height=80 width=80/></td>
                       {% endif %} 
+                    {% else %}
+                      {% if Class.image_class and Class.image_class != "False" %} 
+                          <td class="block_class"><img src="{{ Class.image_class.url }}" height=80 width=80/></td>
+                          {% else %} 
+                          <td class="block_class"><img src="{% static 'class_management/images/classroom.jpg' %}" height=80 width=80/></td>
+                      {% endif %} 
+                    {% endif %}
                           <td class="student_name">{{ Class.class_name }}</td>
                           <td>{{ Class.teacher.username }}</td>
                           <td style="margin-right: 10px;">
@@ -77,7 +85,7 @@
       var graph = document.getElementsByClassName("testchart");
       for(var i = 0; i< len; i++){
         if (chart[i][4] === 0){
-      graph[i].innerHTML = "Class Haven't Any Test";
+      graph[i].innerHTML = "Class Hasn't Any Test";
        graph[i].style.height = "";
     }else{
         basic_pie(graph[i], chart[i][0], chart[i][1], chart[i][2], chart[i][3] );

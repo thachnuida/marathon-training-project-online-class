@@ -10,12 +10,12 @@
 <div id="test_history" class="bg" >
 		<div class="row">
 		<div id="student" class="col-md-3">
-			{% if user.userprofile.user_image %}
-				<img src="{{ user.userprofile.user_image.url }}"/>
+			{% if student.userprofile.user_image %}
+				<img src="{{ student.userprofile.user_image.url }}"/>
 			{% else %}
 				<img src="{% static 'home/img/account.png' %}"/>
 			{% endif %}
-			<div style="margin-top: 10px; color: rgb(95, 17, 17);" class="hello">{{ user.username }}</div>
+			<div style="margin-top: 10px; color: rgb(95, 17, 17);" class="hello">{{ student.username }}</div>
 			<div id="sort">
 				<div class="title">Sort</div>
 				<div id="sort_option">
@@ -86,7 +86,7 @@
 		$(this).css('background', 'rgb(223, 217, 217)');
 		$.ajax({
     		type:"POST",
-    		url : "{% url 'classes:testhistory' user.pk chosen_class.pk %}",
+    		url : "{% url 'classes:testhistory' student.pk chosen_class.pk %}",
     		dataType: "html",
     		data : { 
     			csrfmiddlewaretoken : '{{ csrf_token }}',

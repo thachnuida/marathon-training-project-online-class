@@ -31,22 +31,39 @@
 				
     			<input type="submit" value="UPDATE CLASS" class="btn btn-success pull-right"/>
 			</form>
-			<button class="btn btn-danger btn-block delete_btn" data-toggle="modal" data-target="#myModal">DELETE CLASS</button>
+			{% if Chose_class.enable == 'T' %}
+				<button class="btn btn-danger btn-block delete_btn" data-toggle="modal" data-target="#myModal">DISABLE CLASS</button>
+			{% else %}
+				<button class="btn btn-danger btn-block delete_btn" data-toggle="modal" data-target="#myModal">ENABLE CLASS</button>
+			{% endif %}
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			        <h4 class="modal-title" id="myModalLabel">DELETE CLASS</h4>
-			      </div>
-			      <div class="modal-body">
-			        Everything relating to This Class will be deleted too!<br/>Are you sure you want to delete This Class?
+			        {% if Chose_class.enable == 'T' %}
+			        <h4 class="modal-title" id="myModalLabel">DISABLE CLASS</h4>
+			         <div class="modal-body">
+			        Your Student in This Class Can't Attend Any Lesson!<br/>Are you sure you want to Disable This Class?
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <a class="btn btn-danger" href="{% url 'classes:deleteclass' Chose_class.id %}" role="button">Delete Class</a>
+			        <a class="btn btn-danger" href="{% url 'classes:disableclass' Chose_class.id %}" role="button">Disable Class</a>
 			      </div>
+			        {% else %}
+			        <h4 class="modal-title" id="myModalLabel">ENABLE CLASS</h4>
+			         <div class="modal-body">
+			        Your Student in This Class Can Attend Any Lesson Right Now!<br/>Are you sure you want to Enable This Class?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <a class="btn btn-danger" href="{% url 'classes:disableclass' Chose_class.id %}" role="button">Enable Class</a>
+			      </div>
+			        {% endif %}
+			      </div>
+
+			     
 			    </div>
 			  </div>
 			</div>
@@ -64,7 +81,6 @@
 					<a class="panel panel-primary lesson_wrapper" href="{% url 'classes:detaillesson' Chose_class.id lesson.id %}">
   						<div class="panel-heading">{{ lesson.lesson_name }}</div>
   						<div class="panel-body">
-  							<div class="shortcut">{{ lesson.description|safe|lower|slice:":20" }}</div>
     						<p class="date">Create Date {{ lesson.create_date|date:"H:i d/m/Y" }}</p>
 	    					<p class="date">Update Date {{ lesson.latest_update_date|date:"H:i d/m/Y" }}</p>
   						</div>

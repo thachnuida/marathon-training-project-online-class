@@ -15,7 +15,11 @@
                     You Aren't Having Any Class. Let's Create Class!</div>
 		{% else %}
 			{% for class in ones_classes %}
-				<div class="class_in_list">
+				{% if class.enable == 'T' %}
+					<div class="class_in_list">
+				{% else %}
+					<div class="class_in_list block_class">
+				{% endif %}
 					{% if class.image_class and class.image_class != "False" %}
 	    				<img src="{{ class.image_class.url }}" height=200 width=200/>
 					{% else %}

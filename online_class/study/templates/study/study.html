@@ -6,7 +6,6 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
@@ -19,7 +18,11 @@
     <div class="content">
       {% for class in all_class %}
           <div class="classes">
+            {% if class.enable == 'T' %}
             <div class="row">
+            {% else %}
+           <div class="row" style="opacity: 0.65;">
+            {% endif %}
               <div class="image_class col-md-5">
                 {% if class.image_class and class.image_class != "False" %}
                   <img src="{{ class.image_class.url }}" height=150 width=150/><br>
@@ -35,9 +38,16 @@
               <div class="date">Created Date: {{ class.create_date }}</div>
             </div>
             <div class="col-md-1">
+              {% if class.enable = 'T' %}
               <a href="{% url 'study:studyclass' class.id %}" role="button" class="btn btn-success">Resume Learn</a>
-            </div>
+              </div>
           </div>
+              {% else %}
+                 <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
+                   </div>
+                 </div>
+              <a href="{% url 'study:leaveclass' class.id %}" role="button" class="btn btn-success pull-right" style="opacity: 1; margin-right: 4%;">Leave Class</a>
+              {% endif %}
         </div>
       {% endfor %}
         {%  if all_class.paginator.num_pages > 1 %}

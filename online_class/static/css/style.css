@@ -177,8 +177,8 @@ a:hover{
     height: 245px;
 }
 .menu_bar img{
-    margin-left: 8px;
-    margin-top: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
     float: left;
     margin-right: 5px;
 }
@@ -208,6 +208,7 @@ a:hover{
     overflow: hidden;
     padding-bottom: 10px;
     margin-left: -15px;
+    margin-top: 15px;
 }
 #footer h4{
    color: white;
@@ -300,6 +301,7 @@ display: block;
     border-bottom: 2px solid #ccc;
     margin-bottom: 15px;
     padding-bottom: 15px;
+    overflow: hidden;
 }
 #studylist .classes .classes-header{
     display: block;
@@ -371,10 +373,10 @@ display: block;
     margin-top: 20px;
 }
 #studyclass ul li{
-    width: 89%;
+    width: 75%;
     margin: 0px auto;
     color: #473E47;
-    font: 26px/1 Helvetica, Verdana, sans-serif;
+    font: 25px/1 Helvetica, Verdana, sans-serif;
     margin-top: 1px;
     border-bottom: 3px solid #ccc;
     padding: 20px;
@@ -534,14 +536,14 @@ display: block;
 }
 .error_test_form{
     color: white;
-position: absolute;
-background: #DF504E;
-padding: 6px;
-padding-bottom: 0px;
-border-radius: 15px;
-top: 10%;
-left: -37%;
-display: none;
+	position: absolute;
+	background: #DF504E;
+	padding: 6px;
+	padding-bottom: 0px;
+	border-radius: 15px;
+	top: 10%;
+	left: -37%;
+	display: none;
 }
 .popular h4{
     color: #061955;
@@ -576,6 +578,7 @@ display: none;
     display: inline-block;
 }
 .header-image-profile{
+    border-left: 5px solid green;
     display: inline-block;
     float: left;
     margin-left: 15px;

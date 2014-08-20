@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Class(models.Model):
+    Enable_Check = (
+    ('T', 'Enable'),
+    ('F', 'Disable'),
+    )
     class_name = models.CharField(max_length=100)
     teacher = models.ForeignKey(User)
     students_in_class = models.ManyToManyField(User, related_name="students_in_class", null=True, blank=True)
@@ -12,6 +16,7 @@ class Class(models.Model):
     quantity = models.IntegerField()
     image_class = models.ImageField(upload_to="class_management", null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
+    enable= models.CharField(max_length=1,choices=Enable_Check)
 
     def __unicode__(self):
         return self.class_name
