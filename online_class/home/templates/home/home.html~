@@ -198,7 +198,7 @@
                                 });
                         }
             $(".classes").html(html);
-            $(".pagination").hide();
+            $(".pagination").html("");
 }
         });
         return false;
