@@ -27,12 +27,17 @@
     <div class="test">
       <h2> EXERCISES IN THIS LESSON </h2>
     {% for test in all_test %}  
+
+      {% if chosen_class.enable = 'T' %}
       <a class="panel panel-primary one_test" href="{% url 'study:test' chosen_class.pk chosen_lesson.id test.id %}">
-              <div class="panel-heading">{{test.test_name}}<span style="float:right;"><span class="none_score" >{% get_score user test %}</span><span>/{{ test.question_set.count }}</span></span></div>
-              <div class="panel-body">
-                <p class="date">Create Date {{ test.create_date|date:"H:i d/m/Y" }}</p>
-                <p class="date">Update Date {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
-              </div>
+      {% else %}
+         <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
+      {% endif %}
+        <div class="panel-heading">{{test.test_name}}<span style="float:right;"><span class="none_score" >{% get_score user test %}</span><span>/{{ test.question_set.count }}</span></span></div>
+        <div class="panel-body">
+          <p class="date">Create Date {{ test.create_date|date:"H:i d/m/Y" }}</p>
+          <p class="date">Update Date {{ test.latest_update_date|date:"H:i d/m/Y" }}</p>
+        </div>
           </a>
     {% endfor %}
     </div>

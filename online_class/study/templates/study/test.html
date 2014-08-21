@@ -10,6 +10,8 @@
 {% block body %}
 <div id="test" class="bg" style="position: relative;"> 
   <h2>{{ chosen_test.test_name }}</h2>
+
+  {% if chosen_class.enable = 'T' %}
   {% if none_question %}
     <div class="alert alert-danger text-center" role="alert">Ooh! This Test Haven't Update Any Question.<br/> Please Come Back Later!</div>
   {% else %}
@@ -42,6 +44,11 @@
   </form>
 </div>
 {% endif %}
+{% else %}
+     <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
+     <p>The class was disable</p>
+  {% endif %}
+
 </div> 
 {% endblock %}
 {% block script %}
