@@ -12,8 +12,9 @@
     <div id="create_class">
         <div id="add_class_form" class="bg">
             <h1 class="title">CREATE CLASS</h1>
-            <img class ="pull-right image_class" src="/media/test/img-icon.png" alt="Preview"/>
-            <div id="img_error" class="text-danger"></div>
+            <div class="row">
+                <div class="col-xs-6">
+           
             <form enctype="multipart/form-data" method="post" action="" role="form">
 	           {% csrf_token %}
 	           {% for field in form %}
@@ -25,9 +26,17 @@
                         {{ field.placeholder }}
                     </div>
 	           {% endfor %}
-               <div class="pull-right">
+           </div>
+           <div class="col-xs-4 col-xs-offset-2">
+                <img class ="image_class" src="/media/test/img-icon.png" alt="Preview" height='150' width='150'/>
+            <div id="img_error" class="text-danger"></div>
+        </div>
+    </div>
+               <div class="row">
+                <div class="col-xs-8 col-xs-offset-5">
                     <a class="btn btn-default" href="{% url 'classes:classlist' %}" role="button">Cancel</a>
-                <button type="submit" class="btn btn-primary ">Create Class</button>
+                    <button type="submit" class="btn btn-primary ">Create Class</button>
+            </div>
            </div>
             </form>
         </div>

@@ -13,12 +13,14 @@
        <div class="alert alert-info nonhaving" role="alert">
                     Any Student Haven't Joined This Class</div>
         {% else %}
-          <div id="bonus">
+        <div class="row">
+          <div id="bonus" class="col-xs-3 col-xs-offset-7">
               <div><div id="goodscore"></div><span>Good Mark (Mark >= 70%)</span></div>
               <div><div id="mediumscore"></div><span>Medium Mark ( 50% &lt= Mark &lt 70%)</span></div>
               <div><div id="badscore"></div><span>Bad Mark (Mark &lt 50%)</span></div>
               <div><div id="nonscore"></div><span>Haven't Done</span></div>
           </div>
+        </div>
           <table id="student_score_detail">
               <tr>
                   <th>Student Image</th>

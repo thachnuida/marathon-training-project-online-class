@@ -13,9 +13,9 @@
 		<div id="add_class_form" class="well">
 			<h1 class="title">CLASS DETAIL</h1>
 			{% if Chose_class.image_class and Chose_class.image_class != "False" %}
-				<img src="{{ Chose_class.image_class.url }}" class ="pull-right image_class"/>
+				<img src="{{ Chose_class.image_class.url }}" class ="pull-right image_class" height="150" width="150"/>
 			{% else %}
-				<img src="{% static 'class_management/images/classroom.jpg' %}" class ="pull-right image_class"/>
+				<img src="{% static 'class_management/images/classroom.jpg' %}" class ="pull-right image_class" height="150" width="150"/>
 			{% endif %}
 			<div id="img_error"  class="text-danger"></div>
 			<form enctype="multipart/form-data" method="post" action="" role="form">

@@ -26,8 +26,8 @@
     <input class="order" type="hidden" name="number" value ="{{ one_question.order_test}}"/>
     <input class="answer_user" type="hidden" name="answer_user"/>
     <div class="title_question">Question<span class="numbertest">{{one_question.order_test}}</span> of {{ chosen_test.question_set.count }}</div>
-    <div class="row">
-    <div class="col-md-5 col-md-offset-1">
+    <div class="row" style="word-wrap: break-word;">
+    <div class="col-xs-7 col-xs-offset-1">
       <div class="question_m">The Question</span>: <span class="question">{{ one_question.question}}</span></div>
     
       <input class="1" type="radio" name="answer" value="A" /><span class="span1">{{ one_question.answerA }} </span><br>
@@ -35,11 +35,11 @@
       <input class="3" type="radio" name="answer" value="C" /><span class="span3">{{ one_question.answerC }}</span><br>
       <input class="4" type="radio" name="answer" value="D" /><span class="span4">{{ one_question.answerD }}</span><br>
     </div>
-  <div class="col-md-5 col-md-offset-1">
+  <div class="col-xs-3 col-xs-offset-1">
   {% if one_question.image_ques.url and one_question.image_ques != False %}
-    <img src="{{ one_question.image_ques.url }}" height="170" width="170"class="pull-right image_ques_test" style="margin-right: 250px;"/>
+    <img src="{{ one_question.image_ques.url }}" height="170" width="170"class="image_ques_test"/>
     {% else %}
-    <img src="#" height="0" width="0"class="pull-right image_ques_test" style="margin-right: 250px;"/>
+    <img src="#" height="0" width="0"class="image_ques_test"/>
     {% endif %}
   </div>
 </div>

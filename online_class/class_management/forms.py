@@ -5,10 +5,10 @@ from django.forms import ModelForm, CharField, TextInput
 
 
 class CreateClass(forms.Form):
-    class_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '30','title':'Max length 100', 'placeholder': 'Ex: Java,...'}))
-    quantity = forms.IntegerField(widget=forms.TextInput(attrs={'size': '30','title':'Only Number', 'placeholder': 'Ex: 50,...'}))
+    class_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '28','title':'Max length 100', 'placeholder': 'Ex: Java,...'}))
+    quantity = forms.IntegerField(widget=forms.TextInput(attrs={'size': '28','title':'Only Number', 'placeholder': 'Ex: 50,...'}))
     image_class = forms.ImageField(required=False)
-    description = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
+    description = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
 
     def __init__(self, *args, **kwargs):
         class_details = kwargs.pop('class_details', None)
@@ -24,7 +24,7 @@ class CreateClass(forms.Form):
 class CreateLesson(forms.Form):
     lesson_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '30','title':'Max length 100', 'placeholder': 'Ex: Swing,...'}))
     video_link = forms.CharField(widget=forms.TextInput(attrs={'size': '30','title':'Video Link', 'placeholder': 'Ex: //www.youtube.com/embed/H1Tsjn40mg0'}))
-    description = forms.CharField(max_length=100,widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
+    description = forms.CharField(max_length=300,widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
 
     def __init__(self, *args, **kwargs):
         chosen_lesson = kwargs.pop('chosen_lesson', None)
@@ -39,10 +39,10 @@ class CreateTest(forms.Form):
 
 class CreateQuestion(forms.Form):
     CHOICES=[('A','A'), ('B','B'), ('C','C'), ('D','D')]
-    question = forms.CharField(max_length=255,label="",widget=forms.Textarea(attrs={'cols' : "50", 'rows': "3", 'title':'Max length 255'}))
-    answerA = forms.CharField(max_length=255, label="A. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", 'title':'Max length 255'}))
-    answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", 'title':'Max length 255'}))
-    answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", 'title':'Max length 255'}))
-    answerD = forms.CharField(max_length=255, label="D. ",  widget=forms.Textarea(attrs={'cols' : "47", 'rows': "2", 'title':'Max length 255'}))
+    question = forms.CharField(max_length=255,label="",widget=forms.Textarea(attrs={'cols' : "40", 'rows': "3", 'title':'Max length 255'}))
+    answerA = forms.CharField(max_length=255, label="A. ", widget=forms.Textarea(attrs={'cols' : "37", 'rows': "2", 'title':'Max length 255'}))
+    answerB = forms.CharField(max_length=255, label="B. ", widget=forms.Textarea(attrs={'cols' : "37", 'rows': "2", 'title':'Max length 255'}))
+    answerC = forms.CharField(max_length=255, label="C. ", widget=forms.Textarea(attrs={'cols' : "37", 'rows': "2", 'title':'Max length 255'}))
+    answerD = forms.CharField(max_length=255, label="D. ",  widget=forms.Textarea(attrs={'cols' : "37", 'rows': "2", 'title':'Max length 255'}))
     image_ques =  forms.ImageField(required=False, label="Question Image")
     right_answer = forms.ChoiceField( choices=CHOICES, widget=forms.RadioSelect())

@@ -12,7 +12,7 @@
     border: 2px solid #e3e3e3;
     border-radius: 4px;
     padding: 10px;
-    min-height: 450px;
+    min-height: 650px;
     overflow: hidden;
     margin-left: -15px;
     box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
@@ -31,10 +31,8 @@
     clear: both;
 }
 .image_class{
-    margin-right: 155px;
+    margin-right: 5%;
     margin-top: 20px;
-    width:100px;
-    height:100px;
     margin-bottom: 5px;
   }
   .image_ques{
@@ -182,7 +180,7 @@
     color: white;
     text-align: center;
     font-weight: bold;
-    background: #976043;
+    background: #4D4946;
     -webkit-box-shadow: inset 0px 1px 0 rgba(255, 255, 255, 0.28);
 }
 
@@ -219,6 +217,7 @@ border-bottom: 1px solid #976043;
     font-size: 1.9em;
     text-transform: uppercase;
     text-align: center;
+    margin-bottom: 0px;
 }
 #ones_classes .class_name h3{
     font-weight: 600;
@@ -253,6 +252,13 @@ border-bottom: 1px solid #976043;
     width: 50%;
 }
 
+#create_test #create_test_form textarea{
+    width: 93%;
+}
+#create_test #create_test_form #id_question{
+    width: 100%;
+}
+
  #create_test #create_test_form{
 	border: 5px groove rgb(137, 136, 170);
     padding: 20px;
@@ -273,7 +279,7 @@ border-bottom: 1px solid #976043;
 #detail_class .lesson_wrapper{
 	display: inline-block;
     margin: 7px;
-    width: 235px;
+    width: 45%;
 }
 #detail_class .lesson_wrapper:hover{
     background-color: rgb(212, 241, 248);
@@ -309,9 +315,10 @@ border-bottom: 1px solid #976043;
 }
 
 #create_test #testlist .question{
-    padding-left: 85px;
+    padding-left: 10px;
     overflow: hidden;
     padding-bottom: 12px;
+    word-wrap: break-word;
 }
 #detail_lesson #detail_test{
     border-top: 5px groove rgb(137, 136, 170);
@@ -351,7 +358,6 @@ border-radius: 3px;
 .fixed_class{
     margin-top: 0px !important;
     margin-right: 0px !important;
-    right: 89px;
     top: 0px;
     position: fixed!important;
 }
@@ -392,8 +398,7 @@ border-radius: 3px;
     padding: 10px;
     display: inline-block;
     position: absolute;
-    top: 350px;
-    right: 165px;
+    width: 29%;
 }
 
 #studentclass #bonus #goodscore, #student_process #bonus #goodscore{
@@ -405,17 +410,17 @@ border-radius: 3px;
 }
 #studentclass #bonus #mediumscore, #student_process #bonus #mediumscore{
     background: #C0D800;
-display: inline-block;
-width: 15px;
-height: 15px;
-margin-right: 10px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }
 #studentclass #bonus #badscore, #student_process #bonus #badscore{
     background: #CB4B4B;
-display: inline-block;
-width: 15px;
-height: 15px;
-margin-right: 10px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }
 
 #studentclass #bonus #nonscore, #student_process #bonus #nonscore{
@@ -450,8 +455,6 @@ margin-right: 10px;
 }
 #test_history{
     overflow: hidden;
-    margin-left: 0px;
-margin-right: 15px;
 }
 
 #test_history .fill-green{
@@ -484,9 +487,9 @@ font-weight: bold;
 .time-period-left-blue:before {
     position: absolute;
     top: 18px;
-    left: 5px;
-    width: 24px;
-    height: 24px;
+    left: 3px;
+	width: 22px;
+	height: 22px;
     border: 3px solid #2d7fb9;
     border-radius: 15px;
     background: #fff;
@@ -568,7 +571,6 @@ font-weight: bold;
 
 #test_history #student{
     display: inline-block;
-    border: 1px solid black;
     padding: 20px;
     text-align: center;
 }

@@ -3,6 +3,11 @@
     text-align: center;
     background-color: #f1f1f1;
 }
+
+.ui-widget-header {
+border: 1px solid #2d6ca2 !important;
+background: #2d6ca2 50% 50% repeat-x !important;
+}
 a:hover{
     text-decoration: none;
 }
@@ -292,7 +297,7 @@ display: block;
     margin-left: 40%;
 }
 #studylist .content{
-    width: 75%;
+    width: 90%;
     margin: 0 auto;
     padding-bottom: 9%;
 }
@@ -471,15 +476,16 @@ display: block;
 #test .button2{
     border-radius: 10px;
     position: absolute;
-    margin-top: 40px;
     right: 25%;
+    bottom: 20px;
 }
 #test .button3{
     border-radius: 10px;
     position: absolute;
-    margin-top: 40px;
+    bottom: 20px;
     left: 15%;
 }
+
 #test p{
     padding-top: 10px;
     padding-left: 30px;
@@ -542,7 +548,7 @@ display: block;
 	padding-bottom: 0px;
 	border-radius: 15px;
 	top: 10%;
-	left: -37%;
+	left: -43%;
 	display: none;
 }
 .popular h4{
@@ -580,8 +586,7 @@ display: block;
 .header-image-profile{
     border-left: 5px solid green;
     display: inline-block;
-    float: left;
-    margin-left: 15px;
+    margin-left: 18px;
 }
 .profile{
     display: block;

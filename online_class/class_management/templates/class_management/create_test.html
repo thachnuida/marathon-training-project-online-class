@@ -9,29 +9,14 @@
 {% endblock %}
 {% block body %}
     <div id="create_test" class="bg" style="overflow:hidden;">
-        <div id="create_test_form" class="pull-right">
-            <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
-            <div id="img_error" class="text-danger error_test_form"></div>
-            <form enctype="multipart/form-data"  method="post" action="" id="add_ques" onsubmit="return false;" role="form">
-	           {% csrf_token %}
-                <input type="hidden" value={{ test.pk  }}/>
-	           {% for field in form %}
-                    <div class="form-group" style="position: relative">
-                    {{ field.label_tag }} {{ field }}
-                    <div class="text-danger error_test_form"></div>
-                    </div>  
-	           {% endfor %}
-                
-                <button class="btn btn-primary" onclick="tam()">Add Question</button>
-                <a class="btn btn-default" href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}" role="button">Done</a>
-            </form>
-        </div>
-        <div id="testlist" style="padding-right: 15px; width: 50%">
+        <div class="row">
+        
+        <div id="testlist" class="col-xs-7" style="margin-left: -5px; margin-right: -12px;">
             <h2 class="title">{{ chosen_test.test_name }} Exercise</h2>
             {% for question in question_list %}
                 <div class="question">
                     <div class="row">
-                <div class="col-md-5">
+                <div class="col-xs-8">
                     <div>
                         <span>{{ question.order_test }}. </span> {{ question.question }}
                     </div>
@@ -43,7 +28,7 @@
                     </ol>
                     <div> Right Answer : {{ question.right_answer }}</div> 
                 </div>
-                <div class="col-md-7">
+                <div class="col-xs-4">
                     {% if question.image_ques and question.image_ques != "False" %}
                         <img src="{{ question.image_ques.url }}" height=150 width=150/>
                     {% endif %}
@@ -52,23 +37,49 @@
             </div>
             {% endfor %}
         </div>
+
+        <div id="create_test_form" class="col-xs-5">
+            <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
+            <div id="img_error" class="text-danger error_test_form"></div>
+            <form enctype="multipart/form-data"  method="post" action="" id="add_ques" onsubmit="return false;" role="form">
+               {% csrf_token %}
+                <input type="hidden" value={{ test.pk  }}/>
+               {% for field in form %}
+                    <div class="form-group" style="position: relative">
+                    {{ field.label_tag }} {{ field }}
+                    <div class="text-danger error_test_form"></div>
+                    </div>  
+               {% endfor %}
+                
+                <button class="btn btn-primary" onclick="tam()">Add Question</button>
+                <a class="btn btn-default" href="{% url 'classes:detaillesson' chosen_class.pk chosen_lesson.pk %}" role="button">Done</a>
+            </form>
+        </div>
+    </div>
     </div>
 {% endblock %}
 {% block script %}
     <script src="{% static 'class_management/js/js.js' %}"></script>
     <script>
+    var add_question_width = $("#create_test_form").width();
     $("#navigation-ul li").removeClass("active");
         $("#managerli").addClass("active");
      $(".dropdown").addClass("active");
     $(window).scroll(function () { 
-       if ($(window).scrollTop()>350 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
+        var distance_testlist = $("#testlist").offset().top - $(window).scrollTop();
+       if (distance_testlist<=0 && ($("#footer").height()) < ($(document).height() - $(window).scrollTop() - $(window).height()) + 15) {
          $("#create_test_form").css("top", '');
         $("#create_test_form").addClass("fixed_class");
+         $("#create_test_form").width(add_question_width);
+        $("#create_test_form").css('right', $(".container").offset().left + 15 + 10 + 2 + 2);
         } else if(($("#footer").height()) >= ($(document).height() - $(window).scrollTop() - $(window).height())){
             $("#create_test_form").addClass("fixed_class");
-            $("#create_test_form").css("top",($("#footer").height() + 15 - ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
+            $("#create_test_form").css('right', $(".container").offset().left + 15 + 10 + 2 + 2);
+            $("#create_test_form").width(add_question_width);
+            $("#create_test_form").css("top",($("#footer").height() + 30 - ($(document).height() - $(window).scrollTop() - $(window).height()) ) * -1);
         }
         else {
+            $('#create_test_form').css('right', '')
             $("#create_test_form").removeClass("fixed_class");
         }
 });
@@ -88,7 +99,7 @@
                 contentType: false,
         		success : function(question_dict){
                     var html =  "<div class='question'><div class='row'>"
-                            +   "<div class='col-md-5'><div>"
+                            +   "<div class='col-xs-8'><div>"
                             +       "<span>"+question_dict['order_test']+". </span>"+question_dict['question']
                             +   "</div>";
                         html+=   "<ol style='list-style-type: upper-alpha'>"
@@ -97,7 +108,7 @@
                             +       "<li>"+question_dict['answerC']+"</li>"
                             +       "<li>"+question_dict['answerD']+"</li>"
                             +   "</ol>"
-                            +   "<div> Right Answer : "+question_dict['right_answer']+"</div></div><div class='col-md-7'>";
+                            +   "<div> Right Answer : "+question_dict['right_answer']+"</div></div><div class='col-xs-4'>";
                             if (question_dict['image_ques']){
                         html+=  "<img src = '"+ question_dict['image_ques']+"' height=150 width=150 /></div></div>";
                     }

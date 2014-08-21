@@ -6,10 +6,19 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
     <script src="{% static 'class_management/js/js.js' %}"></script>
+    <style>
+    #win {
+    display: none;
+  } 
+  .hinh{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+}
+  }
+</style>
 {% endblock %}
 {% block body %}
 <div id="result" class="bg" style="min-height: 368px !important;">
@@ -29,37 +38,37 @@
     </tr>
   </table>
   <div class="row" style="margin-top: 50px;">
-    <div class="col-md-3 col-md-offset-2">
+    <div class="col-xs-3 col-xs-offset-2">
       <a href="{% url 'study:lesson' chosen_class.id chosen_lesson.id %}" role="button" class="btn btn-success">Back Lesson</a>
     </div>
-    <div class="col-md-3" style="margin-left: 50px;">
+    <div class="col-xs-3" style="margin-left: 50px;">
      <a href="{% url 'study:test' chosen_class.id chosen_lesson.id chosen_test.id %}" role="button" class="btn btn-danger">Do Again</a>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <button class="result btn btn-primary btn_show">Show Answer</button>
     </div>
   </div>
   <div id="win">
     <h2 style="margin-top: 100px;">EXERCISE'S ANSWER</h2>
     {% for question in all_question %}
-    <div class="row" style="margin-left: 15%;margin-bottom: 25px;">
-    <div id="{{ question.order_test }}">
-      <div class="col-md-5 col-md-offset-1">
-    <p style="font-size: 18px;"><b>{{ question.order_test }}. Question: {{ question.question }}</b></p>
-    <div class="ans_option">
-    <p class="A"><img src="#" height="20" width="20" style="margin-right: 15px;"/>A. {{ question.answerA }}</p>
-    <p class="B"><img src="#" height="20" width="20" style="margin-right: 15px;"/>B. {{ question.answerB }}</p>
-    <p class="C"><img src="#" height="20" width="20" style="margin-right: 15px;"/>C. {{ question.answerC }}</p>
-    <p class="D"><img src="#" height="20" width="20" style="margin-right: 15px;"/>D. {{ question.answerD }}</p>
-  </div>
+    <div class="row" style="margin-bottom: 25px; word-wrap: break-word;">
+      <div class="col-xs-7 col-xs-offset-1">
+      <div id="{{ question.order_test }}">
+      <p style="font-size: 18px;"><b>{{ question.order_test }}. Question: {{ question.question }}</b></p>
+      <div class="ans_option">
+      <p class="A"><span class="hinh"></span>A. {{ question.answerA }}</p>
+      <p class="B"><span class="hinh"></span>B. {{ question.answerB }}</p>
+      <p class="C"><span class="hinh"></span>C. {{ question.answerC }}</p>
+      <p class="D"><span class="hinh"></span>D. {{ question.answerD }}</p>
     </div>
-    <div class="col-md-5 col-md-offset-1">
+      </div>
+    </div>
+    <div class="col-xs-3 col-xs-offset-1">
       {% if question.image_ques.url and question.image_ques.url != False %}
       <img src="{{ question.image_ques.url }}" heigth="150" width="150"/>
       {% endif %}
     </div>
   </div>
-</div>
     {% endfor %}
   </div>
 </div>
@@ -99,17 +108,13 @@ $(document).ready(function(){
       $("#"+j+" ."+b[j-1]).css("background-color","rgb(66, 167, 66)");
     }else{
       $("#"+j+" ."+c[j-1]).css("background-color","rgb(252, 76, 76)");
-      $("#"+j+" ."+b[j-1] +" img").attr("src","{% static 'images/true.jpg' %}").css('visibility','');
+      $("#"+j+" ."+b[j-1] +" .hinh").html('<img src="/static/images/true.jpg" height="20" width="20" style="margin-right: 15px;"/>');
     }
   }
   });
 });
 </script>
-<style>
-#win {
-    display: none;
-} 
-</style>
+
 
 {% endblock %}
 

@@ -146,10 +146,8 @@ def student_class(request, pk):
     try:
         student_list = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         student_list = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         student_list = paginator.page(paginator.num_pages)
 
     chart = []
@@ -166,10 +164,8 @@ def student_process(request, user_id):
     try:
         class_list = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         class_list = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         class_list = paginator.page(paginator.num_pages)
 
     chart = []
@@ -180,16 +176,25 @@ def student_process(request, user_id):
 
 def calpercent(chosen_class, user):
     num_test = Test.objects.filter(lesson__Class=chosen_class).count()
-    non_test = num_test - Score.objects.filter(test__lesson__Class=chosen_class,user=user).values_list('test', flat=True).distinct().count()
     test_list = Test.objects.filter(lesson__Class=chosen_class)
-    good_test = 0;
-    medium_test = 0;
-    bad_test = 0;
+    non_test = 0
+    good_test = 0
+    medium_test = 0
+    bad_test = 0
     for test in test_list:
         question_num = Question.objects.filter(test=test).count()
-        good_test += Score.objects.filter(test=test, user=user, score__gte = float(question_num*70)/100).values_list('test',flat=True).distinct().count()
-        medium_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*70)/100, score__gte = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
-        bad_test += Score.objects.filter(test=test, user=user, score__lt = float(question_num*50)/100).values_list('test',flat=True).distinct().count()
+        score = Score.objects.filter(test=test, user=user).aggregate(Max('score'))['score__max']
+        print score
+        print float(question_num*70)/100
+        if score != None:
+            if float(score) >= float(question_num*70)/100:
+                good_test += 1
+            if score < float(question_num*70)/100 and score >= float(question_num*50)/100:
+                medium_test += 1
+            if score < float(question_num*50)/100:
+                bad_test += 1
+        else:
+            non_test += 1
     chart = [[[0, good_test]], [[0, medium_test]], [[0,bad_test]], [[0,non_test]], num_test ]
     return chart
 
