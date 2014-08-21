@@ -4,6 +4,9 @@
 {% load staticfiles %}
 {% block title %} Online Class {% endblock %}
 {% block body %}
+
+   {% if chosen_class.enable = 'T' %}
+   {% if joined %} 
 <div id="lesson" class="bg">
   <div class="content-lesson">
     <div class="row">
@@ -27,12 +30,7 @@
     <div class="test">
       <h2> EXERCISES IN THIS LESSON </h2>
     {% for test in all_test %}  
-
-      {% if chosen_class.enable = 'T' %}
       <a class="panel panel-primary one_test" href="{% url 'study:test' chosen_class.pk chosen_lesson.id test.id %}">
-      {% else %}
-         <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
-      {% endif %}
         <div class="panel-heading">{{test.test_name}}<span style="float:right;"><span class="none_score" >{% get_score user test %}</span><span>/{{ test.question_set.count }}</span></span></div>
         <div class="panel-body">
           <p class="date">Create Date {{ test.create_date|date:"H:i d/m/Y" }}</p>
@@ -61,11 +59,33 @@
   </div>
   </div>
 </div>  
+  {% else %}
+  <div>
+  <p class="bg-danger" style="font-size:27px;">You must join class</p>
+  </div>
+  {% endif %}
+    {% else %}
+  <div>
+    <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
+    <p class="bg-danger" style="font-size:27px;">The class was disabled! Please go home page.</p>
+  </div>
+  {% endif %}
+
+
   {% endblock %}
+
+
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet"/>
+    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
+    <script src="{% static 'class_management/js/js.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    {% endblock %}
 {% block script %}
 <script type="text/javascript">
 $("#navigation-ul li").removeClass("active");

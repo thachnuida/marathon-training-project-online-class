@@ -8,10 +8,14 @@
     <script src="{% static 'class_management/js/js.js' %}"></script>
 {% endblock %}
 {% block body %}
+
+
+{% if chosen_class.enable = 'T' %}
+{% if joined %}
+
 <div id="test" class="bg" style="position: relative;"> 
   <h2>{{ chosen_test.test_name }}</h2>
 
-  {% if chosen_class.enable = 'T' %}
   {% if none_question %}
     <div class="alert alert-danger text-center" role="alert">Ooh! This Test Haven't Update Any Question.<br/> Please Come Back Later!</div>
   {% else %}
@@ -44,12 +48,22 @@
   </form>
 </div>
 {% endif %}
-{% else %}
-     <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
-     <p>The class was disable</p>
-  {% endif %}
 
-</div> 
+</div>
+{% else %}
+  <div>
+  <p class="bg-danger" style="font-size:27px;">You must join class</p>
+  </div>
+{% endif %}
+
+{% else %}
+  <div>
+     <img src="{% static 'class_management/images/block.png' %}" height=50 width=50 style="border: 0px;"/>
+     <p class="bg-danger" style="font-size:27px;">The class was disabled! Please go home page.</p>
+  </div>
+{% endif %}
+
+
 {% endblock %}
 {% block script %}
 <script>
