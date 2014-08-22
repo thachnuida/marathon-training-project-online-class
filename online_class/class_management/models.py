@@ -12,7 +12,7 @@ class Class(models.Model):
     class_name = models.CharField(max_length=100)
     teacher = models.ForeignKey(User)
     students_in_class = models.ManyToManyField(User, related_name="students_in_class", null=True, blank=True)
-    description = models.TextField(max_length=300, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
     quantity = models.IntegerField()
     image_class = models.ImageField(upload_to="class_management", null=True, blank=True)
     create_date = models.DateTimeField(auto_now_add=True)

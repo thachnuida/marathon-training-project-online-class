@@ -24,15 +24,16 @@ $(document).ready(function(){
   });
 });
 function readURL(input, image_input) {
-  console.log("hi");
     if (input.prop('files') && input.prop('files')[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
             image_input.attr('src', e.target.result);
         }
         reader.readAsDataURL(input.prop('files')[0]);
-    }
+        $(".del_img").show();
+    }else{
     image_input.attr('src', "/media/test/img-icon.png");
+  }
 };
 
 function basic_pie(container, d1, d2 , d3, d4) {

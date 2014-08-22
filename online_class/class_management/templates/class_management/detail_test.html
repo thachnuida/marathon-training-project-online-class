@@ -6,8 +6,7 @@
     {{ block.super }}
     <script language="javascript">var STATIC_URL = "{{ STATIC_URL }}";</script>
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    
 {% endblock %}
 {% block body %}
     <div id="detail_test" class="bg" style="overflow: hidden; padding: 10px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);">
@@ -80,6 +79,7 @@
                {% csrf_token %} 
                 <input type="hidden" id="id" value=""/>
                 <img class="image_ques" src="/media/test/img-icon.png" alt="Preview"/>
+                <button id="del_img" class="btn btn-danger btn-xs" style="display: none;">Clear Image</button>
                 <div id="img_error" class="text-danger error_test_form"></div>
                {% for field in form %}
                    <div class="form-group" style="position: relative;">
@@ -207,6 +207,7 @@
                    });
     var upevent = function(button){
         $('.error_test_form').hide();
+        
         $("#testlist").removeClass("col-xs-8 col-xs-offset-2").addClass("col-xs-7").css('margin-left', '-5px');
         $('#add_test_form').show();
         $('#add_question').hide();
@@ -214,8 +215,18 @@
             var item = button.parent().parent().parent();
             $('#id_question').html(item.find(".id_question_test").html());
             $("#id").val(item.find(".id_test").html());
-            if (item.find('img').attr('src') != "#") $('.image_ques').attr('src', item.find('img').attr('src'));
-            else $('.image_ques').attr('src', "/media/test/img-icon.png");
+            if (item.find('img').attr('src') != "#") {
+                $('.image_ques').attr('src', item.find('img').attr('src'));
+                $("#del_img").show();
+                $("#del_img").click(function(){
+                    $(".image_ques").attr('src', "/media/test/img-icon.png");
+                    $("#del_img").hide();
+                });
+            }
+            else {
+                $('.image_ques').attr('src', "/media/test/img-icon.png");
+                $("#del_img").hide();
+            }
             $('#id_question').val(item.find(".id_question_test").html());
             $('#id_answerA').val(item.find(".id_answerA_test").html());
             $('#id_answerB').val(item.find(".id_answerB_test").html());
@@ -227,6 +238,11 @@
     var updatequestion = function() {
         var data = new FormData($('form').get(0));
         data.append('id', $("#id").val());
+        if ($(".image_ques").attr("src") == "/media/test/img-icon.png"){
+            data.append('clear_btn', 0);}
+        else{
+            data.append('clear_btn', 1);
+        }
         $.ajax({
             type: "POST",
             url: "{% url 'classes:updatequestion' chosen_test.pk %}",

@@ -183,7 +183,7 @@ a:hover{
 }
 .menu_bar img{
     margin-left: 10px;
-    margin-top: 30px;
+    margin-top: 10px;
     float: left;
     margin-right: 5px;
 }
@@ -363,6 +363,8 @@ display: block;
 #studyclass .des{
     font-size: 20px;
     color: rgb(11, 11, 153);
+    clear: both;
+    text-align: center;
 }
 #studyclass .des span{
    padding: 4%;
@@ -371,6 +373,10 @@ display: block;
 }
 #studyclass .des h1{
     font-size: 11px !important;
+}
+#studyclass .teacher{
+    color: rgb(143, 23, 23);
+    font-size: 20px;
 }
 
 #studyclass ul{
@@ -580,12 +586,12 @@ display: block;
 }
 .header-text{
     font-family: Vivaldi;
-    margin-left: 15px;
+    margin-left: 20px;
     display: inline-block;
 }
 .header-image-profile{
     display: inline-block;
-    margin-left: 18px;
+    margin-left: 5px;
 }
 .profile{
     display: block;

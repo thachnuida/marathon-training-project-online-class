@@ -8,7 +8,7 @@ class CreateClass(forms.Form):
     class_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '28','title':'Max length 100', 'placeholder': 'Ex: Java,...'}))
     quantity = forms.IntegerField(widget=forms.TextInput(attrs={'size': '28','title':'Only Number', 'placeholder': 'Ex: 50,...'}))
     image_class = forms.ImageField(required=False)
-    description = forms.CharField(max_length=300, widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
+    description = forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'cols' : "62", 'rows': "5"}))
 
     def __init__(self, *args, **kwargs):
         class_details = kwargs.pop('class_details', None)

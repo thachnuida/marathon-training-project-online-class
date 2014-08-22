@@ -5,13 +5,7 @@
 {% block link %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'class_management/css/style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/skin.css' %}"/>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <link href="{% static 'class_management/css/style.css' %}" rel="stylesheet"/>
-    <script src="{% static 'class_management/js/jcarousel.js' %}"></script>
-    <script src="{% static 'class_management/js/js.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 {% endblock %}
 {% block body %}
   <div id="studyclass" class="bg">
@@ -19,14 +13,18 @@
     <h3 class="bg-info title_leave">You leaved This class Successful!! See you again</h3>
       <a href="/study/study/" role="button" class="btn btn-primary pull-right" style="margin-top: 20px;">Go To Your Classes</a>
     {% else %}
-    <div class="text-center">
-    <h3 style="color: #352354">
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-4">
+        <h3>{{ join_class }}</h3>
+        <div class="teacher">Teacher: {{ join_class.teacher }}</div>
+    </div>
+        <div class="col-xs-5">
       {% if join_class.image_class and join_class.image_class != False %}
         <img src="{{ join_class.image_class.url }}" height="150" width="150" style="margin-right: 50px"/>
       {% else %}
         <img src="{% static 'class_management/images/classroom.jpg' %}" height="150" width="150"  style="margin-right: 50px"/>
       {% endif %}
-        <h3>{{ join_class }}</h3>
+    </div>
     <div class="des">{{ join_class.description|safe }}</div>
 </div>
 

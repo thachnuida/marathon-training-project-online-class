@@ -288,6 +288,12 @@ def update_question(request, test_id):
                 updatedquestion = get_object_or_404(Question, test=test_id, order_test = id_question)
                 if form.cleaned_data['image_ques'] != None:
                     updatedquestion.image_ques = form.cleaned_data['image_ques']
+                print "image"
+                print form.cleaned_data['image_ques']
+                print "clear_btn"
+                print request.POST['clear_btn']
+                if request.POST['clear_btn'] == '0':
+                    updatedquestion.image_ques = ""
                 updatedquestion.save()
                 question =Question.objects.get(test=test_id, order_test=id_question)
                 question_dict = question.__dict__
