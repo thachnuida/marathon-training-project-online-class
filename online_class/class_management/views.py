@@ -58,7 +58,7 @@ def create_class(request):
 def detail_class(request, pk):
     Chose_class = get_object_or_404(Class, pk=pk)
     lesson_list = Chose_class.lesson_set.all()
-    paginator = Paginator(lesson_list, 6) # Show 25 contacts per page
+    paginator = Paginator(lesson_list, 4) # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         lesson_list = paginator.page(page)

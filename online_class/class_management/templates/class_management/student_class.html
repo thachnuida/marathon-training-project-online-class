@@ -14,7 +14,7 @@
                     Any Student Haven't Joined This Class</div>
         {% else %}
         <div class="row">
-          <div id="bonus" class="col-xs-3 col-xs-offset-7">
+          <div id="bonus" class="col-xs-3 col-xs-offset-5 col-md-offset-7">
               <div><div id="goodscore"></div><span>Good Mark (Mark >= 70%)</span></div>
               <div><div id="mediumscore"></div><span>Medium Mark ( 50% &lt= Mark &lt 70%)</span></div>
               <div><div id="badscore"></div><span>Bad Mark (Mark &lt 50%)</span></div>
@@ -41,10 +41,10 @@
                           <div style="width: 200px; height: 150px; display: block;" class="testchart">
                           </div>
                       </td>
-                      <td><a href="{% url 'classes:studentdetail' student.pk %}"><img src="{% static 'class_management/images/Show-Info-icon.png' %}"/><div>Watch Student Detail</div></a>
+                      <td><a href="{% url 'classes:studentdetail' student.pk %}"><img src="{% static 'class_management/images/Show-Info-icon.png' %}"/><div>Student Detail</div></a>
                       </td>
                       <td>
-                          <a href="{% url 'classes:testhistory' student.pk chosen_class.pk %}"><img src="{% static 'class_management/images/Show-Test-icon.png' %}"/><div>Watch Score Detail</div></a>
+                          <a href="{% url 'classes:testhistory' student.pk chosen_class.pk %}"><img src="{% static 'class_management/images/Show-Test-icon.png' %}"/><div>Score Detail</div></a>
                       </td>
                   </tr>
               {% endfor %}

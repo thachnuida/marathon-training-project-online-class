@@ -13,11 +13,11 @@
 		<div id="add_lesson_form">
 			<h1 class="title">CREATE LESSON</h1>
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-xs-5 col-md-6">
 			<iframe id = "video_link" height="345" style="margin-top: 25px;width: 100%;">
 			</iframe>
 			</div>
-				<div class="col-xs-6">
+				<div class="col-xs-7 col-md-6">
 			<form method="post" action="" role="form" >
 				{% csrf_token %}
 				{% for field in form %}

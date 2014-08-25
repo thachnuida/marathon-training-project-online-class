@@ -9,11 +9,11 @@
 {% block body %}
 <div id="test_history" class="bg" >
 		<div class="row">
-		<div id="student" class="col-md-3">
+		<div id="student" class="col-xs-3">
 			{% if student.userprofile.user_image %}
-				<img src="{{ student.userprofile.user_image.url }}"/>
+				<img src="{{ student.userprofile.user_image.url }}" height="120" width="120"/>
 			{% else %}
-				<img src="{% static 'home/img/account.png' %}"/>
+				<img src="{% static 'home/img/account.png' %}" height="120" width="120"/>
 			{% endif %}
 			<div style="margin-top: 10px; color: rgb(95, 17, 17);" class="hello">{{ student.username }}</div>
 			<div id="sort">
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="history" class="col-md-9">
+		<div id="history" class="col-xs-9">
 			<div class="fill-green">Exercise History - {{ chosen_class.class_name }} Class</div>
 				{% if test_list|length == 0 %}
 				<div class="alert alert-info nonhaving" role="alert">
@@ -39,7 +39,7 @@
 								<th>Your Score</th>
 								<th>Doing Exercise Time</th>
 								<th>Lesson Name</th>
-								<th>Test Name</th>
+								<th>Exercise Name</th>
 							</tr>
 						{% for test in test_list %}
 						<tr>

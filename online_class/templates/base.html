@@ -5,6 +5,7 @@
     <head>
         <title>{% block title %}ONLINE CLASS{% endblock %}</title>
         {% block link %}
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <script src="{% static 'class_management/js/jquery2-1-1.js' %}"></script>
           <link href="/static/home/css/bootstrap.min.css" rel="stylesheet">
           <link href="/static/home/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -54,9 +55,9 @@
                         <div class="row">
                         <div class="col-xs-4 header-image-profile">
                           {% if user.userprofile.user_image and user.userprofile.user_image != "False" %}
-                            <img src="{{ user.userprofile.user_image.url }}" height=150 width=150 id="image_class"/>
+                            <img src="{{ user.userprofile.user_image.url }}" height=100 width=100 id="image_class"/>
                           {% else %}
-                            <img src="{% static 'home/images/account.png' %}" height=150 width=150 id="image_class"/>
+                            <img src="{% static 'home/images/account.png' %}" height=100 width=100 id="image_class"/>
                           {% endif %}
                         </div>
                         <div class="col-xs-7 header-text">

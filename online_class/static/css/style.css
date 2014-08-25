@@ -3,6 +3,110 @@
     text-align: center;
     background-color: #f1f1f1;
 }
+.non{
+    width: 0px !important;
+    height: 0px !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .header1{
+        margin-left: 45% !important;
+    }
+    #profile .image_student{
+        height: 100px;
+        width: 100px;
+    }
+    #create_class .image_class{
+        height: 120px;
+        width: 120px;
+    }
+    #add_class_form img{
+        height: 100px;
+        width: 100px;
+    }
+    #detail_class #add_class_form{
+        width: 60% !important;
+    }
+    #detail_class .lesson_wrapper{
+        width: 100% !important;
+    }
+    #create_test #testlist .question img{
+        width: 100px;
+        height: 100px;
+    }
+    #detail_test #testlist .question img{
+        width: 100px;
+        height: 100px;
+    }
+    #detail_test .option button{
+        margin-bottom: 10px;
+    font-size: 11px;
+    margin-left: -18px;
+    padding: 7px;
+    }
+    .bs-callout {
+    border-left: 3px solid #51A573 !important;
+}
+#add_lesson_form #video_link, #detail_lesson #video_link{
+    height: 200px;
+}
+#student_detail #image_student img{
+    height: 150px;
+    width: 150px;
+}
+#student_detail #image_student{
+    margin-left: 100px !important;
+}
+#home .contentclass a {
+    font-size: 1.2em !important;
+}
+}
+@media only screen and (min-width : 1024px) {
+/* Styles */
+}
+
+@media only screen and (min-width : 1280px) {
+#student_detail #image_student img{
+    height: 200px;
+    width: 200px;
+}
+#home .class_name h3{
+    font-size: 2.0em !important;
+}
+.hello{
+    font-size: 25px !important;
+}
+.header-image-profile img{
+    height: 150px;
+    width: 150px;
+}
+#profile .image_student {
+height: 150px;
+width: 150px;
+}
+#detail_class .lesson_wrapper {
+width: 45% !important;
+}
+#detail_lesson #video_link,#add_lesson_form #video_link {
+height: 316px;
+}
+.bs-callout {
+border-left: 5px solid #51A573 !important;
+}
+#detail_test .option button {
+margin-bottom: 10px;
+font-size: 13px;
+margin-left: 0px;
+padding: 7px;
+}
+}
+.question img {
+width: 125px;
+height: 125px;
+}
+ #detail_class textarea{
+    width: 100%;
+ }
 
 .ui-widget-header {
 border: 1px solid #2d6ca2 !important;
@@ -36,17 +140,13 @@ a:hover{
     width: 175px;
 }
 #topmost{
-    padding-left: 85px;
     padding-top: 20px;
     display: block;
     border: 2px solid #ccc;
     border-top: 0px;
 }
 #topmost li{
-    display: inline-block;
-    height: 100px;
-    width: 200px;
-    padding-bottom: 10px;
+    display: block;
     margin-bottom: 10px;
     border-bottom: solid 1px #CCC;
 }
@@ -165,12 +265,12 @@ a:hover{
 }
 
 .hello{
-    font-size: 30px;
+    font-size: 22px;
     margin-top: 20px;
     color: rgb(119, 35, 35);
 }
 .font-x{
-    font-size: 25px;
+    font-size: 22px;
 }
 .menu_bar{
     margin-top: 5px;
